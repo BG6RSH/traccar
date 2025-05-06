@@ -83,8 +83,8 @@ public class NavisetProtocolDecoder extends BaseProtocolDecoder {
                 position.set(Position.KEY_STATUS, buf.readUnsignedByte());
                 position.setValid(true);
                 position.setTime(new Date(buf.readUnsignedIntLE() * 1000));
-                position.setLatitude(buf.readUnsignedIntLE() * 0.000001);
-                position.setLongitude(buf.readUnsignedIntLE() * 0.000001);
+                position.setLatitude_wgs84(buf.readUnsignedIntLE() * 0.000001);
+                position.setLongitude_wgs84(buf.readUnsignedIntLE() * 0.000001);
                 position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE() * 0.1));
 
                 if (BitUtil.check(blockMask, 0)) {

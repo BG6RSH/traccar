@@ -74,8 +74,8 @@ public class ContinentalProtocolDecoder extends BaseProtocolDecoder {
             position.setFixTime(new Date(buf.readUnsignedInt() * 1000L));
 
             boolean extended = buf.getUnsignedByte(buf.readerIndex()) != 0;
-            position.setLatitude(readCoordinate(buf, extended));
-            position.setLongitude(readCoordinate(buf, extended));
+            position.setLatitude_wgs84(readCoordinate(buf, extended));
+            position.setLongitude_wgs84(readCoordinate(buf, extended));
 
             position.setCourse(buf.readUnsignedShort());
             position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));

@@ -99,8 +99,8 @@ public class JidoProtocolDecoder extends BaseProtocolDecoder {
         }
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
-        position.setLatitude(parser.nextCoordinate());
-        position.setLongitude(parser.nextCoordinate());
+        position.setLatitude_wgs84(parser.nextCoordinate());
+        position.setLongitude_wgs84(parser.nextCoordinate());
 
         if (parser.hasNext(9)) {
 

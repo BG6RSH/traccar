@@ -88,8 +88,8 @@ public class BoxProtocolDecoder extends BaseProtocolDecoder {
 
             position.setTime(parser.nextDateTime());
 
-            position.setLatitude(parser.nextDouble());
-            position.setLongitude(parser.nextDouble());
+            position.setLatitude_wgs84(parser.nextDouble());
+            position.setLongitude_wgs84(parser.nextDouble());
             position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
             position.setCourse(parser.nextDouble());
 

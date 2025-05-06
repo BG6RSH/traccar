@@ -95,8 +95,8 @@ public class TramigoProtocolDecoder extends BaseProtocolDecoder {
             buf.readUnsignedShortLE(); // state flag
 
             position.setValid(true);
-            position.setLatitude(buf.readUnsignedIntLE() * 0.0000001);
-            position.setLongitude(buf.readUnsignedIntLE() * 0.0000001);
+            position.setLatitude_wgs84(buf.readUnsignedIntLE() * 0.0000001);
+            position.setLongitude_wgs84(buf.readUnsignedIntLE() * 0.0000001);
 
             position.set(Position.KEY_RSSI, buf.readUnsignedShortLE());
             position.set(Position.KEY_SATELLITES, buf.readUnsignedShortLE());
@@ -176,8 +176,8 @@ public class TramigoProtocolDecoder extends BaseProtocolDecoder {
                     position.set(Position.KEY_STATUS, status);
 
                     position.setValid(true);
-                    position.setLatitude(buf.readIntLE() * 0.00001);
-                    position.setLongitude(buf.readIntLE() * 0.00001);
+                    position.setLatitude_wgs84(buf.readIntLE() * 0.00001);
+                    position.setLongitude_wgs84(buf.readIntLE() * 0.00001);
                     position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE()));
                     position.setCourse(buf.readUnsignedShortLE());
 
@@ -246,8 +246,8 @@ public class TramigoProtocolDecoder extends BaseProtocolDecoder {
         if (!matcher.find()) {
             return null;
         }
-        position.setLatitude(Double.parseDouble(matcher.group(1)));
-        position.setLongitude(Double.parseDouble(matcher.group(2)));
+        position.setLatitude_wgs84(Double.parseDouble(matcher.group(1)));
+        position.setLongitude_wgs84(Double.parseDouble(matcher.group(2)));
         position.setValid(true);
 
         pattern = Pattern.compile("([NSWE]{1,2}) with speed (\\d+) km/h");

@@ -81,8 +81,8 @@ public class MtxProtocolDecoder extends BaseProtocolDecoder {
         position.setTime(parser.nextDateTime());
 
         position.setValid(true);
-        position.setLatitude(parser.nextDouble(0));
-        position.setLongitude(parser.nextDouble(0));
+        position.setLatitude_wgs84(parser.nextDouble(0));
+        position.setLongitude_wgs84(parser.nextDouble(0));
         position.setSpeed(parser.nextDouble(0));
         position.setCourse(parser.nextDouble(0));
 

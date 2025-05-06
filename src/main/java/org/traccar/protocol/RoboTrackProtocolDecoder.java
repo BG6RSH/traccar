@@ -84,8 +84,8 @@ public class RoboTrackProtocolDecoder extends BaseProtocolDecoder {
 
                 position.setValid(true);
                 position.setFixTime(position.getDeviceTime());
-                position.setLatitude(buf.readIntLE() * 0.000001);
-                position.setLongitude(buf.readIntLE() * 0.000001);
+                position.setLatitude_wgs84(buf.readIntLE() * 0.000001);
+                position.setLongitude_wgs84(buf.readIntLE() * 0.000001);
                 position.setSpeed(UnitsConverter.knotsFromKph(buf.readByte()));
 
             } else {

@@ -155,8 +155,8 @@ public class KhdProtocolDecoder extends BaseProtocolDecoder {
                     .setSecond(BcdUtil.readInteger(buf, 2));
             position.setTime(dateBuilder.getDate());
 
-            position.setLatitude(BcdUtil.readCoordinate(buf));
-            position.setLongitude(BcdUtil.readCoordinate(buf));
+            position.setLatitude_wgs84(BcdUtil.readCoordinate(buf));
+            position.setLongitude_wgs84(BcdUtil.readCoordinate(buf));
             position.setSpeed(UnitsConverter.knotsFromKph(BcdUtil.readInteger(buf, 4)));
             position.setCourse(BcdUtil.readInteger(buf, 4));
             position.setValid((buf.readUnsignedByte() & 0x80) != 0);

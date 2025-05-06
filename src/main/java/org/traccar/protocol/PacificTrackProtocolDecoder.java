@@ -76,8 +76,8 @@ public class PacificTrackProtocolDecoder extends BaseProtocolDecoder {
                             .setDate(2020 + BitUtil.from(date, 4), BitUtil.to(date, 4), buf.readUnsignedByte())
                             .setTime(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte());
                     position.setTime(dateBuilder.getDate());
-                    position.setLatitude(buf.readUnsignedInt() / 1000000.0 - 90.0);
-                    position.setLongitude(buf.readUnsignedInt() / 1000000.0 - 180.0);
+                    position.setLatitude_wgs84(buf.readUnsignedInt() / 1000000.0 - 90.0);
+                    position.setLongitude_wgs84(buf.readUnsignedInt() / 1000000.0 - 180.0);
                     int speedAndCourse = buf.readUnsignedMedium();
                     position.setCourse(BitUtil.from(speedAndCourse, 12));
                     position.setSpeed(UnitsConverter.knotsFromKph(BitUtil.to(speedAndCourse, 12) * 0.1));

@@ -86,8 +86,8 @@ public class Gl100ProtocolDecoder extends BaseProtocolDecoder {
         position.setSpeed(parser.nextDouble(0));
         position.setCourse(parser.nextDouble(0));
         position.setAltitude(parser.nextDouble(0));
-        position.setLongitude(parser.nextDouble(0));
-        position.setLatitude(parser.nextDouble(0));
+        position.setLongitude_wgs84(parser.nextDouble(0));
+        position.setLatitude_wgs84(parser.nextDouble(0));
 
         position.setTime(parser.nextDateTime());
 

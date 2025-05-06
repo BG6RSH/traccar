@@ -93,8 +93,8 @@ public class DmtProtocolDecoder extends BaseProtocolDecoder {
                     .setSecond((int) (time >> 26) & 0x3F)
                     .getDate());
 
-            position.setLongitude(buf.readIntLE() * 0.0000001);
-            position.setLatitude(buf.readIntLE() * 0.0000001);
+            position.setLongitude_wgs84(buf.readIntLE() * 0.0000001);
+            position.setLatitude_wgs84(buf.readIntLE() * 0.0000001);
             position.setSpeed(UnitsConverter.knotsFromCps(buf.readUnsignedShortLE()));
             position.setCourse(buf.readUnsignedByte() * 2);
             position.setAltitude(buf.readShortLE());
@@ -165,8 +165,8 @@ public class DmtProtocolDecoder extends BaseProtocolDecoder {
                 if (fieldId == 0) {
 
                     position.setFixTime(new Date(1356998400000L + buf.readUnsignedIntLE() * 1000));
-                    position.setLatitude(buf.readIntLE() * 0.0000001);
-                    position.setLongitude(buf.readIntLE() * 0.0000001);
+                    position.setLatitude_wgs84(buf.readIntLE() * 0.0000001);
+                    position.setLongitude_wgs84(buf.readIntLE() * 0.0000001);
                     position.setAltitude(buf.readShortLE());
                     position.setSpeed(UnitsConverter.knotsFromCps(buf.readUnsignedShortLE()));
 

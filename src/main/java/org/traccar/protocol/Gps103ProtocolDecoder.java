@@ -233,8 +233,8 @@ public class Gps103ProtocolDecoder extends BaseProtocolDecoder {
 
             position.setValid(parser.next().equals("A"));
             position.setFixTime(position.getDeviceTime());
-            position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN_HEM));
-            position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN_HEM));
+            position.setLatitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN_HEM));
+            position.setLongitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN_HEM));
             position.setSpeed(parser.nextDouble(0));
             position.setCourse(parser.nextDouble(0));
             position.setAltitude(parser.nextDouble(0));
@@ -317,8 +317,8 @@ public class Gps103ProtocolDecoder extends BaseProtocolDecoder {
         position.set(Position.KEY_RSSI, parser.nextInt());
 
         position.setValid(parser.nextInt() > 0);
-        position.setLatitude(parser.nextDouble());
-        position.setLongitude(parser.nextDouble());
+        position.setLatitude_wgs84(parser.nextDouble());
+        position.setLongitude_wgs84(parser.nextDouble());
         position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
         position.setCourse(parser.nextInt());
         position.setAltitude(parser.nextInt());

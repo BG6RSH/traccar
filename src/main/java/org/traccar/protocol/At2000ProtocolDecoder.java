@@ -125,8 +125,8 @@ public class At2000ProtocolDecoder extends BaseProtocolDecoder {
 
                     position.setTime(new Date(buf.readLongLE() * 1000));
 
-                    position.setLatitude(buf.readFloatLE());
-                    position.setLongitude(buf.readFloatLE());
+                    position.setLatitude_wgs84(buf.readFloatLE());
+                    position.setLongitude_wgs84(buf.readFloatLE());
                     position.setAltitude(buf.readFloatLE());
                     position.setSpeed(UnitsConverter.knotsFromKph(buf.readFloatLE()));
                     position.setCourse(buf.readFloatLE());

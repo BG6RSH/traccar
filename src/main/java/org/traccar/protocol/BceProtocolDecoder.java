@@ -53,8 +53,8 @@ public class BceProtocolDecoder extends BaseProtocolDecoder {
 
         if (BitUtil.check(mask, 0)) {
             position.setValid(true);
-            position.setLongitude(buf.readFloatLE());
-            position.setLatitude(buf.readFloatLE());
+            position.setLongitude_wgs84(buf.readFloatLE());
+            position.setLatitude_wgs84(buf.readFloatLE());
             position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
 
             int status = buf.readUnsignedByte();

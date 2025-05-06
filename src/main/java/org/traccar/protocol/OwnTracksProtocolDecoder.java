@@ -68,8 +68,8 @@ public class OwnTracksProtocolDecoder extends BaseHttpProtocolDecoder {
 
         position.setValid(true);
 
-        position.setLatitude(root.getJsonNumber("lat").doubleValue());
-        position.setLongitude(root.getJsonNumber("lon").doubleValue());
+        position.setLatitude_wgs84(root.getJsonNumber("lat").doubleValue());
+        position.setLongitude_wgs84(root.getJsonNumber("lon").doubleValue());
 
         if (root.containsKey("vel")) {
             position.setSpeed(UnitsConverter.knotsFromKph(root.getInt("vel")));

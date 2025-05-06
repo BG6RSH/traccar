@@ -117,8 +117,8 @@ public class Avl301ProtocolDecoder extends BaseProtocolDecoder {
                 longitude = -longitude;
             }
 
-            position.setLatitude(latitude);
-            position.setLongitude(longitude);
+            position.setLatitude_wgs84(latitude);
+            position.setLongitude_wgs84(longitude);
 
             if ((union & 0x4000) != 0) {
                 position.set("acc", (union & 0x8000) != 0);

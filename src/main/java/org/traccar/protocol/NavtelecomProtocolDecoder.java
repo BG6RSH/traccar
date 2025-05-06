@@ -243,10 +243,10 @@ public class NavtelecomProtocolDecoder extends BaseProtocolDecoder {
                                     position.setFixTime(new Date(buf.readUnsignedIntLE() * 1000));
                                     break;
                                 case 10:
-                                    position.setLatitude(buf.readIntLE() * 0.0001 / 60);
+                                    position.setLatitude_wgs84(buf.readIntLE() * 0.0001 / 60);
                                     break;
                                 case 11:
-                                    position.setLongitude(buf.readIntLE() * 0.0001 / 60);
+                                    position.setLongitude_wgs84(buf.readIntLE() * 0.0001 / 60);
                                     break;
                                 case 12:
                                     position.setAltitude(buf.readIntLE() * 0.1);

@@ -92,8 +92,8 @@ public class Gl601ProtocolDecoder extends BaseProtocolDecoder {
                     case 81, 82 -> {
                         int state = buf.readUnsignedByte();
                         position.setValid(BitUtil.between(state, 2, 4) == 0b10);
-                        position.setLongitude(buf.readInt() / 1000000.0);
-                        position.setLatitude(buf.readInt() / 1000000.0);
+                        position.setLongitude_wgs84(buf.readInt() / 1000000.0);
+                        position.setLatitude_wgs84(buf.readInt() / 1000000.0);
                         position.setFixTime(new Date(buf.readUnsignedInt() * 1000));
                         position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShort() / 10.0));
                         if (dataId == 82) {

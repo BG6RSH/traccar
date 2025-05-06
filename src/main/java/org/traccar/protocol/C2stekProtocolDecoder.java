@@ -96,8 +96,8 @@ public class C2stekProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime());
         position.setValid(parser.nextInt() > 0);
-        position.setLatitude(parser.nextDouble());
-        position.setLongitude(parser.nextDouble());
+        position.setLatitude_wgs84(parser.nextDouble());
+        position.setLongitude_wgs84(parser.nextDouble());
         position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
         position.setCourse(parser.nextDouble());
         position.setAltitude(parser.nextDouble());

@@ -166,10 +166,10 @@ public class GlobalstarProtocolDecoder extends BaseHttpProtocolDecoder {
             }
 
             double latitude = buf.readUnsignedMedium() * 90.0 / (1 << 23);
-            position.setLatitude(latitude > 90 ? latitude - 180 : latitude);
+            position.setLatitude_wgs84(latitude > 90 ? latitude - 180 : latitude);
 
             double longitude = buf.readUnsignedMedium() * 180.0 / (1 << 23);
-            position.setLongitude(longitude > 180 ? longitude - 360 : longitude);
+            position.setLongitude_wgs84(longitude > 180 ? longitude - 360 : longitude);
 
             int speed = 0;
             if (atlas) {
@@ -225,8 +225,8 @@ public class GlobalstarProtocolDecoder extends BaseHttpProtocolDecoder {
             String longitude = gpsCoordinate.getString("longitude");
             if (!latitude.isEmpty() && !longitude.isEmpty()) {
                 position.setValid(deviceInfo.getString("gpsDataValid").equals("Valid"));
-                position.setLatitude(Double.parseDouble(latitude));
-                position.setLongitude(Double.parseDouble(longitude));
+                position.setLatitude_wgs84(Double.parseDouble(latitude));
+                position.setLongitude_wgs84(Double.parseDouble(longitude));
             } else {
                 getLastLocation(position, position.getDeviceTime());
             }

@@ -97,8 +97,8 @@ public class AnytrekProtocolDecoder extends BaseProtocolDecoder {
             longitude = -longitude;
         }
 
-        position.setLatitude(latitude);
-        position.setLongitude(longitude);
+        position.setLatitude_wgs84(latitude);
+        position.setLongitude_wgs84(longitude);
 
         buf.readUnsignedIntLE(); // info index
         buf.readUnsignedIntLE(); // setting index

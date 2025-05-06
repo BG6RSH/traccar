@@ -221,8 +221,8 @@ public class FifotrackProtocolDecoder extends BaseProtocolDecoder {
             position.setFixTime(position.getDeviceTime());
             position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
             position.set(Position.KEY_SATELLITES, parser.nextInt());
-            position.setLatitude(parser.nextDouble());
-            position.setLongitude(parser.nextDouble());
+            position.setLatitude_wgs84(parser.nextDouble());
+            position.setLongitude_wgs84(parser.nextDouble());
 
         } else {
 
@@ -269,8 +269,8 @@ public class FifotrackProtocolDecoder extends BaseProtocolDecoder {
         position.setTime(parser.nextDateTime());
 
         position.setValid(parser.next().equals("A"));
-        position.setLatitude(parser.nextDouble());
-        position.setLongitude(parser.nextDouble());
+        position.setLatitude_wgs84(parser.nextDouble());
+        position.setLongitude_wgs84(parser.nextDouble());
         position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
         position.setCourse(parser.nextInt());
         position.setAltitude(parser.nextInt());

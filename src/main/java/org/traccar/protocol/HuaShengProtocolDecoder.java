@@ -205,8 +205,8 @@ public class HuaShengProtocolDecoder extends BaseProtocolDecoder {
                 .setSecond(Integer.parseInt(time.substring(10, 12)));
         position.setTime(dateBuilder.getDate());
 
-        position.setLongitude(buf.readInt() * 0.00001);
-        position.setLatitude(buf.readInt() * 0.00001);
+        position.setLongitude_wgs84(buf.readInt() * 0.00001);
+        position.setLatitude_wgs84(buf.readInt() * 0.00001);
 
         position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
         position.setCourse(buf.readUnsignedShort());

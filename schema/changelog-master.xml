@@ -48,4 +48,5 @@
   <include file="changelog-6.6.xml" relativeToChangelogFile="true" />
   <include file="changelog-6.7.xml" relativeToChangelogFile="true" />
 
+  <include file="changelog-gcj02.xml" relativeToChangelogFile="true" />
 </databaseChangeLog>

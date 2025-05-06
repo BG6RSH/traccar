@@ -218,12 +218,12 @@ public class NavisProtocolDecoder extends BaseProtocolDecoder {
             position.setTime(dateBuilder.getDate());
 
             if (isFormat(format, F60)) {
-                position.setLatitude(buf.readIntLE() / 600000.0);
-                position.setLongitude(buf.readIntLE() / 600000.0);
+                position.setLatitude_wgs84(buf.readIntLE() / 600000.0);
+                position.setLongitude_wgs84(buf.readIntLE() / 600000.0);
                 position.setAltitude(buf.readIntLE() * 0.1);
             } else {
-                position.setLatitude(buf.readFloatLE() / Math.PI * 180);
-                position.setLongitude(buf.readFloatLE() / Math.PI * 180);
+                position.setLatitude_wgs84(buf.readFloatLE() / Math.PI * 180);
+                position.setLongitude_wgs84(buf.readFloatLE() / Math.PI * 180);
             }
 
             position.setSpeed(UnitsConverter.knotsFromKph(buf.readFloatLE()));
@@ -341,8 +341,8 @@ public class NavisProtocolDecoder extends BaseProtocolDecoder {
                     position.set(Position.KEY_SATELLITES, BitUtil.from(navSensorState, 2));
                 }
                 case 8 -> position.setTime(new DateBuilder(new Date(buf.readUnsignedIntLE() * 1000)).getDate());
-                case 9 -> position.setLatitude(buf.readIntLE() / 600000.0);
-                case 10 -> position.setLongitude(buf.readIntLE() / 600000.0);
+                case 9 -> position.setLatitude_wgs84(buf.readIntLE() / 600000.0);
+                case 10 -> position.setLongitude_wgs84(buf.readIntLE() / 600000.0);
                 case 11 -> position.setAltitude(buf.readIntLE() * 0.1);
                 case 12 -> position.setSpeed(UnitsConverter.knotsFromKph(buf.readFloatLE()));
                 case 13 -> position.setCourse(buf.readUnsignedShortLE());
@@ -427,8 +427,8 @@ public class NavisProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_SATELLITES, BitUtil.from(navSensorState, 2));
 
             position.setTime(new DateBuilder(new Date(buf.readUnsignedIntLE() * 1000)).getDate());
-            position.setLatitude(buf.readIntLE() / 600000.0);
-            position.setLongitude(buf.readIntLE() / 600000.0);
+            position.setLatitude_wgs84(buf.readIntLE() / 600000.0);
+            position.setLongitude_wgs84(buf.readIntLE() / 600000.0);
             position.setAltitude(buf.readIntLE() * 0.1);
             position.setSpeed(UnitsConverter.knotsFromKph(buf.readFloatLE()));
             position.setCourse(buf.readUnsignedShortLE());

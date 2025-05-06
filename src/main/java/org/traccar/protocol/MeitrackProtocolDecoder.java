@@ -147,8 +147,8 @@ public class MeitrackProtocolDecoder extends BaseProtocolDecoder {
         position.set(Position.KEY_EVENT, event);
         position.addAlarm(decodeAlarm(event));
 
-        position.setLatitude(parser.nextDouble());
-        position.setLongitude(parser.nextDouble());
+        position.setLatitude_wgs84(parser.nextDouble());
+        position.setLongitude_wgs84(parser.nextDouble());
 
         position.setTime(parser.nextDateTime());
 
@@ -291,8 +291,8 @@ public class MeitrackProtocolDecoder extends BaseProtocolDecoder {
 
             position.set(Position.KEY_EVENT, buf.readUnsignedByte());
 
-            position.setLatitude(buf.readIntLE() * 0.000001);
-            position.setLongitude(buf.readIntLE() * 0.000001);
+            position.setLatitude_wgs84(buf.readIntLE() * 0.000001);
+            position.setLongitude_wgs84(buf.readIntLE() * 0.000001);
 
             position.setTime(new Date((946684800 + buf.readUnsignedIntLE()) * 1000)); // 946684800 = 2000-01-01
 
@@ -417,8 +417,8 @@ public class MeitrackProtocolDecoder extends BaseProtocolDecoder {
                 boolean extension = buf.getUnsignedByte(buf.readerIndex()) == 0xFE;
                 int id = extension ? buf.readUnsignedShort() : buf.readUnsignedByte();
                 switch (id) {
-                    case 0x02 -> position.setLatitude(buf.readIntLE() * 0.000001);
-                    case 0x03 -> position.setLongitude(buf.readIntLE() * 0.000001);
+                    case 0x02 -> position.setLatitude_wgs84(buf.readIntLE() * 0.000001);
+                    case 0x03 -> position.setLongitude_wgs84(buf.readIntLE() * 0.000001);
                     case 0x04 -> position.setTime(new Date((946684800 + buf.readUnsignedIntLE()) * 1000)); // 2000-01-01
                     case 0x0C -> position.set(Position.KEY_ODOMETER, buf.readUnsignedIntLE());
                     case 0x0D -> position.set("runtime", buf.readUnsignedIntLE());

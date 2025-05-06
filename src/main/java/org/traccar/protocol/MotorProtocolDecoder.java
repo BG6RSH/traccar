@@ -64,8 +64,8 @@ public class MotorProtocolDecoder extends BaseProtocolDecoder {
             position.addAlarm(Position.ALARM_GENERAL);
         }
 
-        position.setLatitude(BcdUtil.readInteger(buf, 2) + BcdUtil.readInteger(buf, 6) * 0.0001 / 60);
-        position.setLongitude(BcdUtil.readInteger(buf, 4) + BcdUtil.readInteger(buf, 6) * 0.0001 / 60);
+        position.setLatitude_wgs84(BcdUtil.readInteger(buf, 2) + BcdUtil.readInteger(buf, 6) * 0.0001 / 60);
+        position.setLongitude_wgs84(BcdUtil.readInteger(buf, 4) + BcdUtil.readInteger(buf, 6) * 0.0001 / 60);
         position.setSpeed(BcdUtil.readInteger(buf, 4) * 0.1);
         position.setCourse(BcdUtil.readInteger(buf, 4) * 0.1);
 

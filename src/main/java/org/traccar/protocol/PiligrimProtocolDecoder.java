@@ -133,8 +133,8 @@ public class PiligrimProtocolDecoder extends BaseHttpProtocolDecoder {
                     if (BitUtil.check(flags, 1)) {
                         longitude = -longitude;
                     }
-                    position.setLatitude(latitude);
-                    position.setLongitude(longitude);
+                    position.setLatitude_wgs84(latitude);
+                    position.setLongitude_wgs84(longitude);
 
                     int satellites = buf.readUnsignedByte();
                     position.set(Position.KEY_SATELLITES, satellites);
@@ -194,8 +194,8 @@ public class PiligrimProtocolDecoder extends BaseHttpProtocolDecoder {
                     .setTime(parser.nextInt(), parser.nextInt(), parser.nextInt());
 
             position.setValid(parser.next().equals("A"));
-            position.setLatitude(parser.nextCoordinate());
-            position.setLongitude(parser.nextCoordinate());
+            position.setLatitude_wgs84(parser.nextCoordinate());
+            position.setLongitude_wgs84(parser.nextCoordinate());
             position.setSpeed(parser.nextDouble());
             position.setCourse(parser.nextDouble());
 

@@ -126,11 +126,11 @@ public class SkypatrolProtocolDecoder extends BaseProtocolDecoder {
             }
 
             if (BitUtil.check(mask, 10)) {
-                position.setLatitude(convertCoordinate(buf.readUnsignedInt()));
+                position.setLatitude_wgs84(convertCoordinate(buf.readUnsignedInt()));
             }
 
             if (BitUtil.check(mask, 11)) {
-                position.setLongitude(convertCoordinate(buf.readUnsignedInt()));
+                position.setLongitude_wgs84(convertCoordinate(buf.readUnsignedInt()));
             }
 
             if (BitUtil.check(mask, 12)) {

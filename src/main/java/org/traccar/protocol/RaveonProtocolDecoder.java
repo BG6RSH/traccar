@@ -72,8 +72,8 @@ public class RaveonProtocolDecoder extends BaseProtocolDecoder {
         Position position = new Position(getProtocolName());
         position.setDeviceId(deviceSession.getDeviceId());
 
-        position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
-        position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
+        position.setLatitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
+        position.setLongitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.HMS));
 

@@ -120,10 +120,10 @@ public class SnapperProtocolDecoder extends BaseProtocolDecoder {
 
         position.setValid(BitUtil.check(flags, 1));
         if (!BitUtil.check(flags, 6)) {
-            position.setLatitude(-position.getLatitude());
+            position.setLatitude_wgs84(-position.getLatitude_wgs84());
         }
         if (!BitUtil.check(flags, 7)) {
-            position.setLongitude(-position.getLongitude());
+            position.setLongitude_wgs84(-position.getLongitude_wgs84());
         }
 
         DateFormat dateFormat = new SimpleDateFormat("ddMMyyHHmmss");
@@ -131,9 +131,9 @@ public class SnapperProtocolDecoder extends BaseProtocolDecoder {
         position.setTime(dateFormat.parse(json.getString("d") + json.getString("t").split("\\.")[0]));
 
         String lat = json.getString("la");
-        position.setLatitude(Integer.parseInt(lat.substring(0, 2)) + Double.parseDouble(lat.substring(2)) / 60);
+        position.setLatitude_wgs84(Integer.parseInt(lat.substring(0, 2)) + Double.parseDouble(lat.substring(2)) / 60);
         String lon = json.getString("lo");
-        position.setLongitude(Integer.parseInt(lon.substring(0, 3)) + Double.parseDouble(lon.substring(3)) / 60);
+        position.setLongitude_wgs84(Integer.parseInt(lon.substring(0, 3)) + Double.parseDouble(lon.substring(3)) / 60);
 
         position.setAltitude(Double.parseDouble(json.getString("a")));
         position.setSpeed(Double.parseDouble(json.getString("s")));

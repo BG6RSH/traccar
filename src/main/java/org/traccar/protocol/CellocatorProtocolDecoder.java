@@ -154,11 +154,11 @@ public class CellocatorProtocolDecoder extends BaseProtocolDecoder {
         position.setValid(true);
 
         if (alternative) {
-            position.setLongitude(buf.readIntLE() / 10000000.0);
-            position.setLatitude(buf.readIntLE() / 10000000.0);
+            position.setLongitude_wgs84(buf.readIntLE() / 10000000.0);
+            position.setLatitude_wgs84(buf.readIntLE() / 10000000.0);
         } else {
-            position.setLongitude(buf.readIntLE() / Math.PI * 180 / 100000000);
-            position.setLatitude(buf.readIntLE() / Math.PI * 180 / 100000000);
+            position.setLongitude_wgs84(buf.readIntLE() / Math.PI * 180 / 100000000);
+            position.setLatitude_wgs84(buf.readIntLE() / Math.PI * 180 / 100000000);
         }
 
         position.setAltitude(buf.readIntLE() * 0.01);
@@ -210,8 +210,8 @@ public class CellocatorProtocolDecoder extends BaseProtocolDecoder {
                     buf.readUnsignedByte(); // mode 1
                     buf.readUnsignedByte(); // mode 2
                     buf.readUnsignedByte(); // satellites
-                    position.setLongitude(buf.readIntLE() / Math.PI * 180 / 100000000);
-                    position.setLatitude(buf.readIntLE() / Math.PI * 180 / 100000000);
+                    position.setLongitude_wgs84(buf.readIntLE() / Math.PI * 180 / 100000000);
+                    position.setLatitude_wgs84(buf.readIntLE() / Math.PI * 180 / 100000000);
                     position.setAltitude(buf.readIntLE() * 0.01);
                     position.setSpeed(UnitsConverter.knotsFromMps(buf.readUnsignedByte() * 0.01));
                     position.setCourse(buf.readUnsignedShortLE() / Math.PI * 180.0 / 1000.0);

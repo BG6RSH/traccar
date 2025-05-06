@@ -85,8 +85,8 @@ public class B2316ProtocolDecoder extends BaseProtocolDecoder {
 
             if (item.containsKey("gp")) {
                 String[] coordinates = item.getString("gp").split(",");
-                position.setLongitude(Double.parseDouble(coordinates[0]));
-                position.setLatitude(Double.parseDouble(coordinates[1]));
+                position.setLongitude_wgs84(Double.parseDouble(coordinates[0]));
+                position.setLatitude_wgs84(Double.parseDouble(coordinates[1]));
                 position.setValid(true);
                 position.setTime(time);
             } else {

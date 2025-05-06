@@ -110,8 +110,8 @@ public class BlueProtocolDecoder extends BaseProtocolDecoder {
                 int flags = buf.readUnsignedByte();
 
                 position.setValid(BitUtil.check(flags, 7));
-                position.setLatitude(readCoordinate(buf, BitUtil.check(flags, 6)));
-                position.setLongitude(readCoordinate(buf, BitUtil.check(flags, 5)));
+                position.setLatitude_wgs84(readCoordinate(buf, BitUtil.check(flags, 6)));
+                position.setLongitude_wgs84(readCoordinate(buf, BitUtil.check(flags, 5)));
                 position.setSpeed(buf.readUnsignedShort() + buf.readUnsignedShort() * 0.001);
                 position.setCourse(buf.readUnsignedShort() + buf.readUnsignedByte() * 0.01);
 

@@ -129,8 +129,8 @@ public class Mta6ProtocolDecoder extends BaseProtocolDecoder {
                     }
                 }
 
-                position.setLatitude(latitudeReader.readFloat(buf) / Math.PI * 180);
-                position.setLongitude(longitudeReader.readFloat(buf) / Math.PI * 180);
+                position.setLatitude_wgs84(latitudeReader.readFloat(buf) / Math.PI * 180);
+                position.setLongitude_wgs84(longitudeReader.readFloat(buf) / Math.PI * 180);
                 position.setTime(timeReader.readTime(buf));
 
                 if (BitUtil.check(flags, 0)) {
@@ -209,8 +209,8 @@ public class Mta6ProtocolDecoder extends BaseProtocolDecoder {
             }
         }
 
-        position.setLatitude(new FloatReader().readFloat(buf) / Math.PI * 180);
-        position.setLongitude(new FloatReader().readFloat(buf) / Math.PI * 180);
+        position.setLatitude_wgs84(new FloatReader().readFloat(buf) / Math.PI * 180);
+        position.setLongitude_wgs84(new FloatReader().readFloat(buf) / Math.PI * 180);
         position.setTime(new TimeReader().readTime(buf));
 
         position.set(Position.KEY_STATUS, buf.readUnsignedByte());

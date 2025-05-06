@@ -86,8 +86,8 @@ public class TechtoCruzProtocolDecoder extends BaseProtocolDecoder {
 
         position.set(Position.KEY_ODOMETER, parser.nextInt());
 
-        position.setLatitude(parser.nextDouble());
-        position.setLongitude(parser.nextDouble());
+        position.setLatitude_wgs84(parser.nextDouble());
+        position.setLongitude_wgs84(parser.nextDouble());
         position.setAltitude(parser.nextDouble());
         position.setCourse(parser.nextDouble());
 

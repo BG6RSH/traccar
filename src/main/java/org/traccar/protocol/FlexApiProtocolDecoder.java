@@ -60,12 +60,12 @@ public class FlexApiProtocolDecoder extends BaseProtocolDecoder {
 
             if (payload.containsKey("time")) {
                 position.setTime(new Date(payload.getInt("time") * 1000L));
-                position.setLatitude(payload.getJsonNumber("lat").doubleValue());
-                position.setLongitude(payload.getJsonNumber("log").doubleValue());
+                position.setLatitude_wgs84(payload.getJsonNumber("lat").doubleValue());
+                position.setLongitude_wgs84(payload.getJsonNumber("log").doubleValue());
             } else {
                 position.setTime(new Date(payload.getInt("gnss.ts") * 1000L));
-                position.setLatitude(payload.getJsonNumber("gnss.latitude").doubleValue());
-                position.setLongitude(payload.getJsonNumber("gnss.longitude").doubleValue());
+                position.setLatitude_wgs84(payload.getJsonNumber("gnss.latitude").doubleValue());
+                position.setLongitude_wgs84(payload.getJsonNumber("gnss.longitude").doubleValue());
             }
 
             position.setValid(payload.getInt("gnss.fix") > 0);

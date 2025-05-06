@@ -119,11 +119,11 @@ public class VtfmsProtocolDecoder extends BaseProtocolDecoder {
         double latitude = parser.nextDouble();
         double longitude = parser.nextDouble();
         if (Math.abs(latitude) > 90 || Math.abs(longitude) > 180) {
-            position.setLatitude(convertToDegrees(latitude));
-            position.setLongitude(convertToDegrees(longitude));
+            position.setLatitude_wgs84(convertToDegrees(latitude));
+            position.setLongitude_wgs84(convertToDegrees(longitude));
         } else {
-            position.setLatitude(latitude);
-            position.setLongitude(longitude);
+            position.setLatitude_wgs84(latitude);
+            position.setLongitude_wgs84(longitude);
         }
 
         position.setCourse(parser.nextDouble(0));

@@ -74,8 +74,8 @@ public class HomtecsProtocolDecoder extends BaseProtocolDecoder {
 
         position.set(Position.KEY_SATELLITES, parser.nextInt(0));
 
-        position.setLatitude(parser.nextCoordinate());
-        position.setLongitude(parser.nextCoordinate());
+        position.setLatitude_wgs84(parser.nextCoordinate());
+        position.setLongitude_wgs84(parser.nextCoordinate());
         position.setSpeed(parser.nextDouble(0));
         position.setCourse(parser.nextDouble(0));
 

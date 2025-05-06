@@ -83,8 +83,8 @@ public class WliProtocolDecoder extends BaseProtocolDecoder {
                                 .setDate(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte())
                                 .setTime(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte());
                         position.setFixTime(dateBuilder.getDate());
-                        position.setLatitude(buf.readInt() / 600000.0);
-                        position.setLongitude(buf.readInt() / 600000.0);
+                        position.setLatitude_wgs84(buf.readInt() / 600000.0);
+                        position.setLongitude_wgs84(buf.readInt() / 600000.0);
                         position.setSpeed(buf.readUnsignedShort());
                         position.setCourse(buf.readUnsignedShort() * 0.1);
                         position.set(Position.KEY_ODOMETER, UnitsConverter.metersFromFeet(buf.readUnsignedInt()));

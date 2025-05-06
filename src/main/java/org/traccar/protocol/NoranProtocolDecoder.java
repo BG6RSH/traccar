@@ -103,8 +103,8 @@ public class NoranProtocolDecoder extends BaseProtocolDecoder {
                 position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
                 position.setCourse(buf.readUnsignedShortLE());
             }
-            position.setLongitude(buf.readFloatLE());
-            position.setLatitude(buf.readFloatLE());
+            position.setLongitude_wgs84(buf.readFloatLE());
+            position.setLatitude_wgs84(buf.readFloatLE());
 
             if (!newFormat) {
                 long timeValue = buf.readUnsignedIntLE();

@@ -78,20 +78,20 @@ public class RecodaProtocolDecoder extends BaseProtocolDecoder {
 
                 position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE()));
 
-                position.setLongitude(buf.readUnsignedByte() + buf.readUnsignedByte() / 60.0);
-                position.setLatitude(buf.readUnsignedByte() + buf.readUnsignedByte() / 60.0);
+                position.setLongitude_wgs84(buf.readUnsignedByte() + buf.readUnsignedByte() / 60.0);
+                position.setLatitude_wgs84(buf.readUnsignedByte() + buf.readUnsignedByte() / 60.0);
 
-                position.setLongitude(position.getLongitude() + buf.readUnsignedIntLE() / 3600.0);
-                position.setLatitude(position.getLatitude() + buf.readUnsignedIntLE() / 3600.0);
+                position.setLongitude_wgs84(position.getLongitude_wgs84() + buf.readUnsignedIntLE() / 3600.0);
+                position.setLatitude_wgs84(position.getLatitude_wgs84() + buf.readUnsignedIntLE() / 3600.0);
 
                 int status = buf.readUnsignedByte();
 
                 position.setValid(BitUtil.check(status, 0));
                 if (BitUtil.check(status, 1)) {
-                    position.setLongitude(-position.getLongitude());
+                    position.setLongitude_wgs84(-position.getLongitude_wgs84());
                 }
                 if (!BitUtil.check(status, 2)) {
-                    position.setLatitude(-position.getLatitude());
+                    position.setLatitude_wgs84(-position.getLatitude_wgs84());
                 }
 
             } else {

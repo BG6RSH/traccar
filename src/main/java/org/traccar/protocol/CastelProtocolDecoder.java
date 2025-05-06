@@ -128,8 +128,8 @@ public class CastelProtocolDecoder extends BaseProtocolDecoder {
         if ((flags & 0x01) == 0) {
             lon = -lon;
         }
-        position.setLatitude(lat);
-        position.setLongitude(lon);
+        position.setLatitude_wgs84(lat);
+        position.setLongitude_wgs84(lon);
         position.setValid((flags & 0x0C) > 0);
         position.set(Position.KEY_SATELLITES, flags >> 4);
 

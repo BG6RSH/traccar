@@ -117,7 +117,9 @@ public final class Main {
             injector = Guice.createInjector(new MainModule(configFile), new DatabaseModule(), new WebModule());
             logSystemInfo();
             LOGGER.info("Version: {}", Main.class.getPackage().getImplementationVersion());
-            LOGGER.info("Starting server...");
+            LOGGER.info("This service program only supports the GCJ02 coordinate system.");
+           LOGGER.info("Technical Forum http://bbs.atoo.top:8081");
+           LOGGER.info("Starting server...");
 
             var services = new ArrayList<LifecycleObject>();
             for (var clazz : List.of(

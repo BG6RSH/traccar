@@ -81,16 +81,16 @@ public class HaicomProtocolDecoder extends BaseProtocolDecoder {
 
         double latitude = parser.nextDouble(0) + parser.nextDouble(0) / 60000;
         if (BitUtil.check(flags, 2)) {
-            position.setLatitude(latitude);
+            position.setLatitude_wgs84(latitude);
         } else {
-            position.setLatitude(-latitude);
+            position.setLatitude_wgs84(-latitude);
         }
 
         double longitude = parser.nextDouble(0) + parser.nextDouble(0) / 60000;
         if (BitUtil.check(flags, 1)) {
-            position.setLongitude(longitude);
+            position.setLongitude_wgs84(longitude);
         } else {
-            position.setLongitude(-longitude);
+            position.setLongitude_wgs84(-longitude);
         }
 
         position.setSpeed(parser.nextDouble(0) / 10);

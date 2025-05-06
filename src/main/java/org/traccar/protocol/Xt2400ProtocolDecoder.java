@@ -137,8 +137,8 @@ public class Xt2400ProtocolDecoder extends BaseProtocolDecoder {
                 case 0x04 -> position.set(Position.KEY_EVENT, buf.readUnsignedByte());
                 case 0x05 -> position.set(Position.KEY_INDEX, buf.readUnsignedShort());
                 case 0x06 -> position.setTime(new Date(buf.readUnsignedInt() * 1000));
-                case 0x07 -> position.setLatitude(buf.readInt() * 0.000001);
-                case 0x08 -> position.setLongitude(buf.readInt() * 0.000001);
+                case 0x07 -> position.setLatitude_wgs84(buf.readInt() * 0.000001);
+                case 0x08 -> position.setLongitude_wgs84(buf.readInt() * 0.000001);
                 case 0x09 -> position.setAltitude(buf.readShort() * 0.1);
                 case 0x0a -> position.setCourse(buf.readShort() * 0.1);
                 case 0x0b -> position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
@@ -164,7 +164,7 @@ public class Xt2400ProtocolDecoder extends BaseProtocolDecoder {
             }
         }
 
-        if (position.getLatitude() != 0 && position.getLongitude() != 0) {
+        if (position.getLatitude_wgs84() != 0 && position.getLongitude_wgs84() != 0) {
             position.setValid(true);
         } else {
             getLastLocation(position, position.getDeviceTime());

@@ -12,3 +12,5 @@ out
 build
 .vscode
 bin
+tools/patch-amap.py
+.venv

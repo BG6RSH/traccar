@@ -86,8 +86,8 @@ public class Stl060ProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
-        position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_MIN_MIN_HEM));
-        position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_MIN_MIN_HEM));
+        position.setLatitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_MIN_MIN_HEM));
+        position.setLongitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_MIN_MIN_HEM));
         position.setSpeed(parser.nextDouble(0));
         position.setCourse(parser.nextDouble(0));
 

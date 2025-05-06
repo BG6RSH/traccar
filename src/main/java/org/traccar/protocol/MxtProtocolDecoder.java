@@ -110,8 +110,8 @@ public class MxtProtocolDecoder extends BaseProtocolDecoder {
             position.setTime(dateBuilder.getDate());
 
             position.setValid(true);
-            position.setLatitude(buf.readIntLE() / 1000000.0);
-            position.setLongitude(buf.readIntLE() / 1000000.0);
+            position.setLatitude_wgs84(buf.readIntLE() / 1000000.0);
+            position.setLongitude_wgs84(buf.readIntLE() / 1000000.0);
 
             long flags = buf.readUnsignedIntLE();
             position.set(Position.KEY_IGNITION, BitUtil.check(flags, 0));

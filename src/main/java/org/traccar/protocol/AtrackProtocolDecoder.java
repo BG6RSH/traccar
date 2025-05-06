@@ -555,8 +555,8 @@ public class AtrackProtocolDecoder extends BaseProtocolDecoder {
             position.setTime(new Date(Long.parseLong(time) * 1000));
         }
 
-        position.setLongitude(parser.nextInt() * 0.000001);
-        position.setLatitude(parser.nextInt() * 0.000001);
+        position.setLongitude_wgs84(parser.nextInt() * 0.000001);
+        position.setLatitude_wgs84(parser.nextInt() * 0.000001);
         position.setCourse(parser.nextInt());
 
         position.set(Position.KEY_EVENT, parser.nextInt());
@@ -641,8 +641,8 @@ public class AtrackProtocolDecoder extends BaseProtocolDecoder {
             }
 
             position.setValid(true);
-            position.setLongitude(buf.readInt() * 0.000001);
-            position.setLatitude(buf.readInt() * 0.000001);
+            position.setLongitude_wgs84(buf.readInt() * 0.000001);
+            position.setLatitude_wgs84(buf.readInt() * 0.000001);
             position.setCourse(buf.readUnsignedShort());
 
             int type = buf.readUnsignedByte();

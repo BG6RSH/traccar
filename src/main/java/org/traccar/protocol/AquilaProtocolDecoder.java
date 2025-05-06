@@ -149,8 +149,8 @@ public class AquilaProtocolDecoder extends BaseProtocolDecoder {
 
         position.set(Position.KEY_EVENT, parser.nextInt(0));
 
-        position.setLatitude(parser.nextDouble(0));
-        position.setLongitude(parser.nextDouble(0));
+        position.setLatitude_wgs84(parser.nextDouble(0));
+        position.setLongitude_wgs84(parser.nextDouble(0));
 
         position.setTime(parser.nextDateTime());
 

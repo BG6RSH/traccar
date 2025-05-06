@@ -56,8 +56,8 @@ public class HoopoProtocolDecoder extends BaseProtocolDecoder {
             position.setTime(time);
 
             position.setValid(true);
-            position.setLatitude(eventData.getJsonNumber("latitude").doubleValue());
-            position.setLongitude(eventData.getJsonNumber("longitude").doubleValue());
+            position.setLatitude_wgs84(eventData.getJsonNumber("latitude").doubleValue());
+            position.setLongitude_wgs84(eventData.getJsonNumber("longitude").doubleValue());
 
             position.set(Position.KEY_EVENT, eventData.getString("eventType"));
             position.set(Position.KEY_BATTERY_LEVEL, eventData.getInt("batteryLevel"));

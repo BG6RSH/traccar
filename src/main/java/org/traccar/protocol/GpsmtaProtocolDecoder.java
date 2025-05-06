@@ -70,8 +70,8 @@ public class GpsmtaProtocolDecoder extends BaseProtocolDecoder {
         String time = parser.next();
         position.setTime(new Date(Long.parseLong(time) * 1000));
 
-        position.setLatitude(parser.nextDouble());
-        position.setLongitude(parser.nextDouble());
+        position.setLatitude_wgs84(parser.nextDouble());
+        position.setLongitude_wgs84(parser.nextDouble());
         position.setSpeed(parser.nextInt());
         position.setCourse(parser.nextInt());
         position.setAccuracy(parser.nextInt());

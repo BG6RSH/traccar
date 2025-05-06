@@ -108,8 +108,8 @@ public class Gps056ProtocolDecoder extends BaseProtocolDecoder {
 
             position.setValid(true);
             position.setTime(dateBuilder.getDate());
-            position.setLatitude(decodeCoordinate(buf));
-            position.setLongitude(decodeCoordinate(buf));
+            position.setLatitude_wgs84(decodeCoordinate(buf));
+            position.setLongitude_wgs84(decodeCoordinate(buf));
             position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
             position.setCourse(buf.readUnsignedShort());
 

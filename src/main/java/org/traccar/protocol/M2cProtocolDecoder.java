@@ -89,8 +89,8 @@ public class M2cProtocolDecoder extends BaseProtocolDecoder {
 
         position.setValid(true);
         position.setTime(parser.nextDateTime());
-        position.setLatitude(parser.nextDouble());
-        position.setLongitude(parser.nextDouble());
+        position.setLatitude_wgs84(parser.nextDouble());
+        position.setLongitude_wgs84(parser.nextDouble());
         position.setAltitude(parser.nextInt());
         position.setCourse(parser.nextInt());
         position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));

@@ -95,8 +95,8 @@ public class OigoProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (BitUtil.check(mask, 3)) {
-            position.setLatitude(buf.readUnsignedInt() * 0.000001 - 90);
-            position.setLongitude(buf.readUnsignedInt() * 0.000001 - 180.0);
+            position.setLatitude_wgs84(buf.readUnsignedInt() * 0.000001 - 90);
+            position.setLongitude_wgs84(buf.readUnsignedInt() * 0.000001 - 180.0);
         }
 
         if (BitUtil.check(mask, 4)) {
@@ -192,8 +192,8 @@ public class OigoProtocolDecoder extends BaseProtocolDecoder {
                 .setTime(buf.readUnsignedByte(), buf.readUnsignedByte(), 0);
 
         position.setValid(true);
-        position.setLatitude(convertCoordinate(buf.readInt()));
-        position.setLongitude(convertCoordinate(buf.readInt()));
+        position.setLatitude_wgs84(convertCoordinate(buf.readInt()));
+        position.setLongitude_wgs84(convertCoordinate(buf.readInt()));
 
         position.setAltitude(UnitsConverter.metersFromFeet(buf.readShort()));
         position.setCourse(buf.readUnsignedShort());

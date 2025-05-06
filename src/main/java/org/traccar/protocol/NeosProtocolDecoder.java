@@ -82,8 +82,8 @@ public class NeosProtocolDecoder extends BaseProtocolDecoder {
 
         position.setValid(parser.nextInt() > 0);
         position.setTime(parser.nextDateTime());
-        position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
-        position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
+        position.setLongitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
+        position.setLatitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
         position.setSpeed(parser.nextInt());
         position.setCourse(parser.nextInt());
 

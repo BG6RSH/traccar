@@ -107,7 +107,7 @@ public abstract class JsonGeocoder implements Geocoder {
             statisticsManager.registerGeocoderRequest();
         }
 
-        var request = client.target(String.format(url, latitude, longitude)).request();
+        var request = client.target(String.format(url, longitude, latitude)).request();
 
         if (callback != null) {
             request.async().get(new InvocationCallback<JsonObject>() {

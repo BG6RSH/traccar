@@ -72,8 +72,8 @@ public class S168ProtocolDecoder extends BaseProtocolDecoder {
                     DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
                     dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
                     position.setTime(dateFormat.parse(values[index++]));
-                    position.setLatitude(Double.parseDouble(values[index++]));
-                    position.setLongitude(Double.parseDouble(values[index++]));
+                    position.setLatitude_wgs84(Double.parseDouble(values[index++]));
+                    position.setLongitude_wgs84(Double.parseDouble(values[index++]));
                     position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(values[index++])));
                     position.setCourse(Integer.parseInt(values[index++]));
                     position.setAltitude(Integer.parseInt(values[index++]));

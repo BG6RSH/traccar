@@ -81,8 +81,8 @@ public class MilesmateProtocolDecoder extends BaseProtocolDecoder {
         DateBuilder dateBuilder = new DateBuilder()
                 .setTime(parser.nextInt(), parser.nextInt(), parser.nextInt());
 
-        position.setLatitude(parser.nextCoordinate());
-        position.setLongitude(parser.nextCoordinate());
+        position.setLatitude_wgs84(parser.nextCoordinate());
+        position.setLongitude_wgs84(parser.nextCoordinate());
         position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
 
         dateBuilder.setDateReverse(parser.nextInt(), parser.nextInt(), parser.nextInt());

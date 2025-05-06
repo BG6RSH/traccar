@@ -94,8 +94,8 @@ public class KenjiProtocolDecoder extends BaseProtocolDecoder {
 
         position.setValid(parser.next().equals("A"));
 
-        position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
-        position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
+        position.setLatitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
+        position.setLongitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
         position.setSpeed(parser.nextDouble(0));
         position.setCourse(parser.nextDouble(0));
 
