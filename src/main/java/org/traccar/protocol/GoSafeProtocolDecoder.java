@@ -85,13 +85,13 @@ public class GoSafeProtocolDecoder extends BaseProtocolDecoder {
             case "GPS":
                 position.setValid(values[index++].equals("A"));
                 position.set(Position.KEY_SATELLITES, Integer.parseInt(values[index++]));
-                position.setLatitude_wgs84(Double.parseDouble(values[index].substring(1)));
+                position.setLatitudeWgs84(Double.parseDouble(values[index].substring(1)));
                 if (values[index++].charAt(0) == 'S') {
-                    position.setLatitude_wgs84(-position.getLatitude_wgs84());
+                    position.setLatitudeWgs84(-position.getLatitudeWgs84());
                 }
-                position.setLongitude_wgs84(Double.parseDouble(values[index].substring(1)));
+                position.setLongitudeWgs84(Double.parseDouble(values[index].substring(1)));
                 if (values[index++].charAt(0) == 'W') {
-                    position.setLongitude_wgs84(-position.getLongitude_wgs84());
+                    position.setLongitudeWgs84(-position.getLongitudeWgs84());
                 }
                 if (!values[index++].isEmpty()) {
                     position.setSpeed(UnitsConverter.knotsFromKph(Integer.parseInt(values[index - 1])));
@@ -256,8 +256,8 @@ public class GoSafeProtocolDecoder extends BaseProtocolDecoder {
                     .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
 
             position.setValid(parser.next().equals("A"));
-            position.setLatitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
-            position.setLongitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
+            position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
+            position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
             position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
             position.setCourse(parser.nextDouble(0));
 
@@ -319,8 +319,8 @@ public class GoSafeProtocolDecoder extends BaseProtocolDecoder {
             }
 
             if (BitUtil.check(fragmentMask, 1)) {
-                position.setLatitude_wgs84(buf.readInt() / 1000000.0);
-                position.setLongitude_wgs84(buf.readInt() / 1000000.0);
+                position.setLatitudeWgs84(buf.readInt() / 1000000.0);
+                position.setLongitudeWgs84(buf.readInt() / 1000000.0);
             }
 
             if (BitUtil.check(fragmentMask, 2)) {

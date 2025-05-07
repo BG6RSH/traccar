@@ -108,8 +108,8 @@ public class EelinkProtocolDecoder extends BaseProtocolDecoder {
         position.set(Position.KEY_INDEX, index);
 
         position.setTime(new Date(buf.readUnsignedInt() * 1000));
-        position.setLatitude_wgs84(buf.readInt() / 1800000.0);
-        position.setLongitude_wgs84(buf.readInt() / 1800000.0);
+        position.setLatitudeWgs84(buf.readInt() / 1800000.0);
+        position.setLongitudeWgs84(buf.readInt() / 1800000.0);
         position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
         position.setCourse(buf.readUnsignedShort());
 
@@ -169,8 +169,8 @@ public class EelinkProtocolDecoder extends BaseProtocolDecoder {
         int flags = buf.readUnsignedByte();
 
         if (BitUtil.check(flags, 0)) {
-            position.setLatitude_wgs84(buf.readInt() / 1800000.0);
-            position.setLongitude_wgs84(buf.readInt() / 1800000.0);
+            position.setLatitudeWgs84(buf.readInt() / 1800000.0);
+            position.setLongitudeWgs84(buf.readInt() / 1800000.0);
             position.setAltitude(buf.readShort());
             position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
             position.setCourse(buf.readUnsignedShort());
@@ -365,8 +365,8 @@ public class EelinkProtocolDecoder extends BaseProtocolDecoder {
         if (parser.matches()) {
 
             position.setValid(true);
-            position.setLatitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
-            position.setLongitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
+            position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
+            position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
             position.setCourse(parser.nextDouble());
             position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
             position.setTime(parser.nextDateTime());

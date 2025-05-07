@@ -66,8 +66,8 @@ public class AustinNbProtocolDecoder extends BaseProtocolDecoder {
         position.setTime(parser.nextDateTime());
 
         position.setValid(true);
-        position.setLatitude_wgs84(Double.parseDouble(parser.next().replace(',', '.')));
-        position.setLongitude_wgs84(Double.parseDouble(parser.next().replace(',', '.')));
+        position.setLatitudeWgs84(Double.parseDouble(parser.next().replace(',', '.')));
+        position.setLongitudeWgs84(Double.parseDouble(parser.next().replace(',', '.')));
         position.setCourse(parser.nextInt());
         position.set("angle", parser.nextInt());
         position.set("range", parser.nextInt());

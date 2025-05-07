@@ -60,8 +60,8 @@ public class Dsf22ProtocolDecoder extends BaseProtocolDecoder {
             position.setDeviceId(deviceSession.getDeviceId());
 
             position.setValid(true);
-            position.setLatitude_wgs84(buf.readIntLE() / 10000000.0);
-            position.setLongitude_wgs84(buf.readIntLE() / 10000000.0);
+            position.setLatitudeWgs84(buf.readIntLE() / 10000000.0);
+            position.setLongitudeWgs84(buf.readIntLE() / 10000000.0);
             position.setTime(new Date(buf.readUnsignedIntLE() * 1000));
             position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
 

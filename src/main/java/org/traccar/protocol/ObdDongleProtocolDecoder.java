@@ -106,10 +106,10 @@ public class ObdDongleProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_SATELLITES, BitUtil.to(flags, 4));
 
             double longitude = ((BitUtil.to(buf.readUnsignedShort(), 1) << 24) + buf.readUnsignedMedium()) * 0.00001;
-            position.setLongitude_wgs84(BitUtil.check(flags, 5) ? longitude : -longitude);
+            position.setLongitudeWgs84(BitUtil.check(flags, 5) ? longitude : -longitude);
 
             double latitude = buf.readUnsignedMedium() * 0.00001;
-            position.setLatitude_wgs84(BitUtil.check(flags, 4) ? latitude : -latitude);
+            position.setLatitudeWgs84(BitUtil.check(flags, 4) ? latitude : -latitude);
 
             int speedCourse = buf.readUnsignedMedium();
             position.setSpeed(UnitsConverter.knotsFromMph(BitUtil.from(speedCourse, 10) * 0.1));

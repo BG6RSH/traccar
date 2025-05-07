@@ -86,8 +86,8 @@ public class OrbcommProtocolDecoder extends BaseProtocolDecoder {
                     String value = field.getString("Value");
                     switch (field.getString("Name").toLowerCase()) {
                         case "eventtime" -> position.setDeviceTime(new Date(Long.parseLong(value) * 1000));
-                        case "latitude" -> position.setLatitude_wgs84(Integer.parseInt(value) / 60000.0);
-                        case "longitude" -> position.setLongitude_wgs84(Integer.parseInt(value) / 60000.0);
+                        case "latitude" -> position.setLatitudeWgs84(Integer.parseInt(value) / 60000.0);
+                        case "longitude" -> position.setLongitudeWgs84(Integer.parseInt(value) / 60000.0);
                         case "speed" -> position.setSpeed(UnitsConverter.knotsFromKph(Integer.parseInt(value)));
                         case "heading" -> {
                             int heading = Integer.parseInt(value);
@@ -96,7 +96,7 @@ public class OrbcommProtocolDecoder extends BaseProtocolDecoder {
                     }
                 }
 
-                if (position.getLatitude_wgs84() != 0 && position.getLongitude_wgs84() != 0) {
+                if (position.getLatitudeWgs84() != 0 && position.getLongitudeWgs84() != 0) {
                     position.setValid(true);
                     position.setFixTime(position.getDeviceTime());
                 } else {

@@ -89,8 +89,8 @@ public class NdtpV6ProtocolDecoder extends BaseProtocolDecoder {
         if (itemType == MAIN_NAV_DATA && (itemIndex == 0 || itemIndex == 1)) {
 
             position.setTime(new Date(buf.readUnsignedIntLE() * 1000));
-            position.setLongitude_wgs84(buf.readIntLE() / 10000000.0);
-            position.setLatitude_wgs84(buf.readIntLE() / 10000000.0);
+            position.setLongitudeWgs84(buf.readIntLE() / 10000000.0);
+            position.setLatitudeWgs84(buf.readIntLE() / 10000000.0);
 
             short flags = buf.readUnsignedByte();
             position.setValid(BitUtil.check(flags, 7));

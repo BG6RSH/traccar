@@ -93,8 +93,8 @@ public class BstplProtocolDecoder extends BaseProtocolDecoder {
 
         position.setValid(parser.next().equals("A"));
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
-        position.setLatitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
-        position.setLongitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
+        position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
+        position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
 
         position.set(Position.KEY_ODOMETER, parser.nextInt() * 1000L);

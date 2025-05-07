@@ -130,11 +130,11 @@ public class TzoneProtocolDecoder extends BaseProtocolDecoder {
             if (!BitUtil.check(flags, 10)) {
                 lat = -lat;
             }
-            position.setLatitude_wgs84(lat);
+            position.setLatitudeWgs84(lat);
             if (BitUtil.check(flags, 9)) {
                 lon = -lon;
             }
-            position.setLongitude_wgs84(lon);
+            position.setLongitudeWgs84(lon);
             position.setValid(BitUtil.check(flags, 11));
 
         }

@@ -83,8 +83,8 @@ public class DwayProtocolDecoder extends BaseProtocolDecoder {
 
         position.setValid(true);
         position.setTime(parser.nextDateTime());
-        position.setLatitude_wgs84(parser.nextDouble());
-        position.setLongitude_wgs84(parser.nextDouble());
+        position.setLatitudeWgs84(parser.nextDouble());
+        position.setLongitudeWgs84(parser.nextDouble());
         position.setAltitude(parser.nextDouble(0));
         position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
         position.setCourse(parser.nextDouble(0));

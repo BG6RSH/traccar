@@ -106,8 +106,8 @@ public class BlackKiteProtocolDecoder extends BaseProtocolDecoder {
                 case TAG_COORDINATES:
                     hasLocation = true;
                     position.setValid((buf.readUnsignedByte() & 0xf0) == 0x00);
-                    position.setLatitude_wgs84(buf.readIntLE() / 1000000.0);
-                    position.setLongitude_wgs84(buf.readIntLE() / 1000000.0);
+                    position.setLatitudeWgs84(buf.readIntLE() / 1000000.0);
+                    position.setLongitudeWgs84(buf.readIntLE() / 1000000.0);
                     break;
 
                 case TAG_SPEED_COURSE:

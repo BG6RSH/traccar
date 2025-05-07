@@ -87,15 +87,15 @@ public class SupermateProtocolDecoder extends BaseProtocolDecoder {
         position.setTime(dateBuilder.getDate());
 
         if (parser.nextHexInt(0) == 8) {
-            position.setLatitude_wgs84(-parser.nextHexInt(0) / 600000.0);
+            position.setLatitudeWgs84(-parser.nextHexInt(0) / 600000.0);
         } else {
-            position.setLatitude_wgs84(parser.nextHexInt(0) / 600000.0);
+            position.setLatitudeWgs84(parser.nextHexInt(0) / 600000.0);
         }
 
         if (parser.nextHexInt(0) == 8) {
-            position.setLongitude_wgs84(-parser.nextHexInt(0) / 600000.0);
+            position.setLongitudeWgs84(-parser.nextHexInt(0) / 600000.0);
         } else {
-            position.setLongitude_wgs84(parser.nextHexInt(0) / 600000.0);
+            position.setLongitudeWgs84(parser.nextHexInt(0) / 600000.0);
         }
 
         position.setSpeed(parser.nextHexInt(0) / 100.0);

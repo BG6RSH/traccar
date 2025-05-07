@@ -59,8 +59,8 @@ public class LacakProtocolDecoder extends BaseHttpProtocolDecoder {
 
         if (location.containsKey("coords")) {
             JsonObject coordinates = location.getJsonObject("coords");
-            position.setLatitude_wgs84(coordinates.getJsonNumber("latitude").doubleValue());
-            position.setLongitude_wgs84(coordinates.getJsonNumber("longitude").doubleValue());
+            position.setLatitudeWgs84(coordinates.getJsonNumber("latitude").doubleValue());
+            position.setLongitudeWgs84(coordinates.getJsonNumber("longitude").doubleValue());
             position.setAccuracy(coordinates.getJsonNumber("accuracy").doubleValue());
             position.setSpeed(coordinates.getJsonNumber("speed").doubleValue());
             position.setCourse(coordinates.getJsonNumber("heading").doubleValue());

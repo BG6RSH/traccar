@@ -99,8 +99,8 @@ public class DmtHttpProtocolDecoder extends BaseHttpProtocolDecoder {
                 switch (field.getInt("FType")) {
                     case 0:
                         position.setFixTime(dateFormat.parse(field.getString("GpsUTC")));
-                        position.setLatitude_wgs84(field.getJsonNumber("Lat").doubleValue());
-                        position.setLongitude_wgs84(field.getJsonNumber("Long").doubleValue());
+                        position.setLatitudeWgs84(field.getJsonNumber("Lat").doubleValue());
+                        position.setLongitudeWgs84(field.getJsonNumber("Long").doubleValue());
                         position.setAltitude(field.getInt("Alt"));
                         position.setSpeed(UnitsConverter.knotsFromCps(field.getInt("Spd")));
                         position.setCourse(field.getInt("Head"));
@@ -164,8 +164,8 @@ public class DmtHttpProtocolDecoder extends BaseHttpProtocolDecoder {
         if (root.containsKey("lat") && root.containsKey("lng")) {
             position.setValid(true);
             position.setTime(time);
-            position.setLatitude_wgs84(root.getJsonNumber("lat").doubleValue());
-            position.setLongitude_wgs84(root.getJsonNumber("lng").doubleValue());
+            position.setLatitudeWgs84(root.getJsonNumber("lat").doubleValue());
+            position.setLongitudeWgs84(root.getJsonNumber("lng").doubleValue());
             position.setAccuracy(root.getJsonNumber("posAcc").doubleValue());
         } else {
             getLastLocation(position, time);

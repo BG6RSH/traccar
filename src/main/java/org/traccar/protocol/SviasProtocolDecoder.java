@@ -81,8 +81,8 @@ public class SviasProtocolDecoder extends BaseProtocolDecoder {
         position.setDeviceId(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
-        position.setLatitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN_MIN));
-        position.setLongitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN_MIN));
+        position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN_MIN));
+        position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN_MIN));
         position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble() * 0.01));
         position.setCourse(parser.nextDouble() * 0.01);
 

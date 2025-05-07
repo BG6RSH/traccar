@@ -96,8 +96,8 @@ public class SiwiProtocolDecoder extends BaseProtocolDecoder {
         position.set(Position.KEY_SATELLITES, parser.nextInt(0));
 
         position.setValid(parser.next().equals("A"));
-        position.setLatitude_wgs84(parser.nextDouble(0));
-        position.setLongitude_wgs84(parser.nextDouble(0));
+        position.setLatitudeWgs84(parser.nextDouble(0));
+        position.setLongitudeWgs84(parser.nextDouble(0));
         position.setAltitude(parser.nextDouble(0));
         position.setCourse(parser.nextInt(0));
 

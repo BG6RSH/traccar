@@ -95,16 +95,16 @@ public class Gs100ProtocolDecoder extends BaseProtocolDecoder {
                     position.setValid(true);
 
                     String coordinates = ByteBufUtil.hexDump(buf.readSlice(9));
-                    position.setLongitude_wgs84(Integer.parseInt(coordinates.substring(0, 3))
+                    position.setLongitudeWgs84(Integer.parseInt(coordinates.substring(0, 3))
                             + Integer.parseInt(coordinates.substring(3, 9)) * 0.0001 / 60);
-                    position.setLatitude_wgs84(Integer.parseInt(coordinates.substring(10, 12))
+                    position.setLatitudeWgs84(Integer.parseInt(coordinates.substring(10, 12))
                             + Integer.parseInt(coordinates.substring(12, 18)) * 0.0001 / 60);
                     int flags = Integer.parseInt(coordinates.substring(9, 10), 16);
                     if (!BitUtil.check(flags, 3)) {
-                        position.setLongitude_wgs84(-position.getLongitude_wgs84());
+                        position.setLongitudeWgs84(-position.getLongitudeWgs84());
                     }
                     if (!BitUtil.check(flags, 2)) {
-                        position.setLatitude_wgs84(-position.getLatitude_wgs84());
+                        position.setLatitudeWgs84(-position.getLatitudeWgs84());
                     }
 
                     String other = ByteBufUtil.hexDump(buf.readSlice(4));

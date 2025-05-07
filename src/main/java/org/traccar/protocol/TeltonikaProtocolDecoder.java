@@ -422,8 +422,8 @@ public class TeltonikaProtocolDecoder extends BaseProtocolDecoder {
                 int locationMask = buf.readUnsignedByte();
 
                 if (BitUtil.check(locationMask, 0)) {
-                    position.setLatitude_wgs84(buf.readFloat());
-                    position.setLongitude_wgs84(buf.readFloat());
+                    position.setLatitudeWgs84(buf.readFloat());
+                    position.setLongitudeWgs84(buf.readFloat());
                 }
 
                 if (BitUtil.check(locationMask, 1)) {
@@ -477,8 +477,8 @@ public class TeltonikaProtocolDecoder extends BaseProtocolDecoder {
 
             position.set("priority", buf.readUnsignedByte());
 
-            position.setLongitude_wgs84(buf.readInt() / 10000000.0);
-            position.setLatitude_wgs84(buf.readInt() / 10000000.0);
+            position.setLongitudeWgs84(buf.readInt() / 10000000.0);
+            position.setLatitudeWgs84(buf.readInt() / 10000000.0);
             position.setAltitude(buf.readShort());
             position.setCourse(buf.readUnsignedShort());
 

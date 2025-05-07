@@ -87,10 +87,10 @@ public class RadarProtocolDecoder extends BaseProtocolDecoder {
                     position.setFixTime(new Date(buf.readUnsignedInt() * 1000));
                 }
                 if (mask.get(2)) {
-                    position.setLatitude_wgs84(buf.readInt() / 360000.0);
+                    position.setLatitudeWgs84(buf.readInt() / 360000.0);
                 }
                 if (mask.get(3)) {
-                    position.setLongitude_wgs84(buf.readInt() / 360000.0);
+                    position.setLongitudeWgs84(buf.readInt() / 360000.0);
                 }
                 if (mask.get(4)) {
                     position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));

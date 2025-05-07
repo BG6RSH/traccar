@@ -68,13 +68,13 @@ public class SolarPoweredProtocolDecoder extends BaseProtocolDecoder {
                                 .setDate(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte())
                                 .setTime(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte());
                         position.setTime(dateBuilder.getDate());
-                        position.setLatitude_wgs84(buf.readUnsignedInt() * 0.000001);
+                        position.setLatitudeWgs84(buf.readUnsignedInt() * 0.000001);
                         if (BitUtil.check(status, 3)) {
-                            position.setLatitude_wgs84(-position.getLatitude_wgs84());
+                            position.setLatitudeWgs84(-position.getLatitudeWgs84());
                         }
-                        position.setLongitude_wgs84(buf.readUnsignedInt() * 0.000001);
+                        position.setLongitudeWgs84(buf.readUnsignedInt() * 0.000001);
                         if (BitUtil.check(status, 2)) {
-                            position.setLongitude_wgs84(-position.getLongitude_wgs84());
+                            position.setLongitudeWgs84(-position.getLongitudeWgs84());
                         }
                         position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
                         int temperature = buf.readUnsignedByte();

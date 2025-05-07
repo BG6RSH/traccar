@@ -169,8 +169,8 @@ public class L100ProtocolDecoder extends BaseProtocolDecoder {
                 .setTime(parser.nextInt(), parser.nextInt(), parser.nextInt(), parser.nextInt(0));
 
         position.setValid(parser.next().equals("A"));
-        position.setLatitude_wgs84(parser.nextCoordinate());
-        position.setLongitude_wgs84(parser.nextCoordinate());
+        position.setLatitudeWgs84(parser.nextCoordinate());
+        position.setLongitudeWgs84(parser.nextCoordinate());
         position.setSpeed(parser.nextDouble(0));
         position.setCourse(parser.nextDouble(0));
 
@@ -226,8 +226,8 @@ public class L100ProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.HMS_DMY));
         position.setValid(parser.next().equals("A"));
-        position.setLatitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
-        position.setLongitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
+        position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
+        position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setSpeed(parser.nextInt());
         position.setCourse(parser.nextInt());
 
@@ -312,8 +312,8 @@ public class L100ProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
         position.setValid(parser.next().equals("A"));
-        position.setLatitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
-        position.setLongitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
+        position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
+        position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setSpeed(parser.nextDouble());
 
         position.set(Position.KEY_BATTERY, parser.nextInt() * 0.001);

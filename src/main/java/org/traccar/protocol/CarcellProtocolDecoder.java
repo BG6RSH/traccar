@@ -97,13 +97,13 @@ public class CarcellProtocolDecoder extends BaseProtocolDecoder {
         position.setDeviceId(deviceSession.getDeviceId());
 
         if (parser.hasNext(8)) {
-            position.setLatitude_wgs84(parser.nextCoordinate(CoordinateFormat.HEM_DEG_MIN_MIN));
-            position.setLongitude_wgs84(parser.nextCoordinate(CoordinateFormat.HEM_DEG_MIN_MIN));
+            position.setLatitudeWgs84(parser.nextCoordinate(CoordinateFormat.HEM_DEG_MIN_MIN));
+            position.setLongitudeWgs84(parser.nextCoordinate(CoordinateFormat.HEM_DEG_MIN_MIN));
         }
 
         if (parser.hasNext(4)) {
-            position.setLatitude_wgs84(parser.nextCoordinate(CoordinateFormat.HEM_DEG));
-            position.setLongitude_wgs84(parser.nextCoordinate(CoordinateFormat.HEM_DEG));
+            position.setLatitudeWgs84(parser.nextCoordinate(CoordinateFormat.HEM_DEG));
+            position.setLongitudeWgs84(parser.nextCoordinate(CoordinateFormat.HEM_DEG));
         }
 
         position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt(0)));

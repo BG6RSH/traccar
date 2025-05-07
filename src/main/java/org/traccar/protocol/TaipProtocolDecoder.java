@@ -176,12 +176,12 @@ public class TaipProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (parser.hasNext(4)) {
-            position.setLatitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_DEG));
-            position.setLongitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_DEG));
+            position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_DEG));
+            position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_DEG));
         }
         if (parser.hasNext(6)) {
-            position.setLatitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
-            position.setLongitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
+            position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
+            position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
         }
 
         position.setSpeed(convertSpeed(parser.nextDouble(0), "mph"));

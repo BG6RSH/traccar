@@ -98,8 +98,8 @@ public class GnxProtocolDecoder extends BaseProtocolDecoder {
 
         position.setValid(parser.nextInt(0) != 0);
 
-        position.setLatitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
-        position.setLongitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
+        position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
+        position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
 
         if (type.equals("MIF")) {
             position.set(Position.KEY_DRIVER_UNIQUE_ID, parser.next());

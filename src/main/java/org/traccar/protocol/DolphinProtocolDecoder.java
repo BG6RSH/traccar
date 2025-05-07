@@ -92,8 +92,8 @@ public class DolphinProtocolDecoder extends BaseProtocolDecoder {
 
                 position.setValid(true);
                 position.setTime(new Date(point.getTimestamp() * 1000L));
-                position.setLatitude_wgs84(point.getLatitude());
-                position.setLongitude_wgs84(point.getLongitude());
+                position.setLatitudeWgs84(point.getLatitude());
+                position.setLongitudeWgs84(point.getLongitude());
                 position.setAltitude(point.getAltitude());
                 position.setSpeed(UnitsConverter.knotsFromKph(point.getSpeed()));
                 position.setCourse(point.getBearing());

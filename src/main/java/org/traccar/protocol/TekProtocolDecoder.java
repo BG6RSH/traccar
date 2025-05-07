@@ -116,8 +116,8 @@ public class TekProtocolDecoder extends BaseProtocolDecoder {
             DateBuilder dateBuilder = new DateBuilder()
                     .setTime(parser.nextInt(), parser.nextInt(), parser.nextInt());
 
-            position.setLatitude_wgs84(parser.nextCoordinate());
-            position.setLongitude_wgs84(parser.nextCoordinate());
+            position.setLatitudeWgs84(parser.nextCoordinate());
+            position.setLongitudeWgs84(parser.nextCoordinate());
 
             position.set(Position.KEY_HDOP, parser.nextDouble());
 

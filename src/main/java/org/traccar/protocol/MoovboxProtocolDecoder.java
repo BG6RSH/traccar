@@ -89,8 +89,8 @@ public class MoovboxProtocolDecoder extends BaseHttpProtocolDecoder {
 
             position.setValid(true);
             position.setTime(new Date(Long.parseLong(xPath.evaluate("time", node)) * 1000));
-            position.setLatitude_wgs84(Double.parseDouble(xPath.evaluate("longitude", node)));
-            position.setLongitude_wgs84(Double.parseDouble(xPath.evaluate("latitude", node)));
+            position.setLatitudeWgs84(Double.parseDouble(xPath.evaluate("longitude", node)));
+            position.setLongitudeWgs84(Double.parseDouble(xPath.evaluate("latitude", node)));
             position.setAltitude(Double.parseDouble(xPath.evaluate("altitude", node)));
             position.setSpeed(Double.parseDouble(xPath.evaluate("speed", node)));
 

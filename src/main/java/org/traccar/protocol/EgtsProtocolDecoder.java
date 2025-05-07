@@ -211,16 +211,16 @@ public class EgtsProtocolDecoder extends BaseProtocolDecoder {
                 } else if (type == MSG_POS_DATA) {
 
                     position.setTime(new Date((buf.readUnsignedIntLE() + 1262304000) * 1000)); // since 2010-01-01
-                    position.setLatitude_wgs84(buf.readUnsignedIntLE() * 90.0 / 0xFFFFFFFFL);
-                    position.setLongitude_wgs84(buf.readUnsignedIntLE() * 180.0 / 0xFFFFFFFFL);
+                    position.setLatitudeWgs84(buf.readUnsignedIntLE() * 90.0 / 0xFFFFFFFFL);
+                    position.setLongitudeWgs84(buf.readUnsignedIntLE() * 180.0 / 0xFFFFFFFFL);
 
                     int flags = buf.readUnsignedByte();
                     position.setValid(BitUtil.check(flags, 0));
                     if (BitUtil.check(flags, 5)) {
-                        position.setLatitude_wgs84(-position.getLatitude_wgs84());
+                        position.setLatitudeWgs84(-position.getLatitudeWgs84());
                     }
                     if (BitUtil.check(flags, 6)) {
-                        position.setLongitude_wgs84(-position.getLongitude_wgs84());
+                        position.setLongitudeWgs84(-position.getLongitudeWgs84());
                     }
 
                     int speed = buf.readUnsignedShortLE();

@@ -87,7 +87,7 @@ public class FlespiProtocolDecoder extends BaseHttpProtocolDecoder {
                 decodeUnknownParam(param.getKey(), param.getValue(), position);
             }
         }
-        if (position.getLatitude_wgs84() == 0 && position.getLongitude_wgs84() == 0) {
+        if (position.getLatitudeWgs84() == 0 && position.getLongitudeWgs84() == 0) {
             getLastLocation(position, position.getDeviceTime());
         }
     }
@@ -99,11 +99,11 @@ public class FlespiProtocolDecoder extends BaseHttpProtocolDecoder {
                 yield true;
             }
             case "position.latitude" -> {
-                position.setLatitude_wgs84(((JsonNumber) value).doubleValue());
+                position.setLatitudeWgs84(((JsonNumber) value).doubleValue());
                 yield true;
             }
             case "position.longitude" -> {
-                position.setLongitude_wgs84(((JsonNumber) value).doubleValue());
+                position.setLongitudeWgs84(((JsonNumber) value).doubleValue());
                 yield true;
             }
             case "position.speed" -> {

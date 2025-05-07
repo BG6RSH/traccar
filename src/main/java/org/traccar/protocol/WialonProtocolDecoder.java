@@ -106,8 +106,8 @@ public class WialonProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (parser.hasNextAny(9)) {
-            position.setLatitude_wgs84(parser.nextCoordinate());
-            position.setLongitude_wgs84(parser.nextCoordinate());
+            position.setLatitudeWgs84(parser.nextCoordinate());
+            position.setLongitudeWgs84(parser.nextCoordinate());
             position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
             position.setCourse(parser.nextDouble(0));
             position.setAltitude(parser.nextDouble(0));

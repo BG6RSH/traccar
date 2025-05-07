@@ -195,8 +195,8 @@ public class T800xProtocolDecoder extends BaseProtocolDecoder {
             }
 
             position.setAltitude(buf.readFloatLE());
-            position.setLongitude_wgs84(buf.readFloatLE());
-            position.setLatitude_wgs84(buf.readFloatLE());
+            position.setLongitudeWgs84(buf.readFloatLE());
+            position.setLatitudeWgs84(buf.readFloatLE());
             position.setSpeed(UnitsConverter.knotsFromKph(BcdUtil.readInteger(buf, 4) * 0.1));
             position.setCourse(buf.readUnsignedShort());
 
@@ -385,8 +385,8 @@ public class T800xProtocolDecoder extends BaseProtocolDecoder {
             position.setValid(true);
             position.setTime(readDate(buf));
             position.setAltitude(buf.readFloatLE());
-            position.setLongitude_wgs84(buf.readFloatLE());
-            position.setLatitude_wgs84(buf.readFloatLE());
+            position.setLongitudeWgs84(buf.readFloatLE());
+            position.setLatitudeWgs84(buf.readFloatLE());
             position.setSpeed(UnitsConverter.knotsFromKph(BcdUtil.readInteger(buf, 4) * 0.1));
             position.setCourse(buf.readUnsignedShort());
 

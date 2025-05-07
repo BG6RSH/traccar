@@ -191,8 +191,8 @@ public class XirgoProtocolDecoder extends BaseProtocolDecoder {
                     dateBuilder.setMinute(Integer.parseInt(time[1]));
                     dateBuilder.setSecond(Integer.parseInt(time[2]));
                 }
-                case "LT" -> position.setLatitude_wgs84(Double.parseDouble(values[i]));
-                case "LN" -> position.setLongitude_wgs84(Double.parseDouble(values[i]));
+                case "LT" -> position.setLatitudeWgs84(Double.parseDouble(values[i]));
+                case "LN" -> position.setLongitudeWgs84(Double.parseDouble(values[i]));
                 case "AL" -> position.setAltitude(Integer.parseInt(values[i]));
                 case "GSPT" -> position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(values[i])));
                 case "HD" -> {
@@ -262,8 +262,8 @@ public class XirgoProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime());
 
-        position.setLatitude_wgs84(parser.nextDouble(0));
-        position.setLongitude_wgs84(parser.nextDouble(0));
+        position.setLatitudeWgs84(parser.nextDouble(0));
+        position.setLongitudeWgs84(parser.nextDouble(0));
         position.setAltitude(parser.nextDouble(0));
         position.setSpeed(UnitsConverter.knotsFromMph(parser.nextDouble(0)));
         position.setCourse(parser.nextDouble(0));

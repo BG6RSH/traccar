@@ -354,8 +354,8 @@ public class Gl200TextProtocolDecoder extends BaseProtocolDecoder {
 
         if (parser.hasNext(8)) {
             position.setValid(true);
-            position.setLongitude_wgs84(parser.nextDouble());
-            position.setLatitude_wgs84(parser.nextDouble());
+            position.setLongitudeWgs84(parser.nextDouble());
+            position.setLatitudeWgs84(parser.nextDouble());
             position.setTime(parser.nextDateTime());
         } else {
             getLastLocation(position, null);
@@ -403,8 +403,8 @@ public class Gl200TextProtocolDecoder extends BaseProtocolDecoder {
 
         if (!v[index].isEmpty()) {
             position.setValid(true);
-            position.setLongitude_wgs84(v[index++].isEmpty() ? 0 : Double.parseDouble(v[index - 1]));
-            position.setLatitude_wgs84(v[index++].isEmpty() ? 0 : Double.parseDouble(v[index - 1]));
+            position.setLongitudeWgs84(v[index++].isEmpty() ? 0 : Double.parseDouble(v[index - 1]));
+            position.setLatitudeWgs84(v[index++].isEmpty() ? 0 : Double.parseDouble(v[index - 1]));
             position.setTime(dateFormat.parse(v[index++]));
         } else {
             index += 3;
@@ -759,8 +759,8 @@ public class Gl200TextProtocolDecoder extends BaseProtocolDecoder {
                 position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(v[index++])));
                 position.setCourse(Integer.parseInt(v[index++]));
                 position.setAltitude(Double.parseDouble(v[index++]));
-                position.setLongitude_wgs84(Double.parseDouble(v[index++]));
-                position.setLatitude_wgs84(Double.parseDouble(v[index++]));
+                position.setLongitudeWgs84(Double.parseDouble(v[index++]));
+                position.setLatitudeWgs84(Double.parseDouble(v[index++]));
                 position.setTime(dateFormat.parse(v[index++]));
             } else {
                 index += 6; // no location
@@ -1608,8 +1608,8 @@ public class Gl200TextProtocolDecoder extends BaseProtocolDecoder {
                 position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(v[index++])));
                 position.setCourse(Integer.parseInt(v[index++]));
                 position.setAltitude(Double.parseDouble(v[index++]));
-                position.setLongitude_wgs84(Double.parseDouble(v[index++]));
-                position.setLatitude_wgs84(Double.parseDouble(v[index++]));
+                position.setLongitudeWgs84(Double.parseDouble(v[index++]));
+                position.setLatitudeWgs84(Double.parseDouble(v[index++]));
                 position.setTime(dateFormat.parse(v[index++]));
                 break;
             }

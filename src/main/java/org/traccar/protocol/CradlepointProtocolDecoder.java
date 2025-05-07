@@ -77,8 +77,8 @@ public class CradlepointProtocolDecoder extends BaseProtocolDecoder {
         position.setTime(dateBuilder.getDate());
 
         position.setValid(true);
-        position.setLatitude_wgs84(parser.nextCoordinate());
-        position.setLongitude_wgs84(parser.nextCoordinate());
+        position.setLatitudeWgs84(parser.nextCoordinate());
+        position.setLongitudeWgs84(parser.nextCoordinate());
         position.setSpeed(parser.nextDouble(0));
         position.setCourse(parser.nextDouble(0));
 

@@ -26,8 +26,8 @@ public class AmapGeocoder extends JsonGeocoder {
    public Address parseAddress(JsonObject json) {
        Address address = new Address();
        try {
-           String formatted_address = json.getJsonObject("regeocode").getString("formatted_address");
-           address.setFormattedAddress(formatted_address);
+           String formattedAddress = json.getJsonObject("regeocode").getString("formattedAddress");
+           address.setFormattedAddress(formattedAddress);
        } catch (Exception e) {
            return null;
        }

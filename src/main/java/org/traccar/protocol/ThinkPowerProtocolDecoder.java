@@ -65,8 +65,8 @@ public class ThinkPowerProtocolDecoder extends BaseProtocolDecoder {
         switch (type) {
             case 0x01 -> {
                 position.setValid(true);
-                position.setLatitude_wgs84(BufferUtil.readSignedMagnitudeInt(buf) * 0.0000001);
-                position.setLongitude_wgs84(BufferUtil.readSignedMagnitudeInt(buf) * 0.0000001);
+                position.setLatitudeWgs84(BufferUtil.readSignedMagnitudeInt(buf) * 0.0000001);
+                position.setLongitudeWgs84(BufferUtil.readSignedMagnitudeInt(buf) * 0.0000001);
                 position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShort() * 0.1));
                 position.setCourse(buf.readUnsignedShort() * 0.01);
             }

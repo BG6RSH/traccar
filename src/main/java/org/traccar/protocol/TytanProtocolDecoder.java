@@ -140,12 +140,12 @@ public class TytanProtocolDecoder extends BaseProtocolDecoder {
             // Latitude
             double lat = buf.readUnsignedMedium();
             lat = lat * -180 / 16777216 + 90;
-            position.setLatitude_wgs84(lat);
+            position.setLatitudeWgs84(lat);
 
             // Longitude
             double lon = buf.readUnsignedMedium();
             lon = lon * 360 / 16777216 - 180;
-            position.setLongitude_wgs84(lon);
+            position.setLongitudeWgs84(lon);
 
             // Status
             flags = buf.readUnsignedByte();

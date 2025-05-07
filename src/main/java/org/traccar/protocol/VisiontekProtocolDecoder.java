@@ -93,12 +93,12 @@ public class VisiontekProtocolDecoder extends BaseProtocolDecoder {
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
         if (parser.hasNext(8)) {
-            position.setLatitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_MIN_MIN_HEM));
-            position.setLongitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_MIN_MIN_HEM));
+            position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_MIN_MIN_HEM));
+            position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_MIN_MIN_HEM));
         }
         if (parser.hasNext(4)) {
-            position.setLatitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
-            position.setLongitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
+            position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
+            position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         }
 
         position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(

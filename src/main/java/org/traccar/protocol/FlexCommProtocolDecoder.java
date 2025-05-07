@@ -92,8 +92,8 @@ public class FlexCommProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime());
         position.setValid(parser.next().equals("1"));
-        position.setLatitude_wgs84(parseSignedValue(parser, 6));
-        position.setLongitude_wgs84(parseSignedValue(parser, 6));
+        position.setLatitudeWgs84(parseSignedValue(parser, 6));
+        position.setLongitudeWgs84(parseSignedValue(parser, 6));
         position.setAltitude(parseSignedValue(parser, 0));
         position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
         position.setCourse(parser.nextDouble(0));

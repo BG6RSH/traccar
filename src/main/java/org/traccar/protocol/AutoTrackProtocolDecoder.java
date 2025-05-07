@@ -51,8 +51,8 @@ public class AutoTrackProtocolDecoder extends BaseProtocolDecoder {
         position.setDeviceId(deviceSession.getDeviceId());
 
         position.setTime(new Date(1009843200000L + buf.readUnsignedIntLE() * 1000)); // seconds since 2002
-        position.setLatitude_wgs84(buf.readIntLE() * 0.0000001);
-        position.setLongitude_wgs84(buf.readIntLE() * 0.0000001);
+        position.setLatitudeWgs84(buf.readIntLE() * 0.0000001);
+        position.setLongitudeWgs84(buf.readIntLE() * 0.0000001);
 
         position.set(Position.KEY_ODOMETER, buf.readUnsignedIntLE());
         position.set(Position.KEY_FUEL_USED, buf.readUnsignedIntLE());

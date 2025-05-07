@@ -151,8 +151,8 @@ public class IotmProtocolDecoder extends BaseMqttProtocolDecoder {
                     if (sensorType == 14) {
 
                         position.setValid(true);
-                        position.setLatitude_wgs84(record.readFloatLE());
-                        position.setLongitude_wgs84(record.readFloatLE());
+                        position.setLatitudeWgs84(record.readFloatLE());
+                        position.setLongitudeWgs84(record.readFloatLE());
                         position.setSpeed(UnitsConverter.knotsFromKph(record.readUnsignedShortLE()));
 
                         position.set(Position.KEY_HDOP, record.readUnsignedByte());

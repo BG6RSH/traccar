@@ -64,8 +64,8 @@ public class GenxProtocolDecoder extends BaseProtocolDecoder {
                     }
                 }
                 case 2 -> position.setTime(new SimpleDateFormat("MM/dd/yy HH:mm:ss").parse(values[i]));
-                case 3 -> position.setLatitude_wgs84(Double.parseDouble(values[i]));
-                case 4 -> position.setLongitude_wgs84(Double.parseDouble(values[i]));
+                case 3 -> position.setLatitudeWgs84(Double.parseDouble(values[i]));
+                case 4 -> position.setLongitudeWgs84(Double.parseDouble(values[i]));
                 case 11 -> position.set(Position.KEY_IGNITION, values[i].equals("ON"));
                 case 13 -> position.setSpeed(UnitsConverter.knotsFromKph(Integer.parseInt(values[i])));
                 case 17 -> position.setCourse(Integer.parseInt(values[i]));

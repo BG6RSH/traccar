@@ -251,8 +251,8 @@ public class MeiligaoProtocolDecoder extends BaseProtocolDecoder {
                 .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
 
         position.setValid(parser.next().equals("A"));
-        position.setLatitude_wgs84(parser.nextCoordinate());
-        position.setLongitude_wgs84(parser.nextCoordinate());
+        position.setLatitudeWgs84(parser.nextCoordinate());
+        position.setLongitudeWgs84(parser.nextCoordinate());
 
         if (parser.hasNext()) {
             position.setSpeed(parser.nextDouble(0));
@@ -304,8 +304,8 @@ public class MeiligaoProtocolDecoder extends BaseProtocolDecoder {
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.HMS_DMY));
 
         position.setValid(true);
-        position.setLatitude_wgs84(parser.nextCoordinate());
-        position.setLongitude_wgs84(parser.nextCoordinate());
+        position.setLatitudeWgs84(parser.nextCoordinate());
+        position.setLongitudeWgs84(parser.nextCoordinate());
 
         return position;
     }

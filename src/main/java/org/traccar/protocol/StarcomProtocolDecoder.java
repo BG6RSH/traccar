@@ -53,8 +53,8 @@ public class StarcomProtocolDecoder extends BaseProtocolDecoder {
                 }
                 case "gps_valid" -> position.setValid(Integer.parseInt(value) != 0);
                 case "datetime_actual" -> position.setTime(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(value));
-                case "latitude" -> position.setLatitude_wgs84(Double.parseDouble(value));
-                case "longitude" -> position.setLongitude_wgs84(Double.parseDouble(value));
+                case "latitude" -> position.setLatitudeWgs84(Double.parseDouble(value));
+                case "longitude" -> position.setLongitudeWgs84(Double.parseDouble(value));
                 case "altitude" -> position.setAltitude(Double.parseDouble(value));
                 case "velocity" -> position.setSpeed(UnitsConverter.knotsFromKph(Integer.parseInt(value)));
                 case "heading" -> position.setCourse(Integer.parseInt(value));

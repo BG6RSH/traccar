@@ -98,8 +98,8 @@ public class GranitProtocolDecoder extends BaseProtocolDecoder {
             }
         }
 
-        position.setLongitude_wgs84(longitude);
-        position.setLatitude_wgs84(latitude);
+        position.setLongitudeWgs84(longitude);
+        position.setLatitudeWgs84(latitude);
 
         position.setSpeed(buf.readUnsignedByte());
 

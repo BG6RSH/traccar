@@ -111,8 +111,8 @@ public class Pt60ProtocolDecoder extends BaseProtocolDecoder {
                 position.setFixTime(position.getDeviceTime());
 
                 String[] coordinates = values[0].split(";");
-                position.setLatitude_wgs84(Double.parseDouble(coordinates[0]));
-                position.setLongitude_wgs84(Double.parseDouble(coordinates[1]));
+                position.setLatitudeWgs84(Double.parseDouble(coordinates[0]));
+                position.setLongitudeWgs84(Double.parseDouble(coordinates[1]));
 
             } else {
 
@@ -171,8 +171,8 @@ public class Pt60ProtocolDecoder extends BaseProtocolDecoder {
                 position.setValid(true);
                 position.setFixTime(position.getDeviceTime());
 
-                position.setLatitude_wgs84(Double.parseDouble(values[0]));
-                position.setLongitude_wgs84(Double.parseDouble(values[1]));
+                position.setLatitudeWgs84(Double.parseDouble(values[0]));
+                position.setLongitudeWgs84(Double.parseDouble(values[1]));
 
             }
 

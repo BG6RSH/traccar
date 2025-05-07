@@ -201,15 +201,15 @@ public class EasyTrackProtocolDecoder extends BaseProtocolDecoder {
         position.setTime(dateBuilder.getDate());
 
         if (BitUtil.check(parser.nextHexInt(), 3)) {
-            position.setLatitude_wgs84(-parser.nextHexInt() / 600000.0);
+            position.setLatitudeWgs84(-parser.nextHexInt() / 600000.0);
         } else {
-            position.setLatitude_wgs84(parser.nextHexInt() / 600000.0);
+            position.setLatitudeWgs84(parser.nextHexInt() / 600000.0);
         }
 
         if (BitUtil.check(parser.nextHexInt(), 3)) {
-            position.setLongitude_wgs84(-parser.nextHexInt() / 600000.0);
+            position.setLongitudeWgs84(-parser.nextHexInt() / 600000.0);
         } else {
-            position.setLongitude_wgs84(parser.nextHexInt() / 600000.0);
+            position.setLongitudeWgs84(parser.nextHexInt() / 600000.0);
         }
 
         position.setSpeed(UnitsConverter.knotsFromKph(parser.nextHexInt() / 100.0));

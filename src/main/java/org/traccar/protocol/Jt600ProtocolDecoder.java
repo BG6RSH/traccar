@@ -107,8 +107,8 @@ public class Jt600ProtocolDecoder extends BaseProtocolDecoder {
 
         byte flags = buf.readByte();
         position.setValid(BitUtil.check(flags, 0));
-        position.setLatitude_wgs84(BitUtil.check(flags, 1) ? latitude : -latitude);
-        position.setLongitude_wgs84(BitUtil.check(flags, 2) ? longitude : -longitude);
+        position.setLatitudeWgs84(BitUtil.check(flags, 1) ? latitude : -latitude);
+        position.setLongitudeWgs84(BitUtil.check(flags, 2) ? longitude : -longitude);
 
         position.setSpeed(BcdUtil.readInteger(buf, 2));
         position.setCourse(buf.readUnsignedByte() * 2.0);
@@ -281,8 +281,8 @@ public class Jt600ProtocolDecoder extends BaseProtocolDecoder {
         Position position = new Position(getProtocolName());
         position.setDeviceId(deviceSession.getDeviceId());
 
-        position.setLongitude_wgs84(parser.nextCoordinate());
-        position.setLatitude_wgs84(parser.nextCoordinate());
+        position.setLongitudeWgs84(parser.nextCoordinate());
+        position.setLatitudeWgs84(parser.nextCoordinate());
         position.setValid(parser.next().equals("A"));
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
@@ -342,8 +342,8 @@ public class Jt600ProtocolDecoder extends BaseProtocolDecoder {
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
         position.setValid(parser.next().equals("T"));
-        position.setLatitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
-        position.setLongitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
+        position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
+        position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
 
         position.setSpeed(UnitsConverter.knotsFromMph(parser.nextDouble(0)));
         position.setCourse(parser.nextDouble(0));
@@ -407,8 +407,8 @@ public class Jt600ProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
-        position.setLatitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
-        position.setLongitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
+        position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
+        position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setValid(parser.next().equals("A"));
 
         position.setSpeed(UnitsConverter.knotsFromMph(parser.nextDouble()));

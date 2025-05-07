@@ -76,9 +76,9 @@ public class StbProtocolDecoder extends BaseProtocolDecoder {
                     String id = propertyObject.getString("id");
                     switch (id) {
                         case "01101001" -> locationType = Integer.parseInt(propertyObject.getString("value"));
-                        case "01102001" -> position.setLongitude_wgs84(
+                        case "01102001" -> position.setLongitudeWgs84(
                                 Double.parseDouble(propertyObject.getString("value")));
-                        case "01103001" -> position.setLatitude_wgs84(
+                        case "01103001" -> position.setLatitudeWgs84(
                                 Double.parseDouble(propertyObject.getString("value")));
                         case "01118001" -> position.set(
                                 Position.KEY_DEVICE_TEMP, Double.parseDouble(propertyObject.getString("value")));
@@ -99,10 +99,10 @@ public class StbProtocolDecoder extends BaseProtocolDecoder {
                     position.setTime(new Date());
                     position.setValid(locationType != 5);
                     if (locationType == 2 || locationType == 4) {
-                        position.setLongitude_wgs84(-position.getLongitude_wgs84());
+                        position.setLongitudeWgs84(-position.getLongitudeWgs84());
                     }
                     if (locationType == 3 || locationType == 4) {
-                        position.setLatitude_wgs84(-position.getLatitude_wgs84());
+                        position.setLatitudeWgs84(-position.getLatitudeWgs84());
                     }
                 } else {
                     getLastLocation(position, null);

@@ -66,11 +66,11 @@ public class PricolProtocolDecoder extends BaseProtocolDecoder {
 
         double lat = buf.getUnsignedShort(buf.readerIndex()) / 100;
         lat += (buf.readUnsignedShort() % 100 * 10000 + buf.readUnsignedShort()) / 600000.0;
-        position.setLatitude_wgs84(buf.readUnsignedByte() == 'S' ? -lat : lat);
+        position.setLatitudeWgs84(buf.readUnsignedByte() == 'S' ? -lat : lat);
 
         double lon = buf.getUnsignedMedium(buf.readerIndex()) / 100;
         lon += (buf.readUnsignedMedium() % 100 * 10000 + buf.readUnsignedShort()) / 600000.0;
-        position.setLongitude_wgs84(buf.readUnsignedByte() == 'W' ? -lon : lon);
+        position.setLongitudeWgs84(buf.readUnsignedByte() == 'W' ? -lon : lon);
 
         position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
 

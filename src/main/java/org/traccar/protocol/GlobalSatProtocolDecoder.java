@@ -155,7 +155,7 @@ public class GlobalSatProtocolDecoder extends BaseProtocolDecoder {
                     if (value.charAt(0) == 'W') {
                         longitude = -longitude;
                     }
-                    position.setLongitude_wgs84(longitude);
+                    position.setLongitudeWgs84(longitude);
                     break;
                 case '2':
                     longitude = Double.parseDouble(value.substring(4)) / 60;
@@ -163,17 +163,17 @@ public class GlobalSatProtocolDecoder extends BaseProtocolDecoder {
                     if (value.charAt(0) == 'W') {
                         longitude = -longitude;
                     }
-                    position.setLongitude_wgs84(longitude);
+                    position.setLongitudeWgs84(longitude);
                     break;
                 case '3':
-                    position.setLongitude_wgs84(Double.parseDouble(value) * 0.000001);
+                    position.setLongitudeWgs84(Double.parseDouble(value) * 0.000001);
                     break;
                 case '6':
                     double latitude = Double.parseDouble(value.substring(1));
                     if (value.charAt(0) == 'S') {
                         latitude = -latitude;
                     }
-                    position.setLatitude_wgs84(latitude);
+                    position.setLatitudeWgs84(latitude);
                     break;
                 case '7':
                     latitude = Double.parseDouble(value.substring(3)) / 60;
@@ -181,10 +181,10 @@ public class GlobalSatProtocolDecoder extends BaseProtocolDecoder {
                     if (value.charAt(0) == 'S') {
                         latitude = -latitude;
                     }
-                    position.setLatitude_wgs84(latitude);
+                    position.setLatitudeWgs84(latitude);
                     break;
                 case '8':
-                    position.setLatitude_wgs84(Double.parseDouble(value) * 0.000001);
+                    position.setLatitudeWgs84(Double.parseDouble(value) * 0.000001);
                     break;
                 case 'G':
                     position.setAltitude(Double.parseDouble(value));
@@ -294,8 +294,8 @@ public class GlobalSatProtocolDecoder extends BaseProtocolDecoder {
 
         position.setValid(!parser.next().equals("1"));
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
-        position.setLongitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
-        position.setLatitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
+        position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
+        position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
         position.setAltitude(parser.nextDouble(0));
         position.setSpeed(parser.nextDouble(0));
         position.setCourse(parser.nextDouble(0));

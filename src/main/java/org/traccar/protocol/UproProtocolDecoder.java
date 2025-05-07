@@ -67,16 +67,16 @@ public class UproProtocolDecoder extends BaseProtocolDecoder {
             DateBuilder dateBuilder = new DateBuilder()
                     .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
 
-            position.setLatitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_MIN_MIN));
-            position.setLongitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_MIN_MIN));
+            position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_MIN_MIN));
+            position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_MIN_MIN));
 
             int flags = parser.nextInt(0);
             position.setValid(!BitUtil.check(flags, 0));
             if (!BitUtil.check(flags, 1)) {
-                position.setLatitude_wgs84(-position.getLatitude_wgs84());
+                position.setLatitudeWgs84(-position.getLatitudeWgs84());
             }
             if (!BitUtil.check(flags, 2)) {
-                position.setLongitude_wgs84(-position.getLongitude_wgs84());
+                position.setLongitudeWgs84(-position.getLongitudeWgs84());
             }
 
             position.setSpeed(parser.nextInt(0) * 2);
@@ -359,7 +359,7 @@ public class UproProtocolDecoder extends BaseProtocolDecoder {
             decodeRegular(head, buf, position);
         }
 
-        if (position.getLatitude_wgs84() == 0 || position.getLongitude_wgs84() == 0) {
+        if (position.getLatitudeWgs84() == 0 || position.getLongitudeWgs84() == 0) {
             if (position.getAttributes().isEmpty()) {
                 return null;
             }

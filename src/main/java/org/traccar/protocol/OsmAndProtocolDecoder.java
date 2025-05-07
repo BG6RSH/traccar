@@ -175,8 +175,8 @@ public class OsmAndProtocolDecoder extends BaseHttpProtocolDecoder {
         }
 
         if (latitude != null && longitude != null) {
-            position.setLatitude_wgs84(latitude);
-            position.setLongitude_wgs84(longitude);
+            position.setLatitudeWgs84(latitude);
+            position.setLongitudeWgs84(longitude);
         } else {
             getLastLocation(position, position.getDeviceTime());
         }

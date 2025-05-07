@@ -124,15 +124,15 @@ public class FleetGuideProtocolDecoder extends BaseProtocolDecoder {
                     position.setTime(new Date((data.readUnsignedIntLE() + 1262304000) * 1000)); // since 2010-01-01
                     break;
                 case 1:
-                    position.setLatitude_wgs84(data.readUnsignedIntLE() * 90.0 / 0xFFFFFFFFL);
-                    position.setLongitude_wgs84(data.readUnsignedIntLE() * 180.0 / 0xFFFFFFFFL);
+                    position.setLatitudeWgs84(data.readUnsignedIntLE() * 90.0 / 0xFFFFFFFFL);
+                    position.setLongitudeWgs84(data.readUnsignedIntLE() * 180.0 / 0xFFFFFFFFL);
                     int speed = data.readUnsignedShortLE();
                     position.setSpeed(UnitsConverter.knotsFromKph(BitUtil.to(speed, 14) * 0.1));
                     if (BitUtil.check(speed, 14)) {
-                        position.setLatitude_wgs84(-position.getLatitude_wgs84());
+                        position.setLatitudeWgs84(-position.getLatitudeWgs84());
                     }
                     if (BitUtil.check(speed, 15)) {
-                        position.setLongitude_wgs84(-position.getLongitude_wgs84());
+                        position.setLongitudeWgs84(-position.getLongitudeWgs84());
                     }
                     int course = data.readUnsignedShortLE();
                     position.setSpeed(BitUtil.to(course, 9));

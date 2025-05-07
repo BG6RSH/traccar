@@ -115,11 +115,11 @@ public class FreematicsProtocolDecoder extends BaseProtocolDecoder {
                     }
                     case 0xA -> {
                         position.setValid(true);
-                        position.setLatitude_wgs84(Double.parseDouble(value));
+                        position.setLatitudeWgs84(Double.parseDouble(value));
                     }
                     case 0xB -> {
                         position.setValid(true);
-                        position.setLongitude_wgs84(Double.parseDouble(value));
+                        position.setLongitudeWgs84(Double.parseDouble(value));
                     }
                     case 0xC -> position.setAltitude(Double.parseDouble(value));
                     case 0xD -> position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(value)));

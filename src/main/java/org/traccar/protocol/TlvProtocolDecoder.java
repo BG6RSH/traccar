@@ -83,8 +83,8 @@ public class TlvProtocolDecoder extends BaseProtocolDecoder {
 
             readArgument(buf); // location identifier
 
-            position.setLongitude_wgs84(Double.parseDouble(readArgument(buf)));
-            position.setLatitude_wgs84(Double.parseDouble(readArgument(buf)));
+            position.setLongitudeWgs84(Double.parseDouble(readArgument(buf)));
+            position.setLatitudeWgs84(Double.parseDouble(readArgument(buf)));
             position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(readArgument(buf))));
             position.setCourse(Double.parseDouble(readArgument(buf)));
 

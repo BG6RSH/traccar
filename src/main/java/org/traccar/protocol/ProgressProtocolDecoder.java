@@ -118,8 +118,8 @@ public class ProgressProtocolDecoder extends BaseProtocolDecoder {
                 }
 
                 position.setTime(new Date(buf.readUnsignedIntLE() * 1000));
-                position.setLatitude_wgs84(buf.readIntLE() * 180.0 / 0x7FFFFFFF);
-                position.setLongitude_wgs84(buf.readIntLE() * 180.0 / 0x7FFFFFFF);
+                position.setLatitudeWgs84(buf.readIntLE() * 180.0 / 0x7FFFFFFF);
+                position.setLongitudeWgs84(buf.readIntLE() * 180.0 / 0x7FFFFFFF);
                 position.setSpeed(buf.readUnsignedIntLE() * 0.01);
                 position.setCourse(buf.readUnsignedShortLE() * 0.01);
                 position.setAltitude(buf.readUnsignedShortLE() * 0.01);

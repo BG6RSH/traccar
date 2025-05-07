@@ -73,8 +73,8 @@ public class G1rusProtocolDecoder extends BaseProtocolDecoder {
                 position.setValid(BitUtil.between(validity, 5, 7) == 2);
             }
             if (BitUtil.check(locationMask, 1)) {
-                position.setLatitude_wgs84(buf.readInt() / 1000000.0);
-                position.setLongitude_wgs84(buf.readInt() / 1000000.0);
+                position.setLatitudeWgs84(buf.readInt() / 1000000.0);
+                position.setLongitudeWgs84(buf.readInt() / 1000000.0);
             }
             if (BitUtil.check(locationMask, 2)) {
                 position.setSpeed(buf.readUnsignedShort());

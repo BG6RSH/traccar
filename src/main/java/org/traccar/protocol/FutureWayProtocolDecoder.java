@@ -97,13 +97,13 @@ public class FutureWayProtocolDecoder extends BaseProtocolDecoder {
                     position.setTime(parser.nextDateTime());
 
                     if (parser.hasNext(6)) {
-                        position.setLatitude_wgs84(parser.nextCoordinate());
-                        position.setLongitude_wgs84(parser.nextCoordinate());
+                        position.setLatitudeWgs84(parser.nextCoordinate());
+                        position.setLongitudeWgs84(parser.nextCoordinate());
                     }
 
                     if (parser.hasNext(4)) {
-                        position.setLatitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
-                        position.setLongitude_wgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
+                        position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
+                        position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
                     }
 
                     position.setSpeed(parser.nextDouble());

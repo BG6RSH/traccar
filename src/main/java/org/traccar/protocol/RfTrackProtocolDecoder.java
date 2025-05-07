@@ -102,8 +102,8 @@ public class RfTrackProtocolDecoder extends BaseHttpProtocolDecoder {
                         JsonObject location = Json.createReader(new StringReader(value)).readObject();
                         position.setValid(true);
                         position.setAccuracy(location.getJsonNumber("a").doubleValue());
-                        position.setLongitude_wgs84(location.getJsonNumber("x").doubleValue());
-                        position.setLatitude_wgs84(location.getJsonNumber("y").doubleValue());
+                        position.setLongitudeWgs84(location.getJsonNumber("x").doubleValue());
+                        position.setLatitudeWgs84(location.getJsonNumber("y").doubleValue());
                         position.setAltitude(location.getJsonNumber("z").doubleValue());
                         position.setFixTime(new Date(location.getJsonNumber("t").longValue()));
                         break;

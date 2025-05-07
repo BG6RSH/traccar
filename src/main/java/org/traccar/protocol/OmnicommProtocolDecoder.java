@@ -124,8 +124,8 @@ public class OmnicommProtocolDecoder extends BaseProtocolDecoder {
                     OmnicommMessageOuterClass.OmnicommMessage.NAV data = message.getNAV();
                     position.setValid(true);
                     position.setTime(new Date((data.getGPSTime() + 1230768000) * 1000L)); // from 2009-01-01 12:00
-                    position.setLatitude_wgs84(data.getLAT() * 0.0000001);
-                    position.setLongitude_wgs84(data.getLON() * 0.0000001);
+                    position.setLatitudeWgs84(data.getLAT() * 0.0000001);
+                    position.setLongitudeWgs84(data.getLON() * 0.0000001);
                     position.setSpeed(UnitsConverter.knotsFromKph(data.getGPSVel() * 0.1));
                     position.setCourse(data.getGPSDir());
                     position.setAltitude(data.getGPSAlt() * 0.1);

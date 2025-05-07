@@ -90,8 +90,8 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
         buf.readUnsignedShortLE(); // report trigger
         position.set(Position.KEY_FLAGS, buf.readUnsignedShortLE());
 
-        position.setLatitude_wgs84(buf.readIntLE() * 0.0000001);
-        position.setLongitude_wgs84(buf.readIntLE() * 0.0000001);
+        position.setLatitudeWgs84(buf.readIntLE() * 0.0000001);
+        position.setLongitudeWgs84(buf.readIntLE() * 0.0000001);
         position.setAltitude(buf.readUnsignedShortLE());
 
         position.set(Position.KEY_SATELLITES, buf.readUnsignedShortLE());
@@ -127,8 +127,8 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(convertTimestamp(buf.readUnsignedIntLE()));
 
-        position.setLatitude_wgs84(buf.readIntLE() * 0.0000001);
-        position.setLongitude_wgs84(buf.readIntLE() * 0.0000001);
+        position.setLatitudeWgs84(buf.readIntLE() * 0.0000001);
+        position.setLongitudeWgs84(buf.readIntLE() * 0.0000001);
         position.setAltitude(buf.readUnsignedShortLE());
 
         position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
@@ -158,8 +158,8 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
         position.setDeviceId(deviceSession.getDeviceId());
         position.setTime(convertTimestamp(timestamp));
 
-        position.setLatitude_wgs84(buf.readMediumLE() * 0.00002);
-        position.setLongitude_wgs84(buf.readMediumLE() * 0.00002);
+        position.setLatitudeWgs84(buf.readMediumLE() * 0.00002);
+        position.setLongitudeWgs84(buf.readMediumLE() * 0.00002);
 
         position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
         position.setCourse(buf.readUnsignedByte() * 2);
@@ -180,8 +180,8 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
         position.setDeviceId(deviceSession.getDeviceId());
         position.setTime(convertTimestamp(timestamp));
 
-        position.setLatitude_wgs84(buf.readIntLE() * 0.0000001);
-        position.setLongitude_wgs84(buf.readIntLE() * 0.0000001);
+        position.setLatitudeWgs84(buf.readIntLE() * 0.0000001);
+        position.setLongitudeWgs84(buf.readIntLE() * 0.0000001);
 
         buf.readUnsignedByte(); // report trigger
 
@@ -213,8 +213,8 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(convertTimestamp(buf.readUnsignedIntLE()));
 
-        position.setLatitude_wgs84(buf.readIntLE() * 0.0000001);
-        position.setLongitude_wgs84(buf.readIntLE() * 0.0000001);
+        position.setLatitudeWgs84(buf.readIntLE() * 0.0000001);
+        position.setLongitudeWgs84(buf.readIntLE() * 0.0000001);
         position.setAltitude(buf.readUnsignedShortLE());
 
         position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
@@ -249,8 +249,8 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
 
         buf.readUnsignedShortLE(); // duration
 
-        position.setLatitude_wgs84(buf.readIntLE() * 0.0000001);
-        position.setLongitude_wgs84(buf.readIntLE() * 0.0000001);
+        position.setLatitudeWgs84(buf.readIntLE() * 0.0000001);
+        position.setLongitudeWgs84(buf.readIntLE() * 0.0000001);
 
         position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
         position.setCourse(buf.readUnsignedByte() * 2.0);

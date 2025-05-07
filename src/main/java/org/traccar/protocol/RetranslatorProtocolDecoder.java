@@ -73,8 +73,8 @@ public class RetranslatorProtocolDecoder extends BaseProtocolDecoder {
 
             if (name.equals("posinfo")) {
                 position.setValid(true);
-                position.setLongitude_wgs84(buf.readDoubleLE());
-                position.setLatitude_wgs84(buf.readDoubleLE());
+                position.setLongitudeWgs84(buf.readDoubleLE());
+                position.setLatitudeWgs84(buf.readDoubleLE());
                 position.setAltitude(buf.readDoubleLE());
                 position.setSpeed(buf.readShort());
                 position.setCourse(buf.readShort());
@@ -96,7 +96,7 @@ public class RetranslatorProtocolDecoder extends BaseProtocolDecoder {
 
         }
 
-        if (position.getLatitude_wgs84() == 0 && position.getLongitude_wgs84() == 0) {
+        if (position.getLatitudeWgs84() == 0 && position.getLongitudeWgs84() == 0) {
             getLastLocation(position, position.getDeviceTime());
         }
 

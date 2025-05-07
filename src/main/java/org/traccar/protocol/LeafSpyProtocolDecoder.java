@@ -63,8 +63,8 @@ public class LeafSpyProtocolDecoder extends BaseHttpProtocolDecoder {
                         }
                         position.setDeviceId(deviceSession.getDeviceId());
                     }
-                    case "Lat" -> position.setLatitude_wgs84(Double.parseDouble(value));
-                    case "Long" -> position.setLongitude_wgs84(Double.parseDouble(value));
+                    case "Lat" -> position.setLatitudeWgs84(Double.parseDouble(value));
+                    case "Long" -> position.setLongitudeWgs84(Double.parseDouble(value));
                     case "RPM" -> {
                         position.set(Position.KEY_RPM, Integer.parseInt(value));
                         position.setSpeed(convertSpeed(Double.parseDouble(value) / 63, "kmh"));
@@ -93,7 +93,7 @@ public class LeafSpyProtocolDecoder extends BaseHttpProtocolDecoder {
             position.setTime(new Date());
         }
 
-        if (position.getLatitude_wgs84() == 0 && position.getLongitude_wgs84() == 0) {
+        if (position.getLatitudeWgs84() == 0 && position.getLongitudeWgs84() == 0) {
             getLastLocation(position, position.getDeviceTime());
         }
 
