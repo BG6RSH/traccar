@@ -1,0 +1,34 @@
+version: "1.0"
+stages:
+  - build
+
+jobs:
+  build:
+    stage: build
+    image: ubuntu:22.04
+    variables:
+      VERSION: preview
+    before_script:
+      - apt-get update
+      - apt-get install -y git wget sudo dpkg apt-transport-https ca-certificates
+      - git config --global http.sslVerify false
+    script:
+      - git clone --recursive https://gitee.com/your-repo/traccar.git
+      - cd traccar/traccar-web
+      - git checkout $CI_COMMIT_REF_NAME
+      - apt-get install -y openjdk-21-jdk
+      - ./gradlew build
+      - apt-get install -y nodejs npm
+      - npm ci && npm run build
+      - sudo dpkg --add-architecture i386
+      - apt-get update
+      - apt-get install -y libgcc-s1:i386 libstdc++6:i386 innoextract makeself wine32 s3cmd
+      - cd ../setup
+      - wget -q http://files.jrsoftware.org/is/5/isetup-5.5.6.exe
+      - wget -q https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.4+7/OpenJDK21U-jdk_x64_windows_hotspot_21.0.4_7.zip
+      - wget -q https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.4+7/OpenJDK21U-jdk_x64_linux_hotspot_21.0.4_7.tar.gz
+      - wget -q https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.4+7/OpenJDK21U-jdk_aarch64_linux_hotspot_21.0.4_7.tar.gz
+      - ./package.sh $VERSION
+      - export S3_ACCESS_KEY=$S3_ACCESS_KEY
+      - export S3_SECRET_KEY=$S3_SECRET_KEY
+      - s3cmd --acl-public put traccar-*.zip s3://traccar/builds/ --host=nyc3.digitaloceanspaces.com --host-bucket=traccar --access_key="$S3_ACCESS_KEY" --secret_key="$S3_SECRET_KEY"
