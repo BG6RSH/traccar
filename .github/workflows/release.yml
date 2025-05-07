@@ -51,6 +51,6 @@ jobs:
         with:
           tag_name: v${{ github.event.inputs.version }}
           name: Release v${{ github.event.inputs.version }}
-          files: ./setup/traccar-*.zip
+          files: ./setup/traccar-amap-*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
