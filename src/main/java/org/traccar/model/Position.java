@@ -154,7 +154,7 @@ public class Position extends Message {
     public static final String ALARM_FUEL_LEAK = "fuelLeak";
     public static final String ALARM_TAMPERING = "tampering";
     public static final String ALARM_REMOVING = "removing";
-    private static final Logger log = LoggerFactory.getLogger(Position.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Position.class);
 
     public Position() {
     }
@@ -417,7 +417,7 @@ public class Position extends Message {
         dLon = (dLon * 180.0) / (A / sqrtMagic * Math.cos(radLat) * Math.PI);
         double mgLat = wgsLat + dLat;
         double mgLon = wgsLon + dLon;
-        log.info(String.format("[WGS84](%.6f, %.6f) => [GCJ02](%.6f, %.6f)", wgsLat, wgsLon, mgLat, mgLon));
+        LOG.info(String.format("[WGS84](%.6f, %.6f) => [GCJ02](%.6f, %.6f)", wgsLat, wgsLon, mgLat, mgLon));
         return new double[]{mgLat, mgLon};
     }
 
