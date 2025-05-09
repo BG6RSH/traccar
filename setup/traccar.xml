@@ -9,4 +9,10 @@
     <entry key='database.user'>sa</entry>
     <entry key='database.password'></entry>
 
+    <!--  amap逆地址解析  -->
+    <entry key='geocoder.type'>amap</entry>
+    <entry key='geocoder.url'>https://restapi.amap.com/v3/geocode/regeo</entry>
+    <entry key='geocoder.key'>de6cf58608a044b643da48377c6bdbfb</entry>
+    <entry key='geocoder.format'>%f %r</entry>
+
 </properties>

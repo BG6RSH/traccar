@@ -1,53 +1,52 @@
-# [Traccar](https://www.traccar.org)
+# [Traccar-amap](http://bbs.atoo.top:8081)
 
-## Overview
+## 概述
 
-Traccar is an open source GPS tracking system. This repository contains Java-based back-end service. It supports more than 200 GPS protocols and more than 2000 models of GPS tracking devices. Traccar can be used with any major SQL database system. It also provides easy to use [REST API](https://www.traccar.org/traccar-api/).
+本项目是在  [Traccar](https://www.traccar.org) 代码的基础上，修改为在中国境内使用时，系统存储的坐标为 GCJ02 坐标，支持高德、腾讯等使用GCJ02坐标的地图。
 
-Other parts of Traccar solution include:
+Traccar 是一个开源的GPS追踪系统。本仓库包含基于 Java 的后端服务。它支持超过200种GPS协议和超过2000种GPS追踪设备型号。Traccar 可以与任何主流的 SQL 数据库系统配合使用。它还提供了易于使用的 [REST API](https://www.traccar.org/traccar-api/)。
 
-- [Traccar web app](https://github.com/traccar/traccar-web)
-- [Traccar Manager Android app](https://github.com/traccar/traccar-manager-android)
-- [Traccar Manager iOS app](https://github.com/traccar/traccar-manager-ios)
+Traccar 解决方案还包括以下部分：
 
-There is also a set of mobile apps that you can use for tracking mobile devices:
+- [Traccar 网页应用](https://github.com/traccar/traccar-web)
+- [Traccar Manager Android 应用](https://github.com/traccar/traccar-manager-android)
+- [Traccar Manager iOS 应用](https://github.com/traccar/traccar-manager-ios)
 
-- [Traccar Client Android app](https://github.com/traccar/traccar-client-android)
-- [Traccar Client iOS app](https://github.com/traccar/traccar-client-ios)
+此外，还有一系列可用于追踪移动设备的移动应用程序：
 
-## Features
+- [Traccar Client Android 应用](https://github.com/traccar/traccar-client-android)
+- [Traccar Client iOS 应用](https://github.com/traccar/traccar-client-ios)
 
-Some of the available features include:
+## 功能
 
-- Real-time GPS tracking
-- Driver behaviour monitoring
-- Detailed and summary reports
-- Geofencing functionality
-- Alarms and notifications
-- Account and device management
-- Email and SMS support
+一些可用的功能包括：
 
-## Build
+- 实时 GPS 追踪
+- 驾驶行为监控
+- 详细和汇总报告
+- 电子围栏功能
+- 报警和通知
+- 账户和设备管理
+- 电子邮件和短信支持
 
-Please read [build from source documentation](https://www.traccar.org/build/) on the official website.
+## 构建
 
-## Team
+请阅读官方网站上的[从源码构建文档](https://www.traccar.org/build/)。
 
-- Anton Tananaev ([anton@traccar.org](mailto:anton@traccar.org))
-- Andrey Kunitsyn ([andrey@traccar.org](mailto:andrey@traccar.org))
+## 团队
 
-## License
+- Bg6rsh ([576998@qq.com](mailto:576998@qq.com))
 
-    Apache License, Version 2.0
+## 许可证
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
+    Apache 许可证，版本 2.0
+
+    根据 Apache 许可证 2.0 版的规定进行授权；
+    除非适用法律有要求或书面同意，否则你可以在本许可证下使用本文件。
+    你可以从以下网址获取许可证副本：
 
         http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+    除非根据适用法律要求或书面同意，否则软件是按“原样”提供的，
+    不提供任何形式的明示或暗示的担保或条件。
+    请参阅特定语言的许可证文本，了解有关权限和限制的具体规定。
