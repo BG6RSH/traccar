@@ -8,10 +8,10 @@
 
  <changeSet author="author" id="changelog-gcj02">
    <addColumn tableName="tc_positions">
-     <column name="latitude_wgs84" type="DOUBLE" />
+     <column name="latitudewgs84" type="DOUBLE" />
    </addColumn>
    <addColumn tableName="tc_positions">
-     <column name="longitude_wgs84" type="DOUBLE" />
+     <column name="longitudewgs84" type="DOUBLE" />
    </addColumn>
  </changeSet>
 

@@ -2,11 +2,17 @@
 <!DOCTYPE properties SYSTEM 'http://java.sun.com/dtd/properties.dtd'>
 <properties>
 
-    <entry key='web.path'>./traccar-web/simple</entry>
+<!--    <entry key='web.path'>./traccar-web/simple</entry>-->
+    <entry key='web.path'>./traccar-web/legacy/web</entry>
+<!--    <entry key='web.path'>./traccar-web</entry>-->
     <entry key='web.debug'>true</entry>
     <entry key='web.console'>true</entry>
 
-    <entry key='geocoder.type'>pluscodes</entry>
+    <!--  amap逆地址解析  -->
+    <entry key='geocoder.type'>amap</entry>
+    <entry key='geocoder.url'>https://restapi.amap.com/v3/geocode/regeo</entry>
+    <entry key='geocoder.key'>de6cf58608a044b643da48377c6bdbfb</entry>
+    <entry key='geocoder.format'>%f %r</entry>
 
     <entry key='media.path'>./target/media</entry>
 
