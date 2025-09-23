@@ -2,7 +2,7 @@
 <!DOCTYPE properties SYSTEM 'http://java.sun.com/dtd/properties.dtd'>
 <properties>
 
-    <entry key='web.path'>./traccar-web/simple</entry>
+    <entry key='web.path'>./traccar-web/</entry>
     <entry key='web.localizationPath'>./traccar-web/src/resources/l10n</entry>
     <entry key='web.debug'>true</entry>
     <entry key='web.console'>true</entry>
@@ -27,5 +27,11 @@
 
     <entry key='atrack.custom'>true</entry>
     <entry key='intellitrac.port'>6037</entry>
+
+    <!--  amap逆地址解析  -->
+    <entry key='geocoder.type'>amap</entry>
+    <entry key='geocoder.url'>https://restapi.amap.com/v3/geocode/regeo</entry>
+    <entry key='geocoder.key'>21b3a11e940d284eecb6b66bdd090fcc</entry>
+    <entry key='geocoder.format'>%f %r</entry>
 
 </properties>
