@@ -79,8 +79,8 @@ public class BwsProtocolDecoder extends BaseProtocolDecoder {
         position.set(Position.KEY_EVENT, messageType);
 
         position.setTime(new Date(buf.readUnsignedInt() * 1000));
-        position.setLatitude(buf.readInt() / 360000.0);
-        position.setLongitude(buf.readInt() / 360000.0);
+        position.setLatitudeWgs84(buf.readInt() / 360000.0);
+        position.setLongitudeWgs84(buf.readInt() / 360000.0);
 
         int flags = buf.readUnsignedByte();
         position.setValid(BitUtil.check(flags, 7));

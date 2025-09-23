@@ -54,8 +54,8 @@ public class NyitechProtocolDecoder extends BaseProtocolDecoder {
         double lat = buf.readUnsignedIntLE() / 3600000.0;
         double lon = buf.readUnsignedIntLE() / 3600000.0;
 
-        position.setLatitude(BitUtil.check(flags, 2) ? lat : -lat);
-        position.setLongitude(BitUtil.check(flags, 3) ? lon : -lon);
+        position.setLatitudeWgs84(BitUtil.check(flags, 2) ? lat : -lat);
+        position.setLongitudeWgs84(BitUtil.check(flags, 3) ? lon : -lon);
 
         position.setSpeed(UnitsConverter.knotsFromCps(buf.readUnsignedShortLE()));
         position.setCourse(buf.readUnsignedShortLE() * 0.1);

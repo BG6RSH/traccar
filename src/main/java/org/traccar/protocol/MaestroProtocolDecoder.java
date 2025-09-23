@@ -83,8 +83,8 @@ public class MaestroProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime());
 
-        position.setLatitude(parser.nextDouble(0));
-        position.setLongitude(parser.nextDouble(0));
+        position.setLatitudeWgs84(parser.nextDouble(0));
+        position.setLongitudeWgs84(parser.nextDouble(0));
         position.setAltitude(parser.nextDouble(0));
         position.setSpeed(UnitsConverter.knotsFromMph(parser.nextDouble(0)));
         position.setCourse(parser.nextDouble(0));

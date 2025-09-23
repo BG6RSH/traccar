@@ -84,8 +84,8 @@ public class T622IridiumProtocolDecoder extends BaseProtocolDecoder {
         for (int parameter : parameters) {
             switch (parameter) {
                 case 0x01 -> position.set(Position.KEY_EVENT, buf.readUnsignedByte());
-                case 0x02 -> position.setLatitude(buf.readIntLE() / 1000000.0);
-                case 0x03 -> position.setLongitude(buf.readIntLE() / 1000000.0);
+                case 0x02 -> position.setLatitudeWgs84(buf.readIntLE() / 1000000.0);
+                case 0x03 -> position.setLongitudeWgs84(buf.readIntLE() / 1000000.0);
                 case 0x04 -> position.setTime(new Date((buf.readUnsignedIntLE() + 946684800) * 1000));
                 case 0x05 -> position.setValid(buf.readUnsignedByte() > 0);
                 case 0x06 -> position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());

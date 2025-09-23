@@ -164,8 +164,8 @@ public class Xrb28ProtocolDecoder extends BaseProtocolDecoder {
                     .setTime(parser.nextInt(), parser.nextInt(), parser.nextInt());
 
             position.setValid(parser.next().equals("A"));
-            position.setLatitude(parser.nextCoordinate());
-            position.setLongitude(parser.nextCoordinate());
+            position.setLatitudeWgs84(parser.nextCoordinate());
+            position.setLongitudeWgs84(parser.nextCoordinate());
 
             position.set(Position.KEY_SATELLITES, parser.nextInt());
             position.set(Position.KEY_HDOP, parser.nextDouble());

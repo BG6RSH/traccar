@@ -99,8 +99,8 @@ public class EnvotechProtocolDecoder extends BaseProtocolDecoder {
 
         position.setFixTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
         position.setValid(parser.nextInt() > 0);
-        position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_DEG_HEM));
-        position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_DEG_HEM));
+        position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_DEG_HEM));
+        position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_DEG_HEM));
         position.setSpeed(parser.nextInt());
         position.setCourse(parser.nextInt());
 

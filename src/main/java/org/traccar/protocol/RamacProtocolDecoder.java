@@ -97,8 +97,8 @@ public class RamacProtocolDecoder extends BaseHttpProtocolDecoder {
             } else {
                 position.setFixTime(position.getDeviceTime());
             }
-            position.setLatitude(json.getJsonNumber("Latitude").doubleValue());
-            position.setLongitude(json.getJsonNumber("Longitude").doubleValue());
+            position.setLatitudeWgs84(json.getJsonNumber("Latitude").doubleValue());
+            position.setLongitudeWgs84(json.getJsonNumber("Longitude").doubleValue());
         } else {
             getLastLocation(position, position.getDeviceTime());
         }

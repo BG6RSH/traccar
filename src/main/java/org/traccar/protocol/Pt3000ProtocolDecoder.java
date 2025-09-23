@@ -69,8 +69,8 @@ public class Pt3000ProtocolDecoder extends BaseProtocolDecoder {
                 .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
 
         position.setValid(parser.next().equals("A"));
-        position.setLatitude(parser.nextCoordinate());
-        position.setLongitude(parser.nextCoordinate());
+        position.setLatitudeWgs84(parser.nextCoordinate());
+        position.setLongitudeWgs84(parser.nextCoordinate());
         position.setSpeed(parser.nextDouble(0));
         position.setCourse(parser.nextDouble(0));
 

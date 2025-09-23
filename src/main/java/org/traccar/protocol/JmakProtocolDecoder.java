@@ -104,11 +104,11 @@ public class JmakProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (BitUtil.check(mask, 5)) {
-            position.setLatitude(Double.parseDouble(values[index++]));
+            position.setLatitudeWgs84(Double.parseDouble(values[index++]));
         }
 
         if (BitUtil.check(mask, 6)) {
-            position.setLongitude(Double.parseDouble(values[index++]));
+            position.setLongitudeWgs84(Double.parseDouble(values[index++]));
         }
 
         if (BitUtil.check(mask, 7)) {

@@ -149,8 +149,8 @@ public class SigfoxProtocolDecoder extends BaseHttpProtocolDecoder {
             }
 
             position.setValid(true);
-            position.setLatitude(getJsonDouble(location, jsonContains(location, "lat") ? "lat" : "latitude"));
-            position.setLongitude(getJsonDouble(location, jsonContains(location, "lng") ? "lng" : "longitude"));
+            position.setLatitudeWgs84(getJsonDouble(location, jsonContains(location, "lat") ? "lat" : "latitude"));
+            position.setLongitudeWgs84(getJsonDouble(location, jsonContains(location, "lng") ? "lng" : "longitude"));
 
         } else if (jsonContains(json, "data")) {
 
@@ -166,14 +166,14 @@ public class SigfoxProtocolDecoder extends BaseHttpProtocolDecoder {
                     position.set(Position.PREFIX_TEMP + 1, (int) buf.readByte());
 
                     position.setValid(true);
-                    position.setLatitude(buf.readInt() / 60000.0);
-                    position.setLongitude(buf.readInt() / 60000.0);
+                    position.setLatitudeWgs84(buf.readInt() / 60000.0);
+                    position.setLongitudeWgs84(buf.readInt() / 60000.0);
 
                 } else if (header == 0x0f || header == 0x1f) {
 
                     position.setValid(header >> 4 > 0);
-                    position.setLatitude(BufferUtil.readSignedMagnitudeInt(buf) * 0.000001);
-                    position.setLongitude(BufferUtil.readSignedMagnitudeInt(buf) * 0.000001);
+                    position.setLatitudeWgs84(BufferUtil.readSignedMagnitudeInt(buf) * 0.000001);
+                    position.setLongitudeWgs84(BufferUtil.readSignedMagnitudeInt(buf) * 0.000001);
 
                     position.set(Position.KEY_BATTERY, (int) buf.readUnsignedByte());
 
@@ -181,8 +181,8 @@ public class SigfoxProtocolDecoder extends BaseHttpProtocolDecoder {
 
                     if (BitUtil.to(header, 4) == 0) {
                         position.setValid(true);
-                        position.setLatitude(buf.readIntLE() * 0.0000001);
-                        position.setLongitude(buf.readIntLE() * 0.0000001);
+                        position.setLatitudeWgs84(buf.readIntLE() * 0.0000001);
+                        position.setLongitudeWgs84(buf.readIntLE() * 0.0000001);
                         position.setCourse(buf.readUnsignedByte() * 2);
                         position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
 
@@ -211,13 +211,13 @@ public class SigfoxProtocolDecoder extends BaseHttpProtocolDecoder {
                     switch (type) {
                         case 0x01 -> {
                             position.setValid(true);
-                            position.setLatitude(buf.readMedium());
-                            position.setLongitude(buf.readMedium());
+                            position.setLatitudeWgs84(buf.readMedium());
+                            position.setLongitudeWgs84(buf.readMedium());
                         }
                         case 0x02 -> {
                             position.setValid(true);
-                            position.setLatitude(buf.readFloat());
-                            position.setLongitude(buf.readFloat());
+                            position.setLatitudeWgs84(buf.readFloat());
+                            position.setLongitudeWgs84(buf.readFloat());
                         }
                         case 0x03 -> position.set(Position.PREFIX_TEMP + 1, buf.readByte() * 0.5);
                         case 0x04 -> position.set(Position.KEY_BATTERY, buf.readUnsignedByte() * 0.1);
@@ -239,7 +239,7 @@ public class SigfoxProtocolDecoder extends BaseHttpProtocolDecoder {
 
         }
 
-        if (position.getLatitude() == 0 && position.getLongitude() == 0) {
+        if (position.getLatitudeWgs84() == 0 && position.getLongitudeWgs84() == 0) {
             getLastLocation(position, position.getDeviceTime());
         }
 

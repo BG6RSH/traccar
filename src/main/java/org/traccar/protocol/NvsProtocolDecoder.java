@@ -86,8 +86,8 @@ public class NvsProtocolDecoder extends BaseProtocolDecoder {
 
                 position.set("reason", buf.readUnsignedByte());
 
-                position.setLongitude(buf.readInt() / 10000000.0);
-                position.setLatitude(buf.readInt() / 10000000.0);
+                position.setLongitudeWgs84(buf.readInt() / 10000000.0);
+                position.setLatitudeWgs84(buf.readInt() / 10000000.0);
                 position.setAltitude(buf.readShort());
                 position.setCourse(buf.readUnsignedShort());
 

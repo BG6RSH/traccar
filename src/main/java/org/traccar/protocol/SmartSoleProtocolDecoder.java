@@ -71,8 +71,8 @@ public class SmartSoleProtocolDecoder extends BaseProtocolDecoder {
 
         position.setFixTime(parser.nextDateTime());
 
-        position.setLatitude(parser.nextDouble());
-        position.setLongitude(parser.nextDouble());
+        position.setLatitudeWgs84(parser.nextDouble());
+        position.setLongitudeWgs84(parser.nextDouble());
         position.setAltitude(parser.nextInt());
         position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
         position.setValid(parser.nextInt() == 1);

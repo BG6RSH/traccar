@@ -114,8 +114,8 @@ public class TrakMateProtocolDecoder extends BaseProtocolDecoder {
         Position position = new Position(getProtocolName());
         position.setDeviceId(deviceSession.getDeviceId());
 
-        position.setLatitude(parser.nextDouble());
-        position.setLongitude(parser.nextDouble());
+        position.setLatitudeWgs84(parser.nextDouble());
+        position.setLongitudeWgs84(parser.nextDouble());
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.HMS_DMY));
 
@@ -144,8 +144,8 @@ public class TrakMateProtocolDecoder extends BaseProtocolDecoder {
         position.addAlarm(decodeAlarm(parser.nextInt()));
         parser.next(); // alert status or data
 
-        position.setLatitude(parser.nextDouble());
-        position.setLongitude(parser.nextDouble());
+        position.setLatitudeWgs84(parser.nextDouble());
+        position.setLongitudeWgs84(parser.nextDouble());
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.HMS_DMY));
 
@@ -172,8 +172,8 @@ public class TrakMateProtocolDecoder extends BaseProtocolDecoder {
 
         parser.next(); // seq
 
-        position.setLatitude(parser.nextDouble());
-        position.setLongitude(parser.nextDouble());
+        position.setLatitudeWgs84(parser.nextDouble());
+        position.setLongitudeWgs84(parser.nextDouble());
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.HMS_DMY));
 

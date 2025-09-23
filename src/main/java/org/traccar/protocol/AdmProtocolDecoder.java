@@ -56,8 +56,8 @@ public class AdmProtocolDecoder extends BaseProtocolDecoder {
             int status = buf.readUnsignedShortLE();
             position.set(Position.KEY_STATUS, status);
             position.setValid(!BitUtil.check(status, 5));
-            position.setLatitude(buf.readFloatLE());
-            position.setLongitude(buf.readFloatLE());
+            position.setLatitudeWgs84(buf.readFloatLE());
+            position.setLongitudeWgs84(buf.readFloatLE());
             position.setCourse(buf.readUnsignedShortLE() * 0.1);
             position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE() * 0.1));
 

@@ -69,8 +69,8 @@ public class T57ProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
-        position.setLatitude(parser.nextCoordinate());
-        position.setLongitude(parser.nextCoordinate());
+        position.setLatitudeWgs84(parser.nextCoordinate());
+        position.setLongitudeWgs84(parser.nextCoordinate());
         position.setSpeed(parser.nextDouble());
         position.setAltitude(parser.nextDouble());
 

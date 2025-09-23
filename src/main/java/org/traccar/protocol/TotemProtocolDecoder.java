@@ -277,8 +277,8 @@ public class TotemProtocolDecoder extends BaseProtocolDecoder {
         dateBuilder.setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
 
         position.setValid(parser.next().equals("A"));
-        position.setLatitude(parser.nextCoordinate());
-        position.setLongitude(parser.nextCoordinate());
+        position.setLatitudeWgs84(parser.nextCoordinate());
+        position.setLongitudeWgs84(parser.nextCoordinate());
         position.setSpeed(parser.nextDouble(0));
         position.setCourse(parser.nextDouble(0));
 
@@ -378,8 +378,8 @@ public class TotemProtocolDecoder extends BaseProtocolDecoder {
         position.set(Position.KEY_PDOP, parser.nextDouble());
         position.set(Position.KEY_ODOMETER, parser.nextInt(0) * 1000);
 
-        position.setLatitude(parser.nextCoordinate());
-        position.setLongitude(parser.nextCoordinate());
+        position.setLatitudeWgs84(parser.nextCoordinate());
+        position.setLongitudeWgs84(parser.nextCoordinate());
 
         return position;
     }
@@ -468,8 +468,8 @@ public class TotemProtocolDecoder extends BaseProtocolDecoder {
         position.set(Position.KEY_HDOP, parser.nextDouble());
         position.set(Position.KEY_ODOMETER, parser.nextInt() * 1000);
 
-        position.setLatitude(parser.nextCoordinate());
-        position.setLongitude(parser.nextCoordinate());
+        position.setLatitudeWgs84(parser.nextCoordinate());
+        position.setLongitudeWgs84(parser.nextCoordinate());
 
         return position;
     }
@@ -491,8 +491,8 @@ public class TotemProtocolDecoder extends BaseProtocolDecoder {
 
         position.setValid(true);
         position.setTime(parser.nextDateTime());
-        position.setLongitude(parser.nextDouble());
-        position.setLatitude(parser.nextDouble());
+        position.setLongitudeWgs84(parser.nextDouble());
+        position.setLatitudeWgs84(parser.nextDouble());
 
         position.set(Position.KEY_DRIVER_UNIQUE_ID, parser.next());
 
@@ -516,8 +516,8 @@ public class TotemProtocolDecoder extends BaseProtocolDecoder {
 
         position.setValid(true);
         position.setTime(parser.nextDateTime());
-        position.setLatitude(parser.nextDouble());
-        position.setLongitude(parser.nextDouble());
+        position.setLatitudeWgs84(parser.nextDouble());
+        position.setLongitudeWgs84(parser.nextDouble());
 
         position.set(Position.KEY_ODOMETER, parser.nextLong());
         position.set(Position.KEY_FUEL_USED, parser.nextInt());

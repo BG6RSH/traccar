@@ -82,8 +82,8 @@ public class WristbandProtocolDecoder extends BaseProtocolDecoder {
         String[] values = sentence.split(",");
 
         position.setValid(true);
-        position.setLongitude(Double.parseDouble(values[0]));
-        position.setLatitude(Double.parseDouble(values[1]));
+        position.setLongitudeWgs84(Double.parseDouble(values[0]));
+        position.setLatitudeWgs84(Double.parseDouble(values[1]));
         position.setTime(new SimpleDateFormat("yyyyMMddHHmm").parse(values[2]));
         position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(values[3])));
 

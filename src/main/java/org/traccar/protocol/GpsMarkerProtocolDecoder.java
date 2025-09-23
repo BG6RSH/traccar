@@ -73,8 +73,8 @@ public class GpsMarkerProtocolDecoder extends BaseProtocolDecoder {
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
         position.setValid(true);
-        position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN_MIN));
-        position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN_MIN));
+        position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN_MIN));
+        position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN_MIN));
         position.setSpeed(parser.nextDouble(0));
         position.setCourse(parser.nextDouble(0));
 

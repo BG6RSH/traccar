@@ -66,8 +66,8 @@ public class CautelaProtocolDecoder extends BaseProtocolDecoder {
         dateBuilder.setDateReverse(parser.nextInt(), parser.nextInt(), parser.nextInt());
 
         position.setValid(true);
-        position.setLatitude(parser.nextDouble());
-        position.setLongitude(parser.nextDouble());
+        position.setLatitudeWgs84(parser.nextDouble());
+        position.setLongitudeWgs84(parser.nextDouble());
 
         dateBuilder.setHour(parser.nextInt()).setMinute(parser.nextInt());
         position.setTime(dateBuilder.getDate());

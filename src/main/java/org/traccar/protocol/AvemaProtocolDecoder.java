@@ -82,8 +82,8 @@ public class AvemaProtocolDecoder extends BaseProtocolDecoder {
 
         position.setValid(true);
         position.setTime(parser.nextDateTime());
-        position.setLongitude(parser.nextDouble());
-        position.setLatitude(parser.nextDouble());
+        position.setLongitudeWgs84(parser.nextDouble());
+        position.setLatitudeWgs84(parser.nextDouble());
         position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
         position.setCourse(parser.nextInt());
         position.setAltitude(parser.nextInt());

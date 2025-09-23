@@ -102,8 +102,8 @@ public class ArmoliProtocolDecoder extends BaseProtocolDecoder {
         position.setDeviceId(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
-        position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
-        position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
+        position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
+        position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
         position.setValid(parser.nextInt() > 0);
 
         position.set(Position.KEY_SATELLITES, parser.nextHexInt());

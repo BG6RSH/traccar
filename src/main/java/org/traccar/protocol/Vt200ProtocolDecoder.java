@@ -83,16 +83,16 @@ public class Vt200ProtocolDecoder extends BaseProtocolDecoder {
             position.setTime(decodeDate(buf));
 
             if (buf.readableBytes() > 2) {
-                position.setLatitude(decodeCoordinate(BcdUtil.readInteger(buf, 8)));
-                position.setLongitude(decodeCoordinate(BcdUtil.readInteger(buf, 9)));
+                position.setLatitudeWgs84(decodeCoordinate(BcdUtil.readInteger(buf, 8)));
+                position.setLongitudeWgs84(decodeCoordinate(BcdUtil.readInteger(buf, 9)));
 
                 int flags = buf.readUnsignedByte();
                 position.setValid(BitUtil.check(flags, 0));
                 if (!BitUtil.check(flags, 1)) {
-                    position.setLatitude(-position.getLatitude());
+                    position.setLatitudeWgs84(-position.getLatitudeWgs84());
                 }
                 if (!BitUtil.check(flags, 2)) {
-                    position.setLongitude(-position.getLongitude());
+                    position.setLongitudeWgs84(-position.getLongitudeWgs84());
                 }
             }
 

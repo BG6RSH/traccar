@@ -129,8 +129,8 @@ public class EsealProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime());
         position.setValid(parser.next().equals("A"));
-        position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
-        position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
+        position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
+        position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setCourse(parser.nextInt());
         position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
 

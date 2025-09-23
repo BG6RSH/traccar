@@ -482,15 +482,15 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
         double lon = buf.readUnsignedInt() * 0.000001;
 
         if (BitUtil.check(status, 2)) {
-            position.setLatitude(-lat);
+            position.setLatitudeWgs84(-lat);
         } else {
-            position.setLatitude(lat);
+            position.setLatitudeWgs84(lat);
         }
 
         if (BitUtil.check(status, 3)) {
-            position.setLongitude(-lon);
+            position.setLongitudeWgs84(-lon);
         } else {
-            position.setLongitude(lon);
+            position.setLongitudeWgs84(lon);
         }
     }
 
@@ -1345,8 +1345,8 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
 
             position.setValid(true);
             position.setTime(readDate(buf, deviceSession.get(DeviceSession.KEY_TIMEZONE)));
-            position.setLatitude(buf.readInt() * 0.000001);
-            position.setLongitude(buf.readInt() * 0.000001);
+            position.setLatitudeWgs84(buf.readInt() * 0.000001);
+            position.setLongitudeWgs84(buf.readInt() * 0.000001);
             position.setAltitude(buf.readShort());
             position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShort() * 0.1));
             position.setCourse(buf.readUnsignedShort());

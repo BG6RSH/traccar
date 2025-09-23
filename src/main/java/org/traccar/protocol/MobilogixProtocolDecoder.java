@@ -129,8 +129,8 @@ public class MobilogixProtocolDecoder extends BaseProtocolDecoder {
             position.setValid(parser.nextInt() > 0);
             position.setFixTime(position.getDeviceTime());
 
-            position.setLatitude(parser.nextDouble());
-            position.setLongitude(parser.nextDouble());
+            position.setLatitudeWgs84(parser.nextDouble());
+            position.setLongitudeWgs84(parser.nextDouble());
             position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
             position.setCourse(parser.nextDouble());
 

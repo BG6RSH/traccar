@@ -94,8 +94,8 @@ public class AstraProtocolDecoder extends BaseProtocolDecoder {
             buf.readUnsignedByte(); // index
 
             position.setValid(true);
-            position.setLatitude(buf.readInt() * 0.000001);
-            position.setLongitude(buf.readInt() * 0.000001);
+            position.setLatitudeWgs84(buf.readInt() * 0.000001);
+            position.setLongitudeWgs84(buf.readInt() * 0.000001);
             position.setTime(readTime(buf));
             position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte() * 2));
             position.setCourse(buf.readUnsignedByte() * 2);
@@ -171,8 +171,8 @@ public class AstraProtocolDecoder extends BaseProtocolDecoder {
             if ((mask & 2L) > 0) {
                 position.setValid(true);
                 position.setFixTime(readTime(buf));
-                position.setLatitude(buf.readInt() * 0.000001);
-                position.setLongitude(buf.readInt() * 0.000001);
+                position.setLatitudeWgs84(buf.readInt() * 0.000001);
+                position.setLongitudeWgs84(buf.readInt() * 0.000001);
                 position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte() * 2));
                 buf.readUnsignedByte(); // max speed since last report
                 position.setCourse(buf.readUnsignedByte() * 2);

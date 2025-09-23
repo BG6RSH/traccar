@@ -79,8 +79,8 @@ public class PretraceProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime());
 
-        position.setLatitude(parser.nextCoordinate());
-        position.setLongitude(parser.nextCoordinate());
+        position.setLatitudeWgs84(parser.nextCoordinate());
+        position.setLongitudeWgs84(parser.nextCoordinate());
         position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt(0)));
         position.setCourse(parser.nextInt(0));
         position.setAltitude(parser.nextHexInt(0));

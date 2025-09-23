@@ -55,8 +55,8 @@ public class PuiProtocolDecoder extends BaseMqttProtocolDecoder {
                 position.setTime(dateFormat.parse(json.getString("ts")));
 
                 JsonObject location = json.getJsonObject("location");
-                position.setLatitude(location.getJsonNumber("lat").doubleValue());
-                position.setLongitude(location.getJsonNumber("lon").doubleValue());
+                position.setLatitudeWgs84(location.getJsonNumber("lat").doubleValue());
+                position.setLongitudeWgs84(location.getJsonNumber("lon").doubleValue());
 
                 position.setCourse(json.getInt("bear"));
                 position.setSpeed(UnitsConverter.knotsFromCps(json.getInt("spd")));

@@ -80,8 +80,8 @@ public class EskyProtocolDecoder extends BaseProtocolDecoder {
 
         position.setValid(true);
         position.setTime(parser.nextDateTime());
-        position.setLatitude(parser.nextDouble());
-        position.setLongitude(parser.nextDouble());
+        position.setLatitudeWgs84(parser.nextDouble());
+        position.setLongitudeWgs84(parser.nextDouble());
         position.setSpeed(UnitsConverter.knotsFromMps(parser.nextDouble()));
         position.setCourse(parser.nextDouble());
 

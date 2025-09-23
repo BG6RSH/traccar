@@ -105,8 +105,8 @@ public class Pt215ProtocolDecoder extends BaseProtocolDecoder {
                 longitude = -longitude;
             }
 
-            position.setLatitude(latitude);
-            position.setLongitude(longitude);
+            position.setLatitudeWgs84(latitude);
+            position.setLongitudeWgs84(longitude);
 
             return position;
 

@@ -110,8 +110,8 @@ public class FlexibleReportProtocolDecoder extends BaseProtocolDecoder {
             }
             if (BitUtil.check(mask, 2)) {
                 position.setValid(true);
-                position.setLatitude(buf.readUnsignedInt() / 1000000.0 - 90);
-                position.setLongitude(buf.readUnsignedInt() / 1000000.0 - 180);
+                position.setLatitudeWgs84(buf.readUnsignedInt() / 1000000.0 - 90);
+                position.setLongitudeWgs84(buf.readUnsignedInt() / 1000000.0 - 180);
             }
             if (BitUtil.check(mask, 3)) {
                 position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));

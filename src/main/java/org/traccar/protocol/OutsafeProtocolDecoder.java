@@ -59,8 +59,8 @@ public class OutsafeProtocolDecoder extends BaseHttpProtocolDecoder {
 
         position.setTime(new Date());
         position.setValid(true);
-        position.setLatitude(json.getJsonNumber("latitude").doubleValue());
-        position.setLongitude(json.getJsonNumber("longitude").doubleValue());
+        position.setLatitudeWgs84(json.getJsonNumber("latitude").doubleValue());
+        position.setLongitudeWgs84(json.getJsonNumber("longitude").doubleValue());
         position.setAltitude(json.getJsonNumber("altitude").doubleValue());
         position.setCourse(json.getJsonNumber("heading").intValue());
 

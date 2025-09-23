@@ -91,8 +91,8 @@ public class NiotProtocolDecoder extends BaseProtocolDecoder {
                     .setSecond(BcdUtil.readInteger(buf, 2));
             position.setTime(dateBuilder.getDate());
 
-            position.setLatitude(BufferUtil.readSignedMagnitudeInt(buf) / 1800000.0);
-            position.setLongitude(BufferUtil.readSignedMagnitudeInt(buf) / 1800000.0);
+            position.setLatitudeWgs84(BufferUtil.readSignedMagnitudeInt(buf) / 1800000.0);
+            position.setLongitudeWgs84(BufferUtil.readSignedMagnitudeInt(buf) / 1800000.0);
             BcdUtil.readInteger(buf, 4); // reserved
             position.setCourse(BcdUtil.readInteger(buf, 4));
 

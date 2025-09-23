@@ -127,8 +127,8 @@ public class PstProtocolDecoder extends BaseProtocolDecoder {
                     case 0x10:
                         position.setValid(true);
                         position.setFixTime(readDate(buf));
-                        position.setLatitude(readCoordinate(buf));
-                        position.setLongitude(readCoordinate(buf));
+                        position.setLatitudeWgs84(readCoordinate(buf));
+                        position.setLongitudeWgs84(readCoordinate(buf));
                         position.setSpeed(buf.readUnsignedByte());
                         position.setCourse(buf.readUnsignedByte() * 2);
                         position.setAltitude(buf.readShort());

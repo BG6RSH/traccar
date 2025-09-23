@@ -113,8 +113,8 @@ public class FlextrackProtocolDecoder extends BaseProtocolDecoder {
             position.setTime(parser.nextDateTime());
 
             position.setValid(true);
-            position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
-            position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
+            position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
+            position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
             position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt(0)));
             position.setCourse(parser.nextInt(0));
 

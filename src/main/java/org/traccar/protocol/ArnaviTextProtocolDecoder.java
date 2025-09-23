@@ -94,8 +94,8 @@ public class ArnaviTextProtocolDecoder extends BaseProtocolDecoder {
                 .setTime(parser.nextInt(), parser.nextInt(), parser.nextInt());
 
         position.setValid(true);
-        position.setLatitude(parser.nextCoordinate());
-        position.setLongitude(parser.nextCoordinate());
+        position.setLatitudeWgs84(parser.nextCoordinate());
+        position.setLongitudeWgs84(parser.nextCoordinate());
         position.setSpeed(parser.nextDouble());
         position.setCourse(parser.nextDouble());
 

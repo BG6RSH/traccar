@@ -147,6 +147,13 @@ public class ComputedAttributesHandler extends BasePositionHandler {
                 .execute(prepareContext(position));
     }
 
+    // 添加新的公共方法供API资源使用
+    public Object computeAttributeValue(Attribute attribute, Position position) throws JexlException {
+        return engine
+                .createScript(features, engine.createInfo(), attribute.getExpression())
+                .execute(prepareContext(position));
+    }
+
     @Override
     public void onPosition(Position position, Callback callback) {
         var attributes = cacheManager.getDeviceObjects(position.getDeviceId(), Attribute.class).stream()

@@ -89,8 +89,8 @@ public class ThurayaProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(dateBuilder.getDate());
 
-        position.setLongitude(buf.readInt() / 1000000.0);
-        position.setLatitude(buf.readInt() / 1000000.0);
+        position.setLongitudeWgs84(buf.readInt() / 1000000.0);
+        position.setLatitudeWgs84(buf.readInt() / 1000000.0);
 
         int data = buf.readUnsignedShort();
 

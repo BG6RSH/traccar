@@ -153,8 +153,8 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
             index += 1; // cell
         }
 
-        position.setLatitude(Double.parseDouble(values[index++]));
-        position.setLongitude(Double.parseDouble(values[index++]));
+        position.setLatitudeWgs84(Double.parseDouble(values[index++]));
+        position.setLongitudeWgs84(Double.parseDouble(values[index++]));
         position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(values[index++])));
         position.setCourse(Double.parseDouble(values[index++]));
 
@@ -269,8 +269,8 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
             dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
             position.setTime(dateFormat.parse(values[index++] + values[index++]));
 
-            position.setLatitude(Double.parseDouble(values[index++]));
-            position.setLongitude(Double.parseDouble(values[index++]));
+            position.setLatitudeWgs84(Double.parseDouble(values[index++]));
+            position.setLongitudeWgs84(Double.parseDouble(values[index++]));
             position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(values[index++])));
             position.setCourse(Double.parseDouble(values[index++]));
 
@@ -381,8 +381,8 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
             }
         }
 
-        position.setLatitude(Double.parseDouble(values[index++]));
-        position.setLongitude(Double.parseDouble(values[index++]));
+        position.setLatitudeWgs84(Double.parseDouble(values[index++]));
+        position.setLongitudeWgs84(Double.parseDouble(values[index++]));
         position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(values[index++])));
         position.setCourse(Double.parseDouble(values[index++]));
 
@@ -551,11 +551,11 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (BitUtil.check(mask, 11)) {
-            position.setLatitude(Double.parseDouble(values[index++]));
+            position.setLatitudeWgs84(Double.parseDouble(values[index++]));
         }
 
         if (BitUtil.check(mask, 12)) {
-            position.setLongitude(Double.parseDouble(values[index++]));
+            position.setLongitudeWgs84(Double.parseDouble(values[index++]));
         }
 
         if (type.equals("BLE")) {
@@ -678,18 +678,18 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
         buf.readUnsignedShort(); // lac
         buf.readUnsignedByte(); // cid
 
-        position.setLatitude(buf.readUnsignedByte() + BcdUtil.readInteger(buf, 6) / 1000000.0);
-        position.setLongitude(buf.readUnsignedByte() + BcdUtil.readInteger(buf, 6) / 1000000.0);
+        position.setLatitudeWgs84(buf.readUnsignedByte() + BcdUtil.readInteger(buf, 6) / 1000000.0);
+        position.setLongitudeWgs84(buf.readUnsignedByte() + BcdUtil.readInteger(buf, 6) / 1000000.0);
         position.setSpeed(buf.readUnsignedShort() + BcdUtil.readInteger(buf, 2) / 100.0);
         position.setCourse(buf.readUnsignedShort() + BcdUtil.readInteger(buf, 2) / 100.0);
 
         int flags = buf.readUnsignedByte();
         position.setValid(BitUtil.check(flags, 7));
         if (BitUtil.check(flags, 6)) {
-            position.setLatitude(-position.getLatitude());
+            position.setLatitudeWgs84(-position.getLatitudeWgs84());
         }
         if (BitUtil.check(flags, 5)) {
-            position.setLongitude(-position.getLongitude());
+            position.setLongitudeWgs84(-position.getLongitudeWgs84());
         }
 
         position.set(Position.KEY_ODOMETER, buf.readUnsignedInt());
@@ -786,11 +786,11 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (BitUtil.check(mask, 11)) {
-            position.setLatitude(BufferUtil.readSignedMagnitudeInt(buf) / 1000000.0);
+            position.setLatitudeWgs84(BufferUtil.readSignedMagnitudeInt(buf) / 1000000.0);
         }
 
         if (BitUtil.check(mask, 12)) {
-            position.setLongitude(BufferUtil.readSignedMagnitudeInt(buf) / 1000000.0);
+            position.setLongitudeWgs84(BufferUtil.readSignedMagnitudeInt(buf) / 1000000.0);
         }
 
         if (BitUtil.check(mask, 13)) {
@@ -900,8 +900,8 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
 
                 position.setValid(true);
                 position.setTime(time);
-                position.setLatitude(crash.readIntLE() * 0.0000001);
-                position.setLongitude(crash.readIntLE() * 0.0000001);
+                position.setLatitudeWgs84(crash.readIntLE() * 0.0000001);
+                position.setLongitudeWgs84(crash.readIntLE() * 0.0000001);
                 position.setSpeed(UnitsConverter.knotsFromKph(crash.readUnsignedShort() * 0.01));
                 position.setCourse(crash.readUnsignedShort() * 0.01);
 

@@ -324,8 +324,8 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
             longitude = -longitude;
         }
 
-        position.setLatitude(latitude);
-        position.setLongitude(longitude);
+        position.setLatitudeWgs84(latitude);
+        position.setLongitudeWgs84(longitude);
 
         if (BitUtil.check(flags, 14)) {
             position.set(Position.KEY_IGNITION, BitUtil.check(flags, 15));
@@ -1119,8 +1119,8 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
 
             if (parser.matches()) {
                 position.setValid(true);
-                position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
-                position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
+                position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
+                position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
                 position.setCourse(parser.nextDouble());
                 position.setSpeed(parser.nextDouble());
                 position.setTime(parser.nextDateTime(Parser.DateTimeFormat.YMD_HMS));
@@ -1376,8 +1376,8 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
                             longitude = -longitude;
                         }
 
-                        position.setLatitude(latitude);
-                        position.setLongitude(longitude);
+                        position.setLatitudeWgs84(latitude);
+                        position.setLongitudeWgs84(longitude);
                     }
                     case 0x34 -> {
                         position.set(Position.KEY_EVENT, buf.readUnsignedByte());

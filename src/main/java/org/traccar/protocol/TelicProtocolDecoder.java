@@ -100,13 +100,13 @@ public class TelicProtocolDecoder extends BaseProtocolDecoder {
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
         if (parser.hasNext(2)) {
-            position.setLongitude(parser.nextDouble() / 1000000);
-            position.setLatitude(parser.nextDouble() / 1000000);
+            position.setLongitudeWgs84(parser.nextDouble() / 1000000);
+            position.setLatitudeWgs84(parser.nextDouble() / 1000000);
         }
 
         if (parser.hasNext(2)) {
-            position.setLongitude(parser.nextDouble() / 10000);
-            position.setLatitude(parser.nextDouble() / 10000);
+            position.setLongitudeWgs84(parser.nextDouble() / 10000);
+            position.setLatitudeWgs84(parser.nextDouble() / 10000);
         }
 
         position.setValid(parser.nextInt() != 1);

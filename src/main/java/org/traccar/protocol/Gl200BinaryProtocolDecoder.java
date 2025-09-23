@@ -143,8 +143,8 @@ public class Gl200BinaryProtocolDecoder extends BaseProtocolDecoder {
                 position.setTime(new Date(time * 1000));
                 position.setSpeed(UnitsConverter.knotsFromKph(speed * 0.1));
                 position.setCourse(heading);
-                position.setLongitude(longitude * 0.000001);
-                position.setLatitude(latitude * 0.000001);
+                position.setLongitudeWgs84(longitude * 0.000001);
+                position.setLatitudeWgs84(latitude * 0.000001);
 
                 positions.add(position);
 
@@ -170,8 +170,8 @@ public class Gl200BinaryProtocolDecoder extends BaseProtocolDecoder {
                 position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedMedium() * 0.1));
                 position.setCourse(buf.readUnsignedShort());
                 position.setAltitude(buf.readShort());
-                position.setLongitude(buf.readInt() * 0.000001);
-                position.setLatitude(buf.readInt() * 0.000001);
+                position.setLongitudeWgs84(buf.readInt() * 0.000001);
+                position.setLatitudeWgs84(buf.readInt() * 0.000001);
 
                 position.setTime(decodeTime(buf));
 
@@ -274,8 +274,8 @@ public class Gl200BinaryProtocolDecoder extends BaseProtocolDecoder {
         position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedMedium() * 0.1));
         position.setCourse(buf.readUnsignedShort());
         position.setAltitude(buf.readShort());
-        position.setLongitude(buf.readInt() * 0.000001);
-        position.setLatitude(buf.readInt() * 0.000001);
+        position.setLongitudeWgs84(buf.readInt() * 0.000001);
+        position.setLatitudeWgs84(buf.readInt() * 0.000001);
 
         position.setTime(decodeTime(buf));
 

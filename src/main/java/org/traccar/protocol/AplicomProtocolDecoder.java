@@ -181,8 +181,8 @@ public class AplicomProtocolDecoder extends BaseProtocolDecoder {
             if (position.getDeviceTime() == null) {
                 position.setDeviceTime(position.getFixTime());
             }
-            position.setLatitude(buf.readInt() / 1000000.0);
-            position.setLongitude(buf.readInt() / 1000000.0);
+            position.setLatitudeWgs84(buf.readInt() / 1000000.0);
+            position.setLongitudeWgs84(buf.readInt() / 1000000.0);
             position.set(Position.KEY_SATELLITES_VISIBLE, buf.readUnsignedByte());
         }
 

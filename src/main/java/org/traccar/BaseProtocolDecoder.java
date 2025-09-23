@@ -17,6 +17,7 @@ package org.traccar;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
+import org.traccar.config.ConfigKey;
 import org.traccar.config.Keys;
 import org.traccar.database.CommandsManager;
 import org.traccar.database.MediaManager;
@@ -108,7 +109,8 @@ public abstract class BaseProtocolDecoder extends ExtendedObjectDecoder {
     }
 
     protected double convertSpeed(double value, String defaultUnits) {
-        return switch (getConfig().getString(getProtocolName() + ".speed", defaultUnits)) {
+        ConfigKey<String> speedUnits = Keys.PROTOCOL_SERVER.withPrefix(getProtocolName() + ".speed");
+        return switch (getConfig().getString(speedUnits, defaultUnits)) {
             case "kmh" -> UnitsConverter.knotsFromKph(value);
             case "mps" -> UnitsConverter.knotsFromMps(value);
             case "mph" -> UnitsConverter.knotsFromMph(value);
@@ -166,6 +168,7 @@ public abstract class BaseProtocolDecoder extends ExtendedObjectDecoder {
             if (decodedMessage instanceof Position position) {
                 deviceIds.add(position.getDeviceId());
             } else if (decodedMessage instanceof Collection) {
+                @SuppressWarnings("unchecked")
                 Collection<Position> positions = (Collection) decodedMessage;
                 for (Position position : positions) {
                     deviceIds.add(position.getDeviceId());

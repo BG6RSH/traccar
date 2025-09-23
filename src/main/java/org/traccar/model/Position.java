@@ -21,6 +21,8 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.traccar.storage.QueryIgnore;
 import org.traccar.storage.StorageName;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @StorageName("tc_positions")
 public class Position extends Message {
@@ -150,6 +152,7 @@ public class Position extends Message {
     public static final String ALARM_FUEL_LEAK = "fuelLeak";
     public static final String ALARM_TAMPERING = "tampering";
     public static final String ALARM_REMOVING = "removing";
+    private static final Logger LOG = LoggerFactory.getLogger(Position.class);
 
     public Position() {
     }
@@ -351,5 +354,118 @@ public class Position extends Message {
     public void setType(String type) {
         super.setType(type);
     }
+ 
+    private double latitudeWgs84 = 0;
+    private double longitudeWgs84 = 0;
+    private boolean latFlag = false;
+    private boolean lonFlag = false;
+ 
+ 
+    public double getLatitudeWgs84() {
+        return latitudeWgs84;
+    }
+ 
+ 
+    public double getLongitudeWgs84() {
+        return longitudeWgs84;
+    }
+ 
+ 
+    public void setLatitudeWgs84(double latitude) {
+        this.latitudeWgs84 = latitude;
+        this.latFlag = true;
+        if (lonFlag) {
+            double[] toGcj02 = wgs84ToGcj02(latitudeWgs84, longitudeWgs84);
+            setLatitude(toGcj02[0]);
+            setLongitude(toGcj02[1]);
+            latFlag = false;
+            lonFlag = false;
+        }
+    }
+ 
+ 
+    public void setLongitudeWgs84(double longitude) {
+        this.longitudeWgs84 = longitude;
+        this.lonFlag = true;
+        if (latFlag) {
+            double[] toGcj02 = wgs84ToGcj02(latitudeWgs84, longitudeWgs84);
+            setLatitude(toGcj02[0]);
+            setLongitude(toGcj02[1]);
+            latFlag = false;
+            lonFlag = false;
+        }
+    }
+ 
+    /**
+     * 将 WGS84 坐标转换为 GCJ02 坐标
+     *
+     * @param wgsLat WGS84 坐标系的纬度
+     * @param wgsLon WGS84 坐标系的经度
+     * @return GCJ02 坐标数组，包含纬度和经度
+     */
+    private double[] wgs84ToGcj02(double wgsLat, double wgsLon) {
+        if (outOfChina(wgsLat, wgsLon)) {
+            return new double[]{wgsLat, wgsLon};
+        }
+        double dLat = transformLat(wgsLon - 105.0, wgsLat - 35.0);
+        double dLon = transformLon(wgsLon - 105.0, wgsLat - 35.0);
+        double radLat = wgsLat / 180.0 * Math.PI;
+        double magic = Math.sin(radLat);
+        magic = 1 - EE * magic * magic;
+        double sqrtMagic = Math.sqrt(magic);
+        dLat = (dLat * 180.0) / ((A * (1 - EE)) / (magic * sqrtMagic) * Math.PI);
+        dLon = (dLon * 180.0) / (A / sqrtMagic * Math.cos(radLat) * Math.PI);
+        double mgLat = wgsLat + dLat;
+        double mgLon = wgsLon + dLon;
+        LOG.info(String.format("[WGS84](%.6f, %.6f) => [GCJ02](%.6f, %.6f)", wgsLat, wgsLon, mgLat, mgLon));
+        return new double[]{mgLat, mgLon};
+    }
+ 
+    /**
+     * 将 GCJ02 坐标转换为 BD09 坐标
+     *
+     * @param gcjLat GCJ02 坐标系的纬度
+     * @param gcjLon GCJ02 坐标系的经度
+     * @return BD09 坐标数组，包含纬度和经度
+     */
+    private double[] gcj02ToBd09(double gcjLat, double gcjLon) {
+        double x = gcjLon, y = gcjLat;
+        double z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * X_PI);
+        double theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * X_PI);
+        double bdLon = z * Math.cos(theta) + 0.0065;
+        double bdLat = z * Math.sin(theta) + 0.006;
+        return new double[]{bdLat, bdLon};
+    }
+ 
+    private boolean outOfChina(double lat, double lon) {
+        if (lon < 72.004 || lon > 137.8347) {
+            return true;
+        }
+        if (lat < 0.8293 || lat > 55.8271) {
+            return true;
+        }
+        return false;
+    }
+ 
+    private double transformLat(double x, double y) {
+        double ret = -100.0 + 2.0 * x + 3.0 * y + 0.2 * y * y + 0.1 * x * y + 0.2 * Math.sqrt(Math.abs(x));
+        ret += (20.0 * Math.sin(6.0 * x * PI) + 20.0 * Math.sin(2.0 * x * PI)) * 2.0 / 3.0;
+        ret += (20.0 * Math.sin(y * PI) + 40.0 * Math.sin(y / 3.0 * PI)) * 2.0 / 3.0;
+        ret += (160.0 * Math.sin(y / 12.0 * PI) + 320 * Math.sin(y * PI / 30.0)) * 2.0 / 3.0;
+        return ret;
+    }
+ 
+    private double transformLon(double x, double y) {
+        double ret = 300.0 + x + 2.0 * y + 0.1 * x * x + 0.1 * x * y + 0.1 * Math.sqrt(Math.abs(x));
+        ret += (20.0 * Math.sin(6.0 * x * PI) + 20.0 * Math.sin(2.0 * x * PI)) * 2.0 / 3.0;
+        ret += (20.0 * Math.sin(x * PI) + 40.0 * Math.sin(x / 3.0 * PI)) * 2.0 / 3.0;
+        ret += (150.0 * Math.sin(x / 12.0 * PI) + 300.0 * Math.sin(x / 30.0 * PI)) * 2.0 / 3.0;
+        return ret;
+    }
+ 
+    private static final double A = 6378245.0;
+    private static final double EE = 0.00669342162296594323;
+    private static final double PI = Math.PI;
+    private static final double X_PI = 3.14159265358979324 * 3000.0 / 180.0;
 
 }

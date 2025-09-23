@@ -153,8 +153,8 @@ public class TopinProtocolDecoder extends BaseProtocolDecoder {
             position.setTime(dateBuilder.getDate());
 
             position.setValid(type == MSG_GPS_2);
-            position.setLatitude(readCoordinate(buf));
-            position.setLongitude(readCoordinate(buf));
+            position.setLatitudeWgs84(readCoordinate(buf));
+            position.setLongitudeWgs84(readCoordinate(buf));
 
             buf.skipBytes(4 + 4); // second coordinates
 

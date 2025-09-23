@@ -131,8 +131,8 @@ public class AlematicsProtocolDecoder extends BaseProtocolDecoder {
         position.setDeviceTime(parser.nextDateTime());
 
         position.setValid(true);
-        position.setLatitude(parser.nextDouble(0));
-        position.setLongitude(parser.nextDouble(0));
+        position.setLatitudeWgs84(parser.nextDouble(0));
+        position.setLongitudeWgs84(parser.nextDouble(0));
         position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt(0)));
         position.setCourse(parser.nextInt(0));
         position.setAltitude(parser.nextInt(0));

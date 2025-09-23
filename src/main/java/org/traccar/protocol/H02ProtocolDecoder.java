@@ -147,8 +147,8 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
             longitude = -longitude;
         }
 
-        position.setLatitude(latitude);
-        position.setLongitude(longitude);
+        position.setLatitudeWgs84(latitude);
+        position.setLongitudeWgs84(longitude);
 
         position.setSpeed(BcdUtil.readInteger(buf, 3));
         position.setCourse((buf.readUnsignedByte() & 0x0f) * 100.0 + BcdUtil.readInteger(buf, 2));
@@ -363,23 +363,23 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (parser.hasNext(3)) {
-            position.setLatitude(parser.nextCoordinate());
+            position.setLatitudeWgs84(parser.nextCoordinate());
         }
         if (parser.hasNext(3)) {
-            position.setLatitude(parser.nextCoordinate());
+            position.setLatitudeWgs84(parser.nextCoordinate());
         }
         if (parser.hasNext(4)) {
-            position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_MIN_MIN_HEM));
+            position.setLatitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_MIN_MIN_HEM));
         }
 
         if (parser.hasNext(3)) {
-            position.setLongitude(parser.nextCoordinate());
+            position.setLongitudeWgs84(parser.nextCoordinate());
         }
         if (parser.hasNext(3)) {
-            position.setLongitude(parser.nextCoordinate());
+            position.setLongitudeWgs84(parser.nextCoordinate());
         }
         if (parser.hasNext(4)) {
-            position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_MIN_MIN_HEM));
+            position.setLongitudeWgs84(parser.nextCoordinate(Parser.CoordinateFormat.DEG_MIN_MIN_HEM));
         }
 
         position.setSpeed(parser.nextDouble(0));
@@ -589,8 +589,8 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
         } else {
 
             position.setValid(true);
-            position.setLatitude(parser.nextCoordinate());
-            position.setLongitude(parser.nextCoordinate());
+            position.setLatitudeWgs84(parser.nextCoordinate());
+            position.setLongitudeWgs84(parser.nextCoordinate());
             position.setSpeed(parser.nextDouble());
             position.setCourse(parser.nextDouble());
 

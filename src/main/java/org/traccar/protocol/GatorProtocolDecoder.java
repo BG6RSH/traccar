@@ -136,8 +136,8 @@ public class GatorProtocolDecoder extends BaseProtocolDecoder {
                     .setSecond(BcdUtil.readInteger(buf, 2));
             position.setTime(dateBuilder.getDate());
 
-            position.setLatitude(BcdUtil.readCoordinate(buf));
-            position.setLongitude(BcdUtil.readCoordinate(buf));
+            position.setLatitudeWgs84(BcdUtil.readCoordinate(buf));
+            position.setLongitudeWgs84(BcdUtil.readCoordinate(buf));
             position.setSpeed(UnitsConverter.knotsFromKph(BcdUtil.readInteger(buf, 4)));
             position.setCourse(BcdUtil.readInteger(buf, 4));
 

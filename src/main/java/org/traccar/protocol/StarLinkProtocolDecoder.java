@@ -164,8 +164,8 @@ public class StarLinkProtocolDecoder extends BaseProtocolDecoder {
                 case "#EDSC#" -> position.set("reason", data[i]);
                 case "#IARM#" -> position.set(Position.KEY_ARMED, Integer.parseInt(data[i]) > 0);
                 case "#PDT#" -> position.setFixTime(dateFormat.parse(data[i]));
-                case "#LAT#" -> position.setLatitude(parseCoordinate(data[i]));
-                case "#LONG#" -> position.setLongitude(parseCoordinate(data[i]));
+                case "#LAT#" -> position.setLatitudeWgs84(parseCoordinate(data[i]));
+                case "#LONG#" -> position.setLongitudeWgs84(parseCoordinate(data[i]));
                 case "#SPD#" -> position.setSpeed(Double.parseDouble(data[i]));
                 case "#SPDK#" -> position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(data[i])));
                 case "#HEAD#" -> position.setCourse(Integer.parseInt(data[i]));

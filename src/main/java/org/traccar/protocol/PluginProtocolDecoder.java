@@ -94,8 +94,8 @@ public class PluginProtocolDecoder extends BaseProtocolDecoder {
         position.setDeviceId(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime());
-        position.setLongitude(parser.nextDouble());
-        position.setLatitude(parser.nextDouble());
+        position.setLongitudeWgs84(parser.nextDouble());
+        position.setLatitudeWgs84(parser.nextDouble());
         position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
         position.setCourse(parser.nextInt());
         position.setAltitude(parser.nextInt());

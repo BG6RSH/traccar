@@ -147,8 +147,8 @@ public class Xexun2ProtocolDecoder extends BaseProtocolDecoder {
                         position.setValid(true);
                         position.setFixTime(position.getDeviceTime());
                         position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
-                        position.setLongitude(convertCoordinate(buf.readFloat()));
-                        position.setLatitude(convertCoordinate(buf.readFloat()));
+                        position.setLongitudeWgs84(convertCoordinate(buf.readFloat()));
+                        position.setLatitudeWgs84(convertCoordinate(buf.readFloat()));
                     }
                     Network network = new Network();
                     if (BitUtil.check(positionMask, 1)) {
@@ -181,8 +181,8 @@ public class Xexun2ProtocolDecoder extends BaseProtocolDecoder {
                         position.setValid(true);
                         position.setFixTime(position.getDeviceTime());
                         position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
-                        position.setLongitude(convertCoordinate(buf.readDouble()));
-                        position.setLatitude(convertCoordinate(buf.readDouble()));
+                        position.setLongitudeWgs84(convertCoordinate(buf.readDouble()));
+                        position.setLatitudeWgs84(convertCoordinate(buf.readDouble()));
                     }
                     if (BitUtil.check(positionMask, 7)) {
                         int dataLength = buf.readUnsignedShort();
@@ -191,8 +191,8 @@ public class Xexun2ProtocolDecoder extends BaseProtocolDecoder {
                             int dataEndIndex = buf.readerIndex() + buf.readUnsignedShort();
                             if (dataType == 'G') {
                                 position.setFixTime(position.getDeviceTime());
-                                position.setLongitude(convertCoordinate(buf.readDouble()));
-                                position.setLatitude(convertCoordinate(buf.readDouble()));
+                                position.setLongitudeWgs84(convertCoordinate(buf.readDouble()));
+                                position.setLatitudeWgs84(convertCoordinate(buf.readDouble()));
                                 position.setValid(buf.readUnsignedByte() > 0);
                                 position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
                                 buf.readUnsignedByte(); // satellite signal-to-noise ratio

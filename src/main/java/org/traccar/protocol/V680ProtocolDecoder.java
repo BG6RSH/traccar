@@ -106,8 +106,8 @@ public class V680ProtocolDecoder extends BaseProtocolDecoder {
                 lat += latDegrees;
             }
 
-            position.setLongitude(west ? -lon : lon);
-            position.setLatitude(south ? -lat : lat);
+            position.setLongitudeWgs84(west ? -lon : lon);
+            position.setLatitudeWgs84(south ? -lat : lat);
 
             position.setSpeed(parser.nextDouble(0));
             position.setCourse(parser.nextDouble(0));

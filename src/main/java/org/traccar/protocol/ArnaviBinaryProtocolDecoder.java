@@ -85,12 +85,12 @@ public class ArnaviBinaryProtocolDecoder extends BaseProtocolDecoder {
             short tag = buf.readUnsignedByte();
             switch (tag) {
                 case TAG_LATITUDE:
-                    position.setLatitude(buf.readFloatLE());
+                    position.setLatitudeWgs84(buf.readFloatLE());
                     position.setValid(true);
                     break;
 
                 case TAG_LONGITUDE:
-                    position.setLongitude(buf.readFloatLE());
+                    position.setLongitudeWgs84(buf.readFloatLE());
                     position.setValid(true);
                     break;
 

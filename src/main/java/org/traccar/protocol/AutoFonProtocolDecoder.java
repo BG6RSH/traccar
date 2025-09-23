@@ -104,8 +104,8 @@ public class AutoFonProtocolDecoder extends BaseProtocolDecoder {
                 .setTime(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte());
         position.setTime(dateBuilder.getDate());
 
-        position.setLatitude(convertCoordinate(buf.readInt()));
-        position.setLongitude(convertCoordinate(buf.readInt()));
+        position.setLatitudeWgs84(convertCoordinate(buf.readInt()));
+        position.setLongitudeWgs84(convertCoordinate(buf.readInt()));
         position.setAltitude(buf.readShort());
         position.setSpeed(buf.readUnsignedByte());
         position.setCourse(buf.readUnsignedByte() * 2.0);
@@ -200,8 +200,8 @@ public class AutoFonProtocolDecoder extends BaseProtocolDecoder {
                     .setDateReverse(date / 10000, date / 100 % 100, date % 100);
             position.setTime(dateBuilder.getDate());
 
-            position.setLatitude(convertCoordinate(buf.readUnsignedByte(), buf.readUnsignedMedium()));
-            position.setLongitude(convertCoordinate(buf.readUnsignedByte(), buf.readUnsignedMedium()));
+            position.setLatitudeWgs84(convertCoordinate(buf.readUnsignedByte(), buf.readUnsignedMedium()));
+            position.setLongitudeWgs84(convertCoordinate(buf.readUnsignedByte(), buf.readUnsignedMedium()));
             position.setSpeed(buf.readUnsignedByte());
             position.setCourse(buf.readUnsignedShort());
 

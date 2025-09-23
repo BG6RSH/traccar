@@ -103,8 +103,8 @@ public class Gt02ProtocolDecoder extends BaseProtocolDecoder {
                 longitude = -longitude;
             }
 
-            position.setLatitude(latitude);
-            position.setLongitude(longitude);
+            position.setLatitudeWgs84(latitude);
+            position.setLongitudeWgs84(longitude);
 
         } else if (type == MSG_RESPONSE) {
 

@@ -64,8 +64,8 @@ public class ValtrackProtocolDecoder extends BaseHttpProtocolDecoder {
 
             position.setValid(true);
             position.setTime(new Date());
-            position.setLatitude(Double.parseDouble(message.getString("lat")));
-            position.setLongitude(Double.parseDouble(message.getString("lon")));
+            position.setLatitudeWgs84(Double.parseDouble(message.getString("lat")));
+            position.setLongitudeWgs84(Double.parseDouble(message.getString("lon")));
             String speed = message.getString("speed");
             if (!speed.isEmpty()) {
                 position.setSpeed(Double.parseDouble(speed));

@@ -224,8 +224,8 @@ public class GalileoProtocolDecoder extends BaseProtocolDecoder {
         position.setTime(calendar.getTime());
 
         position.setValid(bits.readUnsigned(1) == 0);
-        position.setLongitude(360 * bits.readUnsigned(22) / 4194304.0 - 180);
-        position.setLatitude(180 * bits.readUnsigned(21) / 2097152.0 - 90);
+        position.setLongitudeWgs84(360 * bits.readUnsigned(22) / 4194304.0 - 180);
+        position.setLatitudeWgs84(180 * bits.readUnsigned(21) / 2097152.0 - 90);
         if (bits.readUnsigned(1) > 0) {
             position.addAlarm(Position.ALARM_GENERAL);
         }
@@ -255,8 +255,8 @@ public class GalileoProtocolDecoder extends BaseProtocolDecoder {
         int flags = buf.readUnsignedByte();
         double latitude = buf.readUnsignedByte() + buf.readUnsignedShort() / 60000.0;
         double longitude = buf.readUnsignedByte() + buf.readUnsignedShort() / 60000.0;
-        position.setLatitude(BitUtil.check(flags, 1) ? -latitude : latitude);
-        position.setLongitude(BitUtil.check(flags, 0) ? -longitude : longitude);
+        position.setLatitudeWgs84(BitUtil.check(flags, 1) ? -latitude : latitude);
+        position.setLongitudeWgs84(BitUtil.check(flags, 0) ? -longitude : longitude);
         buf.readUnsignedInt(); // accuracy
 
         buf.readUnsignedByte(); // data tag header
@@ -280,8 +280,8 @@ public class GalileoProtocolDecoder extends BaseProtocolDecoder {
                 int tag = data.readUnsignedByte();
                 if (tag == 0x30) {
                     position.setValid((data.readUnsignedByte() & 0xf0) == 0x00);
-                    position.setLatitude(data.readIntLE() / 1000000.0);
-                    position.setLongitude(data.readIntLE() / 1000000.0);
+                    position.setLatitudeWgs84(data.readIntLE() / 1000000.0);
+                    position.setLongitudeWgs84(data.readIntLE() / 1000000.0);
                 } else {
                     decodeTag(position, data, tag);
                 }
@@ -322,8 +322,8 @@ public class GalileoProtocolDecoder extends BaseProtocolDecoder {
             } else if (tag == 0x30) {
                 hasLocation = true;
                 position.setValid((buf.readUnsignedByte() & 0xf0) == 0x00);
-                position.setLatitude(buf.readIntLE() / 1000000.0);
-                position.setLongitude(buf.readIntLE() / 1000000.0);
+                position.setLatitudeWgs84(buf.readIntLE() / 1000000.0);
+                position.setLongitudeWgs84(buf.readIntLE() / 1000000.0);
             } else {
                 decodeTag(position, buf, tag);
             }

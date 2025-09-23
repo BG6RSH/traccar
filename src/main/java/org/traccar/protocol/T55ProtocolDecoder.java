@@ -208,8 +208,8 @@ public class T55ProtocolDecoder extends BaseProtocolDecoder {
                 .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
 
         position.setValid(parser.next().equals("A"));
-        position.setLatitude(parser.nextCoordinate());
-        position.setLongitude(parser.nextCoordinate());
+        position.setLatitudeWgs84(parser.nextCoordinate());
+        position.setLongitudeWgs84(parser.nextCoordinate());
         position.setSpeed(parser.nextDouble(0));
         position.setCourse(parser.nextDouble(0));
 
@@ -260,8 +260,8 @@ public class T55ProtocolDecoder extends BaseProtocolDecoder {
                 .setTime(parser.nextInt(), parser.nextInt(), parser.nextInt());
         position.setTime(dateBuilder.getDate());
 
-        position.setLatitude(parser.nextCoordinate());
-        position.setLongitude(parser.nextCoordinate());
+        position.setLatitudeWgs84(parser.nextCoordinate());
+        position.setLongitudeWgs84(parser.nextCoordinate());
         position.setValid(parser.nextInt() > 0);
         position.set(Position.KEY_SATELLITES, parser.nextInt());
         position.set(Position.KEY_HDOP, parser.nextDouble());
@@ -280,8 +280,8 @@ public class T55ProtocolDecoder extends BaseProtocolDecoder {
         Position position = new Position(getProtocolName());
         position.setDeviceId(deviceSession.getDeviceId());
 
-        position.setLatitude(parser.nextCoordinate());
-        position.setLongitude(parser.nextCoordinate());
+        position.setLatitudeWgs84(parser.nextCoordinate());
+        position.setLongitudeWgs84(parser.nextCoordinate());
 
         DateBuilder dateBuilder = new DateBuilder()
                 .setCurrentDate()
@@ -305,8 +305,8 @@ public class T55ProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(new Date());
         position.setValid(parser.next().equals("A"));
-        position.setLatitude(parser.nextCoordinate());
-        position.setLongitude(parser.nextCoordinate());
+        position.setLatitudeWgs84(parser.nextCoordinate());
+        position.setLongitudeWgs84(parser.nextCoordinate());
         position.setSpeed(parser.nextDouble(0));
         position.setCourse(parser.nextDouble(0));
 
@@ -326,8 +326,8 @@ public class T55ProtocolDecoder extends BaseProtocolDecoder {
         position.setTime(parser.nextDateTime());
 
         position.setValid(parser.next().equals("A"));
-        position.setLatitude(parser.nextDouble());
-        position.setLongitude(parser.nextDouble());
+        position.setLatitudeWgs84(parser.nextDouble());
+        position.setLongitudeWgs84(parser.nextDouble());
         position.setSpeed(parser.nextDouble());
         position.setCourse(parser.nextDouble());
         position.setAltitude(parser.nextDouble());
@@ -373,8 +373,8 @@ public class T55ProtocolDecoder extends BaseProtocolDecoder {
         position.set(Position.KEY_EVENT, parser.nextInt());
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
-        position.setLatitude(parser.nextDouble());
-        position.setLongitude(parser.nextDouble());
+        position.setLatitudeWgs84(parser.nextDouble());
+        position.setLongitudeWgs84(parser.nextDouble());
         position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
         position.setCourse(parser.nextInt());
         position.setValid(parser.next().equals("A"));
@@ -421,8 +421,8 @@ public class T55ProtocolDecoder extends BaseProtocolDecoder {
         position.set(Position.KEY_INDEX, parser.nextInt());
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.HMS));
-        position.setLatitude(parser.nextCoordinate());
-        position.setLongitude(parser.nextCoordinate());
+        position.setLatitudeWgs84(parser.nextCoordinate());
+        position.setLongitudeWgs84(parser.nextCoordinate());
         position.setAltitude(parser.nextDouble());
         position.setValid(!parser.next().equals("NF"));
         position.setAccuracy(parser.nextDouble());

@@ -62,8 +62,8 @@ public class Mavlink2ProtocolDecoder extends BaseProtocolDecoder {
 
             position.setValid(true);
             position.setTime(new Date());
-            position.setLatitude(buf.readIntLE() / 10000000.0);
-            position.setLongitude(buf.readIntLE() / 10000000.0);
+            position.setLatitudeWgs84(buf.readIntLE() / 10000000.0);
+            position.setLongitudeWgs84(buf.readIntLE() / 10000000.0);
             position.setAltitude(buf.readIntLE() / 1000.0);
             position.set("relativeAltitude", buf.readIntLE() / 1000.0);
 

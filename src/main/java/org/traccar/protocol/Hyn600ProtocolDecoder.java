@@ -68,8 +68,8 @@ public class Hyn600ProtocolDecoder extends BaseProtocolDecoder {
             position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
             position.setCourse(buf.readUnsignedShort());
             position.setAltitude(buf.readShort());
-            position.setLatitude(buf.readUnsignedInt() / 1000000.0);
-            position.setLongitude(buf.readUnsignedInt() / 1000000.0);
+            position.setLatitudeWgs84(buf.readUnsignedInt() / 1000000.0);
+            position.setLongitudeWgs84(buf.readUnsignedInt() / 1000000.0);
             DateBuilder dateBuilder = new DateBuilder()
                     .setYear(BcdUtil.readInteger(buf, 4))
                     .setMonth(BcdUtil.readInteger(buf, 2))

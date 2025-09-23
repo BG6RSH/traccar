@@ -155,8 +155,8 @@ public class ApelProtocolDecoder extends BaseProtocolDecoder {
                 }
 
                 position.setTime(new Date(buf.readUnsignedIntLE() * 1000));
-                position.setLatitude(buf.readIntLE() * 180.0 / 0x7FFFFFFF);
-                position.setLongitude(buf.readIntLE() * 180.0 / 0x7FFFFFFF);
+                position.setLatitudeWgs84(buf.readIntLE() * 180.0 / 0x7FFFFFFF);
+                position.setLongitudeWgs84(buf.readIntLE() * 180.0 / 0x7FFFFFFF);
 
                 if (subtype == MSG_STATE_FULL_INFO_T104) {
                     int speed = buf.readUnsignedByte();

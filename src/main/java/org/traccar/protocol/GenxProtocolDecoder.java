@@ -17,6 +17,8 @@ package org.traccar.protocol;
 
 import io.netty.channel.Channel;
 import org.traccar.BaseProtocolDecoder;
+import org.traccar.config.ConfigKey;
+import org.traccar.config.Keys;
 import org.traccar.session.DeviceSession;
 import org.traccar.Protocol;
 import org.traccar.helper.UnitsConverter;
@@ -35,7 +37,8 @@ public class GenxProtocolDecoder extends BaseProtocolDecoder {
 
     @Override
     protected void init() {
-        setReportColumns(getConfig().getString(getProtocolName() + ".reportColumns", "1,2,3,4"));
+        ConfigKey<String> reportColumns = Keys.PROTOCOL_SERVER.withPrefix(getProtocolName() + ".reportColumns");
+        setReportColumns(getConfig().getString(reportColumns, "1,2,3,4"));
     }
 
     public void setReportColumns(String format) {
@@ -64,8 +67,8 @@ public class GenxProtocolDecoder extends BaseProtocolDecoder {
                     }
                 }
                 case 2 -> position.setTime(new SimpleDateFormat("MM/dd/yy HH:mm:ss").parse(values[i]));
-                case 3 -> position.setLatitude(Double.parseDouble(values[i]));
-                case 4 -> position.setLongitude(Double.parseDouble(values[i]));
+                case 3 -> position.setLatitudeWgs84(Double.parseDouble(values[i]));
+                case 4 -> position.setLongitudeWgs84(Double.parseDouble(values[i]));
                 case 11 -> position.set(Position.KEY_IGNITION, values[i].equals("ON"));
                 case 13 -> position.setSpeed(UnitsConverter.knotsFromKph(Integer.parseInt(values[i])));
                 case 17 -> position.setCourse(Integer.parseInt(values[i]));

@@ -66,7 +66,7 @@ public class AttributeResource extends ExtendedObjectResource<Attribute> {
         var key = new Object();
         try {
             cacheManager.addDevice(position.getDeviceId(), key);
-            Object result = computedAttributesHandler.computeAttribute(entity, position);
+            Object result = computedAttributesHandler.computeAttributeValue(entity, position);
             if (result != null) {
                 return switch (entity.getType()) {
                     case "number", "boolean" -> Response.ok(result).build();
