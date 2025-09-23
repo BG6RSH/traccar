@@ -438,14 +438,21 @@ public class Position extends Message {
     }
  
     private boolean outOfChina(double lat, double lon) {
-        if (lon < 72.004 || lon > 137.8347) {
+        // 输入验证
+        if (Double.isNaN(lat) || Double.isNaN(lon) || Double.isInfinite(lat) || Double.isInfinite(lon)) {
             return true;
         }
-        if (lat < 0.8293 || lat > 55.8271) {
-            return true;
-        }
-        return false;
+
+        // 中国经纬度边界常量
+        final double MIN_CHINA_LON = 73.33;
+        final double MAX_CHINA_LON = 135.05;
+        final double MIN_CHINA_LAT = 3.51;
+        final double MAX_CHINA_LAT = 53.33;
+
+        // 同时判断经度和纬度是否在中国范围内
+        return !(lon >= MIN_CHINA_LON && lon <= MAX_CHINA_LON && lat >= MIN_CHINA_LAT && lat <= MAX_CHINA_LAT);
     }
+
  
     private double transformLat(double x, double y) {
         double ret = -100.0 + 2.0 * x + 3.0 * y + 0.2 * y * y + 0.1 * x * y + 0.2 * Math.sqrt(Math.abs(x));

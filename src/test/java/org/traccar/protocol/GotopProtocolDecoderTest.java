@@ -46,7 +46,7 @@ public class GotopProtocolDecoderTest extends ProtocolTest {
 
         verifyPosition(decoder, text(
                 "353327020115804,CMD-T,A,DATE:090329,TIME:223252,LAT:22.7634066N,LOT:114.3964783E,Speed:000.0,84-20,000"),
-                position("2009-03-29 22:32:52.000", true, 22.76341, 114.39648));
+                position("2009-03-29 22:32:52.000", true, 22.760771, 114.401436));
 
         verifyPosition(decoder, text(
                 "353327020115804,CMD-T,A,DATE:090329,TIME:223252,LAT:22.7634066N,LOT:114.3964783E,Speed:000.0,1-1-0-84-20,000"));

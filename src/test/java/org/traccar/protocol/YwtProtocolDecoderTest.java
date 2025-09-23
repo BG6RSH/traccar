@@ -21,7 +21,7 @@ public class YwtProtocolDecoderTest extends ProtocolTest {
 
         verifyPosition(decoder, text(
                 "%RP,3000012345:0,090807182815,E114.602345,N22.069725,,30,160,4,0,00"),
-                position("2009-08-07 18:28:15.000", true, 22.06973, 114.60235));
+                position("2009-08-07 18:28:15.000", true, 22.066781, 114.606798));
 
         verifyPosition(decoder, text(
                 "%KP,3000012345:0,090807183115,E114.602345,N22.069725,,30,160,5,0,00;"));

@@ -164,7 +164,7 @@ public class SuntechProtocolDecoderTest extends ProtocolTest {
 
         verifyPosition(decoder, buffer(
                 "ST910;Alert;123456;410;20141018;18:30:12;+37.478774;+126.889690;000.000;000.00;0;4.0;1;6002"),
-                position("2014-10-18 18:30:12.000", false, 37.47877, 126.88969));
+                position("2014-10-18 18:30:12.000", false, 37.479540, 126.894577));
 
         verifyPosition(decoder, buffer(
                 "ST910;Alert;123456;410;20141018;18:30:12;+37.478774;+126.889690;000.000;000.00;0;4.0;1;6002;02;0;0310000100;450;01;-282;70;255;3;0"));

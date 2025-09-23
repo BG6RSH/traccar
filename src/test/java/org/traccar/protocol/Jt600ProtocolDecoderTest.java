@@ -117,7 +117,7 @@ public class Jt600ProtocolDecoderTest extends ProtocolTest {
 
         verifyPosition(decoder, buffer(
                 "(3110312099,W01,11404.6204,E,2232.9961,N,A,040511,063736,4,7,100,4,17,1,1,company)"),
-                position("2011-05-04 06:37:36.000", true, 22.54994, 114.07701));
+                position("2011-05-04 06:37:36.000", true, 22.547244, 114.082135));
 
         verifyPosition(decoder, buffer(
                 "(3120820029,W01,02553.3555,E,2438.0997,S,A,171012,053339,0,8,20,6,31,5,20,20)"));

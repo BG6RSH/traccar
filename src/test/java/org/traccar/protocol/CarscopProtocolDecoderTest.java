@@ -30,7 +30,7 @@ public class CarscopProtocolDecoderTest extends ProtocolTest {
 
         verifyPosition(decoder, text(
                 "*040331141830UB05123456789012345061825A2934.0133N10627.2544E000.0040331309.6200000000L000000"),
-                position("2004-03-31 06:18:25.000", true, 29.56689, 106.45424));
+                position("2004-03-31 06:18:25.000", true, 29.564303, 106.458213));
 
         verifyPosition(decoder, text(
                 "*040331141830UB04999999984061825A2934.0133N10627.2544E000.0040331309.6200000000L000000"));

@@ -171,7 +171,7 @@ public class H02ProtocolDecoderTest extends ProtocolTest {
         
         verifyPosition(decoder, buffer(
                 "*HQ,355488020119695,V1,050418,,2827.61232,N,07703.84822,E,0.00,0,031015,FFFEFBFF#"),
-                position("2015-10-03 05:04:18.000", false, 28.46021, 77.06414));
+                position("2015-10-03 05:04:18.000", false, 28.456614, 77.066891));
 
         verifyPosition(decoder, buffer(
                 "*HQ,1451316409,V1,030149,A,-23-29.0095,S,-46-51.5852,W,2.4,065,070315,FFFFFFFF#"),

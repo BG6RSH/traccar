@@ -15,7 +15,7 @@ public class MilesmateProtocolDecoderTest extends ProtocolTest {
 
         verifyPosition(decoder, text(
                 "ApiString={A:861359037496211,B:12.7,C:06.0,D:060218,E:2837.1003N,F:07723.3162E,G:016.80,H:310818,I:G,J:10010100,K:0000000A,L:1234,M:358.33}"),
-                position("2018-08-31 06:02:18.000", true, 28.61834, 77.38860));
+                position("2018-08-31 06:02:18.000", true, 28.614832, 77.391384));
 
         verifyPosition(decoder, text(
                 "ApiString={A:862631032208018,B:12.1,C:24.4,D:055852,E:2838.5310N,F:07717.8126E,G:000.0,H:200117,I:G,J:10100100,K:1000000A,L:1234,M:324.45}"));

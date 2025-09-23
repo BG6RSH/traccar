@@ -62,7 +62,7 @@ public class Vt200ProtocolDecoderTest extends ProtocolTest {
 
         verifyPosition(decoder, binary(
                 "2830140414000130890012000003280414090004224388161134912397df29"),
-                position("2014-04-28 09:00:04.000", true, 22.73136, 113.81873166666666));
+                position("2014-04-28 09:00:04.000", true, 22.728450, 113.823782));
 
         verifyAttribute(decoder, binary(
                 "2830140414000130890012000003280414090004224388161134912397df29"),

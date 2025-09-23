@@ -33,7 +33,7 @@ public class Tr20ProtocolDecoderTest extends ProtocolTest {
 
         verifyPosition(decoder, text(
                 "%%TR-10,A,050916070549,N2240.8887E11359.2994,0,000,NA,D3800000,150,CFG:resend|"),
-                position("2005-09-16 07:05:49.000", true, 22.68148, 113.98832));
+                position("2005-09-16 07:05:49.000", true, 22.678597, 113.993298));
 
         verifyPosition(decoder, text(
                 "%%TR-10,A,050916070549,N2240.8887E11359.2994,0,000,NA,D3800000,150,CFG:resend|"));
