@@ -68,7 +68,9 @@ public class WebServer implements LifecycleObject {
 
     private final Injector injector;
     private final Config config;
+
     private final Server server;
+    private McpServerHolder mcpServerHolder;
 
     public WebServer(Injector injector, Config config) throws IOException {
         this.injector = injector;
@@ -168,6 +170,13 @@ public class WebServer implements LifecycleObject {
             servletHandler.addServlet(servletHolder, "/api/media/*");
         }
 
+        if (config.getBoolean(Keys.WEB_MCP_ENABLE)) {
+            mcpServerHolder = injector.getInstance(McpServerHolder.class);
+            var mcpServletHolder = new ServletHolder(mcpServerHolder.getServlet());
+            mcpServletHolder.setAsyncSupported(true);
+            servletHandler.addServlet(mcpServletHolder, McpServerHolder.PATH);
+        }
+
         ResourceConfig resourceConfig = new ResourceConfig();
         resourceConfig.property("jersey.config.server.wadl.disableWadl", true);
         resourceConfig.registerClasses(
@@ -235,6 +244,9 @@ public class WebServer implements LifecycleObject {
     @Override
     public void stop() throws Exception {
         server.stop();
+        if (mcpServerHolder != null) {
+            mcpServerHolder.close();
+        }
     }
 
 }

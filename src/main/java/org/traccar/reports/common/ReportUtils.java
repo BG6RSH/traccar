@@ -103,11 +103,15 @@ public class ReportUtils {
         }
     }
 
-    public double calculateFuel(Position first, Position last) {
+    public double calculateFuel(Position first, Position last, Device device) {
         if (first.hasAttribute(Position.KEY_FUEL_USED) && last.hasAttribute(Position.KEY_FUEL_USED)) {
             return last.getDouble(Position.KEY_FUEL_USED) - first.getDouble(Position.KEY_FUEL_USED);
-        } else if (first.hasAttribute(Position.KEY_FUEL_LEVEL) && last.hasAttribute(Position.KEY_FUEL_LEVEL)) {
-            return first.getDouble(Position.KEY_FUEL_LEVEL) - last.getDouble(Position.KEY_FUEL_LEVEL);
+        } else if (first.hasAttribute(Position.KEY_FUEL) && last.hasAttribute(Position.KEY_FUEL)) {
+            return first.getDouble(Position.KEY_FUEL) - last.getDouble(Position.KEY_FUEL);
+        } else if (first.hasAttribute(Position.KEY_FUEL_LEVEL) && last.hasAttribute(Position.KEY_FUEL_LEVEL)
+                && device.hasAttribute(Keys.FUEL_CAPACITY.getKey())) {
+            return ((first.getDouble(Position.KEY_FUEL_LEVEL) - last.getDouble(Position.KEY_FUEL_LEVEL)) / 100)
+                    * device.getDouble(Keys.FUEL_CAPACITY.getKey());
         }
         return 0;
     }
@@ -200,7 +204,7 @@ public class ReportUtils {
             trip.setAverageSpeed(UnitsConverter.knotsFromMps(trip.getDistance() * 1000 / tripDuration));
         }
         trip.setMaxSpeed(maxSpeed);
-        trip.setSpentFuel(calculateFuel(startTrip, endTrip));
+        trip.setSpentFuel(calculateFuel(startTrip, endTrip, device));
 
         trip.setDriverUniqueId(findDriver(startTrip, endTrip));
         trip.setDriverName(findDriverName(trip.getDriverUniqueId()));
@@ -241,7 +245,7 @@ public class ReportUtils {
 
         long stopDuration = endStop.getFixTime().getTime() - startStop.getFixTime().getTime();
         stop.setDuration(stopDuration);
-        stop.setSpentFuel(calculateFuel(startStop, endStop));
+        stop.setSpentFuel(calculateFuel(startStop, endStop, device));
 
         if (startStop.hasAttribute(Position.KEY_HOURS) && endStop.hasAttribute(Position.KEY_HOURS)) {
             stop.setEngineHours(endStop.getLong(Position.KEY_HOURS) - startStop.getLong(Position.KEY_HOURS));
@@ -271,21 +275,6 @@ public class ReportUtils {
         } else {
             return (T) calculateStop(device, startPosition, endPosition, ignoreOdometer);
         }
-    }
-
-    private boolean isMoving(List<Position> positions, int index, TripsConfig tripsConfig) {
-        if (tripsConfig.getMinimalNoDataDuration() > 0) {
-            boolean beforeGap = index < positions.size() - 1
-                    && positions.get(index + 1).getFixTime().getTime() - positions.get(index).getFixTime().getTime()
-                    >= tripsConfig.getMinimalNoDataDuration();
-            boolean afterGap = index > 0
-                    && positions.get(index).getFixTime().getTime() - positions.get(index - 1).getFixTime().getTime()
-                    >= tripsConfig.getMinimalNoDataDuration();
-            if (beforeGap || afterGap) {
-                return false;
-            }
-        }
-        return positions.get(index).getBoolean(Position.KEY_MOTION);
     }
 
     public <T extends BaseReportItem> List<T> detectTripsAndStops(
