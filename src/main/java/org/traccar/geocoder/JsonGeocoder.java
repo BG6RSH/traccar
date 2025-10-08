@@ -15,6 +15,7 @@
  */
 package org.traccar.geocoder;
 
+import jakarta.ws.rs.client.Invocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.traccar.database.StatisticsManager;
@@ -107,7 +108,14 @@ public abstract class JsonGeocoder implements Geocoder {
             statisticsManager.registerGeocoderRequest();
         }
 
-        var request = client.target(String.format(url, longitude, latitude)).request();
+        Invocation.Builder request;
+        if(url.contains("amap.com")) {
+            // 高德地图
+            request = client.target(String.format(url, longitude, latitude)).request();
+        }else {
+            // 其他地图
+            request = client.target(String.format(url, latitude, longitude)).request();
+        }
 
         if (callback != null) {
             request.async().get(new InvocationCallback<JsonObject>() {

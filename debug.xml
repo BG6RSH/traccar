@@ -30,9 +30,14 @@
     <entry key='intellitrac.port'>6037</entry>
 
     <!--  amap逆地址解析  -->
-    <entry key='geocoder.type'>amap</entry>
-    <entry key='geocoder.url'>https://restapi.amap.com/v3/geocode/regeo</entry>
-    <entry key='geocoder.key'>21b3a11e940d284eecb6b66bdd090fcc</entry>
-    <entry key='geocoder.format'>%f %r</entry>
+<!--    <entry key='geocoder.type'>amap</entry>-->
+<!--    <entry key='geocoder.url'>https://restapi.amap.com/v3/geocode/regeo</entry>-->
+<!--    <entry key='geocoder.key'>21b3a11e940d284eecb6b66bdd090fcc</entry>-->
+<!--    <entry key='geocoder.format'>%f %r</entry>-->
 
+    <!--  qq逆地址解析   -->
+    <entry key='geocoder.type'>qq</entry>
+    <entry key='geocoder.url'>https://apis.map.qq.com/ws/geocoder/v1</entry>
+    <entry key='geocoder.key'>CGABZ-7KUL2-WDEUO-CO6FL-DXBCE-SIFW2</entry>
+    <entry key='geocoder.format'>%f,%r</entry>
 </properties>
