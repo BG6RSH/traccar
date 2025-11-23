@@ -27,131 +27,457 @@ import org.slf4j.LoggerFactory;
 @StorageName("tc_positions")
 public class Position extends Message {
 
+    /**
+     * 原始数据键值常量，用于标识未经处理的原始数据
+     */
     public static final String KEY_ORIGINAL = "raw";
+
+    /**
+     * 索引键值常量，用于标识数据索引位置
+     */
     public static final String KEY_INDEX = "index";
+
+    /**
+     * 水平精度因子键值常量，用于GPS定位精度描述
+     */
     public static final String KEY_HDOP = "hdop";
+
+    /**
+     * 垂直精度因子键值常量，用于GPS垂直定位精度描述
+     */
     public static final String KEY_VDOP = "vdop";
+
+    /**
+     * 位置精度因子键值常量，用于GPS整体定位精度描述
+     */
     public static final String KEY_PDOP = "pdop";
+
+    /**
+     * 使用中卫星数量键值常量
+     */
     public static final String KEY_SATELLITES = "sat"; // in use
+
+    /**
+     * 可见卫星数量键值常量
+     */
     public static final String KEY_SATELLITES_VISIBLE = "satVisible";
+
+    /**
+     * 接收信号强度指示键值常量
+     */
     public static final String KEY_RSSI = "rssi";
+
+    /**
+     * GPS状态键值常量
+     */
     public static final String KEY_GPS = "gps";
+
+    /**
+     * 漫游状态键值常量
+     */
     public static final String KEY_ROAMING = "roaming";
+
+    /**
+     * 事件标识键值常量
+     */
     public static final String KEY_EVENT = "event";
+
+    /**
+     * 报警状态键值常量
+     */
     public static final String KEY_ALARM = "alarm";
+
+    /**
+     * 设备状态键值常量
+     */
     public static final String KEY_STATUS = "status";
+
+    /**
+     * 总里程键值常量，单位为米
+     */
     public static final String KEY_ODOMETER = "odometer"; // meters
+
+    /**
+     * 服务里程键值常量，单位为米
+     */
     public static final String KEY_ODOMETER_SERVICE = "serviceOdometer"; // meters
+
+    /**
+     * 行程里程键值常量，单位为米
+     */
     public static final String KEY_ODOMETER_TRIP = "tripOdometer"; // meters
+
+    /**
+     * 运行时间键值常量，单位为毫秒
+     */
     public static final String KEY_HOURS = "hours"; // milliseconds
+
+    /**
+     * 步数键值常量
+     */
     public static final String KEY_STEPS = "steps";
+
+    /**
+     * 心率键值常量
+     */
     public static final String KEY_HEART_RATE = "heartRate";
+
+    /**
+     * 输入信号键值常量
+     */
     public static final String KEY_INPUT = "input";
+
+    /**
+     * 输出信号键值常量
+     */
     public static final String KEY_OUTPUT = "output";
+
+    /**
+     * 图像数据键值常量
+     */
     public static final String KEY_IMAGE = "image";
+
+    /**
+     * 视频数据键值常量
+     */
     public static final String KEY_VIDEO = "video";
+
+    /**
+     * 音频数据键值常量
+     */
     public static final String KEY_AUDIO = "audio";
+
 
     // The units for the below four KEYs currently vary.
     // The preferred units of measure are specified in the comment for each.
-    public static final String KEY_POWER = "power"; // volts
-    public static final String KEY_BATTERY = "battery"; // volts
-    public static final String KEY_BATTERY_LEVEL = "batteryLevel"; // percentage
-    public static final String KEY_FUEL = "fuel"; // liters
-    public static final String KEY_FUEL_USED = "fuelUsed"; // liters
-    public static final String KEY_FUEL_CONSUMPTION = "fuelConsumption"; // liters/hour
-    public static final String KEY_FUEL_LEVEL = "fuelLevel"; // percentage
+    /**
+     * 定义电力系统相关的关键字常量
+     * 用于标识电力系统的电压参数
+     */
+    public static final String KEY_POWER = "power"; // V
 
+    /**
+     * 定义电池系统相关的关键字常量
+     * 用于标识电池电压参数
+     */
+    public static final String KEY_BATTERY = "battery"; // V
+
+    /**
+     * 定义电池电量相关的关键字常量
+     * 用于标识电池电量百分比参数
+     */
+    public static final String KEY_BATTERY_LEVEL = "batteryLevel"; // %
+
+    /**
+     * 定义燃油系统相关的关键字常量
+     * 用于标识燃油容量参数
+     */
+    public static final String KEY_FUEL = "fuel"; // liters
+
+    /**
+     * 定义燃油消耗相关的关键字常量
+     * 用于标识已使用燃油量参数
+     */
+    public static final String KEY_FUEL_USED = "fuelUsed"; // 升
+
+    /**
+     * 定义燃油消耗率相关的关键字常量
+     * 用于标识燃油消耗速率参数
+     */
+    public static final String KEY_FUEL_CONSUMPTION = "fuelConsumption"; // 升/小时
+
+    /**
+     * 定义燃油液位相关的关键字常量
+     * 用于标识燃油液位百分比参数
+     */
+    public static final String KEY_FUEL_LEVEL = "fuelLevel"; // %
+
+
+    /** 固件版本号键名 */
     public static final String KEY_VERSION_FW = "versionFw";
+
+    /** 硬件版本号键名 */
     public static final String KEY_VERSION_HW = "versionHw";
+
+    /** 设备类型键名 */
     public static final String KEY_TYPE = "type";
+
+    /** 点火状态键名 */
     public static final String KEY_IGNITION = "ignition";
+
+    /** 标志位集合键名 */
     public static final String KEY_FLAGS = "flags";
+
+    /** 天线状态键名 */
     public static final String KEY_ANTENNA = "antenna";
+
+    /** 充电状态键名 */
     public static final String KEY_CHARGE = "charge";
+
+    /** IP地址键名 */
     public static final String KEY_IP = "ip";
+
+    /** 归档标识键名 */
     public static final String KEY_ARCHIVE = "archive";
+
+    /** 距离（米）键名 */
     public static final String KEY_DISTANCE = "distance"; // meters
+
+    /** 总距离（米）键名 */
     public static final String KEY_TOTAL_DISTANCE = "totalDistance"; // meters
+
+    /** 发动机转速键名 */
     public static final String KEY_RPM = "rpm";
+
+    /** 车辆识别号码键名 */
     public static final String KEY_VIN = "vin";
+
+    /** 近似位置标志键名 */
     public static final String KEY_APPROXIMATE = "approximate";
+
+    /** 油门开度键名 */
     public static final String KEY_THROTTLE = "throttle";
+
+    /** 移动状态键名 */
     public static final String KEY_MOTION = "motion";
+
+    /** 布防状态键名 */
     public static final String KEY_ARMED = "armed";
+
+    /** 电子围栏事件键名 */
     public static final String KEY_GEOFENCE = "geofence";
+
+    /** 加速度数据键名 */
     public static final String KEY_ACCELERATION = "acceleration";
+
+    /** 湿度数据键名 */
     public static final String KEY_HUMIDITY = "humidity";
+
+    /** 设备温度（摄氏度）键名 */
     public static final String KEY_DEVICE_TEMP = "deviceTemp"; // celsius
+
+    /** 冷却液温度（摄氏度）键名 */
     public static final String KEY_COOLANT_TEMP = "coolantTemp"; // celsius
+
+    /** 发动机负载键名 */
     public static final String KEY_ENGINE_LOAD = "engineLoad";
+
+    /** 发动机温度键名 */
     public static final String KEY_ENGINE_TEMP = "engineTemp";
+
+    /** 运营商信息键名 */
     public static final String KEY_OPERATOR = "operator";
+
+    /** 指令内容键名 */
     public static final String KEY_COMMAND = "command";
+
+    /** 阻断状态键名 */
     public static final String KEY_BLOCKED = "blocked";
+
+    /** 锁定状态键名 */
     public static final String KEY_LOCK = "lock";
+
+    /** 车门状态键名 */
     public static final String KEY_DOOR = "door";
+
+    /** 轴重数据键名 */
     public static final String KEY_AXLE_WEIGHT = "axleWeight";
+
+    /** G-Sensor数据键名 */
     public static final String KEY_G_SENSOR = "gSensor";
+
+    /** ICCID卡号键名 */
     public static final String KEY_ICCID = "iccid";
+
+    /** 电话号码键名 */
     public static final String KEY_PHONE = "phone";
+
+    /** 限速值键名 */
     public static final String KEY_SPEED_LIMIT = "speedLimit";
+
+    /** 驾驶时间键名 */
     public static final String KEY_DRIVING_TIME = "drivingTime";
 
+    /**
+     * 定义数据传输相关的常量键值
+     */
     public static final String KEY_DTCS = "dtcs";
+
+    /**
+     * 定义OBD速度相关的常量键值，单位为km/h
+     */
     public static final String KEY_OBD_SPEED = "obdSpeed"; // km/h
+
+    /**
+     * 定义OBD里程表相关的常量键值，单位为米
+     */
     public static final String KEY_OBD_ODOMETER = "obdOdometer"; // meters
 
+    /**
+     * 定义结果相关的常量键值
+     */
     public static final String KEY_RESULT = "result";
 
+    /**
+     * 定义驾驶员唯一标识符相关的常量键值
+     */
     public static final String KEY_DRIVER_UNIQUE_ID = "driverUniqueId";
+
+    /**
+     * 定义卡片相关的常量键值
+     */
     public static final String KEY_CARD = "card";
 
+
     // Start with 1 not 0
+    /**
+     * 温度传感器数据前缀标识符
+     * 用于标识与温度相关的数据字段或变量名称前缀
+     */
     public static final String PREFIX_TEMP = "temp";
+
+    /**
+     * 模数转换器数据前缀标识符
+     * 用于标识与模数转换相关的数据字段或变量名称前缀
+     */
     public static final String PREFIX_ADC = "adc";
+
+    /**
+     * 输入输出端口数据前缀标识符
+     * 用于标识与通用输入输出相关的数据字段或变量名称前缀
+     */
     public static final String PREFIX_IO = "io";
+
+    /**
+     * 计数器数据前缀标识符
+     * 用于标识与计数操作相关的数据字段或变量名称前缀
+     */
     public static final String PREFIX_COUNT = "count";
+
+    /**
+     * 输入信号数据前缀标识符
+     * 用于标识与输入信号相关的数据字段或变量名称前缀
+     */
     public static final String PREFIX_IN = "in";
+
+    /**
+     * 输出信号数据前缀标识符
+     * 用于标识与输出信号相关的数据字段或变量名称前缀
+     */
     public static final String PREFIX_OUT = "out";
 
+    /** 通用报警 */
     public static final String ALARM_GENERAL = "general";
+
+    /** SOS紧急报警 */
     public static final String ALARM_SOS = "sos";
+
+    /** 振动报警 */
     public static final String ALARM_VIBRATION = "vibration";
+
+    /** 移动报警 */
     public static final String ALARM_MOVEMENT = "movement";
+
+    /** 低速报警 */
     public static final String ALARM_LOW_SPEED = "lowspeed";
+
+    /** 超速报警 */
     public static final String ALARM_OVERSPEED = "overspeed";
+
+    /** 跌倒报警 */
     public static final String ALARM_FALL_DOWN = "fallDown";
+
+    /** 低电量报警 */
     public static final String ALARM_LOW_POWER = "lowPower";
+
+    /** 低电池报警（与lowPower类似，可能用于不同设备） */
     public static final String ALARM_LOW_BATTERY = "lowBattery";
+
+    /** 故障报警 */
     public static final String ALARM_FAULT = "fault";
+
+    /** 设备关机报警 */
     public static final String ALARM_POWER_OFF = "powerOff";
+
+    /** 设备开机报警 */
     public static final String ALARM_POWER_ON = "powerOn";
+
+    /** 车门报警 */
     public static final String ALARM_DOOR = "door";
+
+    /** 上锁报警 */
     public static final String ALARM_LOCK = "lock";
+
+    /** 解锁报警 */
     public static final String ALARM_UNLOCK = "unlock";
+
+    /** 地理围栏报警 */
     public static final String ALARM_GEOFENCE = "geofence";
+
+    /** 进入地理围栏报警 */
     public static final String ALARM_GEOFENCE_ENTER = "geofenceEnter";
+
+    /** 离开地理围栏报警 */
     public static final String ALARM_GEOFENCE_EXIT = "geofenceExit";
+
+    /** GPS天线被切断报警 */
     public static final String ALARM_GPS_ANTENNA_CUT = "gpsAntennaCut";
+
+    /** 事故报警 */
     public static final String ALARM_ACCIDENT = "accident";
+
+    /** 拖车报警 */
     public static final String ALARM_TOW = "tow";
+
+    /** 怠速报警 */
     public static final String ALARM_IDLE = "idle";
+
+    /** 高转速报警 */
     public static final String ALARM_HIGH_RPM = "highRpm";
+
+    /** 急加速报警 */
     public static final String ALARM_ACCELERATION = "hardAcceleration";
+
+    /** 急刹车报警 */
     public static final String ALARM_BRAKING = "hardBraking";
+
+    /** 急转弯报警 */
     public static final String ALARM_CORNERING = "hardCornering";
+
+    /** 变道报警 */
     public static final String ALARM_LANE_CHANGE = "laneChange";
+
+    /** 疲劳驾驶报警 */
     public static final String ALARM_FATIGUE_DRIVING = "fatigueDriving";
+
+    /** 电源切断报警 */
     public static final String ALARM_POWER_CUT = "powerCut";
+
+    /** 电源恢复报警 */
     public static final String ALARM_POWER_RESTORED = "powerRestored";
+
+    /** 信号干扰报警 */
     public static final String ALARM_JAMMING = "jamming";
+
+    /** 温度异常报警 */
     public static final String ALARM_TEMPERATURE = "temperature";
+
+    /** 停车报警 */
     public static final String ALARM_PARKING = "parking";
+
+    /** 引擎盖开启报警 */
     public static final String ALARM_BONNET = "bonnet";
+
+    /** 脚刹报警 */
     public static final String ALARM_FOOT_BRAKE = "footBrake";
+
+    /** 燃油泄漏报警 */
     public static final String ALARM_FUEL_LEAK = "fuelLeak";
+
+    /** 非法操作/篡改报警 */
     public static final String ALARM_TAMPERING = "tampering";
+
+    /** 设备移除报警 */
     public static final String ALARM_REMOVING = "removing";
     private static final Logger LOG = LoggerFactory.getLogger(Position.class);
 

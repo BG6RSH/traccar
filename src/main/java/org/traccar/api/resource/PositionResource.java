@@ -62,11 +62,23 @@ public class PositionResource extends BaseResource {
     @Inject
     private GpxExportProvider gpxExportProvider;
 
+    /**
+     * 根据不同的查询条件获取位置信息的JSON数据流
+     *
+     * @param deviceId 设备ID，用于查询特定设备的位置信息
+     * @param positionIds 位置ID列表，用于精确查询指定位置
+     * @param geofenceId 地理围栏ID，用于过滤在指定地理围栏内的位置
+     * @param from 起始时间，用于查询时间范围内的位置数据
+     * @param to 结束时间，用于查询时间范围内的位置数据
+     * @return 返回符合条件的位置信息数据流
+     * @throws StorageException 当存储操作出现异常时抛出
+     */
     @GET
     public Stream<Position> getJson(
             @QueryParam("deviceId") long deviceId, @QueryParam("id") List<Long> positionIds,
             @QueryParam("geofenceId") long geofenceId, @QueryParam("from") Date from, @QueryParam("to") Date to)
             throws StorageException {
+        // 根据位置ID列表精确查询位置信息
         if (!positionIds.isEmpty()) {
             var positions = new ArrayList<Position>();
             for (long positionId : positionIds) {
@@ -76,24 +88,40 @@ public class PositionResource extends BaseResource {
                 positions.add(position);
             }
             return positions.stream();
+        // 根据设备ID查询位置信息
         } else if (deviceId > 0) {
             permissionsService.checkPermission(Device.class, getUserId(), deviceId);
+            // 查询指定时间范围内的位置数据
             if (from != null && to != null) {
                 permissionsService.checkRestriction(getUserId(), UserRestrictions::getDisableReports);
 
                 Geofence geofence = geofenceId == 0 ? null : storage.getObject(Geofence.class, new Request(
                         new Columns.All(), new Condition.Equals("id", geofenceId)));
 
-                return PositionUtil.getPositionsStream(storage, deviceId, from, to)
-                        .filter(position -> geofence == null || geofence.containsPosition(position));
-            } else {
+                // 过滤无效坐标记录，添加 valid=1 的条件
+                var conditions = new LinkedList<Condition>();
+                conditions.add(new Condition.Equals("deviceId", deviceId));
+                conditions.add(new Condition.Between("fixTime", from, to));
+                conditions.add(new Condition.Equals("valid", 1)); // 添加valid=1的条件
+
                 return storage.getObjectsStream(Position.class, new Request(
-                        new Columns.All(), new Condition.LatestPositions(deviceId)));
+                                new Columns.All(), Condition.merge(conditions)))
+                        .filter(position -> geofence == null || geofence.containsPosition(position));
+            // 查询最新的位置数据
+            } else {
+                // 如果需要，也可以在这里添加valid条件
+                var conditions = new LinkedList<Condition>();
+                conditions.add(new Condition.LatestPositions(deviceId));
+                conditions.add(new Condition.Equals("valid", 1));
+                return storage.getObjectsStream(Position.class, new Request(
+                        new Columns.All(), Condition.merge(conditions)));
             }
+        // 查询用户所有设备的最新位置
         } else {
             return PositionUtil.getLatestPositions(storage, getUserId()).stream();
         }
     }
+
 
     @Path("{id}")
     @DELETE

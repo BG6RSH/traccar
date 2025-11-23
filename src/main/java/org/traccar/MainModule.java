@@ -198,7 +198,7 @@ public class MainModule extends AbstractModule {
             int cacheSize = config.getInteger(Keys.GEOCODER_CACHE_SIZE);
             Geocoder geocoder = switch (type) {
                 case "pluscodes" -> new PlusCodesGeocoder();
-                case "amap" -> new AmapGeocoder(client, url, key, cacheSize, addressFormat);
+                case "amap" -> new AmapGeocoder(client, url, key, cacheSize, addressFormat);// 高德逆地址解码
                 case "qq" -> new QqGeocoder(client, url, key, cacheSize, addressFormat);    // 腾讯逆地址解码
                 case "nominatim" -> new NominatimGeocoder(client, url, key, language, cacheSize, addressFormat);
                 case "locationiq" -> new LocationIqGeocoder(client, url, key, language, cacheSize, addressFormat);

@@ -25,8 +25,14 @@ import jakarta.inject.Inject;
 
 public class HuabaoProtocol extends BaseProtocol {
 
+        /**
+     * 构造函数，初始化华宝协议处理器
+     *
+     * @param config 配置对象，用于初始化服务器和协议处理相关参数
+     */
     @Inject
     public HuabaoProtocol(Config config) {
+        // 设置支持的数据命令类型
         setSupportedDataCommands(
                 Command.TYPE_CUSTOM,
                 Command.TYPE_REBOOT_DEVICE,
@@ -35,6 +41,8 @@ public class HuabaoProtocol extends BaseProtocol {
                 Command.TYPE_ALARM_DISARM,
                 Command.TYPE_ENGINE_STOP,
                 Command.TYPE_ENGINE_RESUME);
+
+        // 添加服务器实例并配置协议编解码器
         addServer(new TrackerServer(config, getName(), false) {
             @Override
             protected void addProtocolHandlers(PipelineBuilder pipeline, Config config) {
@@ -45,5 +53,6 @@ public class HuabaoProtocol extends BaseProtocol {
             }
         });
     }
+
 
 }
