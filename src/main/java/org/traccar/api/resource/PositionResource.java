@@ -42,6 +42,7 @@ import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.StreamingOutput;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -65,11 +66,11 @@ public class PositionResource extends BaseResource {
     /**
      * 根据不同的查询条件获取位置信息的JSON数据流
      *
-     * @param deviceId 设备ID，用于查询特定设备的位置信息
+     * @param deviceId    设备ID，用于查询特定设备的位置信息
      * @param positionIds 位置ID列表，用于精确查询指定位置
-     * @param geofenceId 地理围栏ID，用于过滤在指定地理围栏内的位置
-     * @param from 起始时间，用于查询时间范围内的位置数据
-     * @param to 结束时间，用于查询时间范围内的位置数据
+     * @param geofenceId  地理围栏ID，用于过滤在指定地理围栏内的位置
+     * @param from        起始时间，用于查询时间范围内的位置数据
+     * @param to          结束时间，用于查询时间范围内的位置数据
      * @return 返回符合条件的位置信息数据流
      * @throws StorageException 当存储操作出现异常时抛出
      */
@@ -84,11 +85,16 @@ public class PositionResource extends BaseResource {
             for (long positionId : positionIds) {
                 Position position = storage.getObject(Position.class, new Request(
                         new Columns.All(), new Condition.Equals("id", positionId)));
-                permissionsService.checkPermission(Device.class, getUserId(), position.getDeviceId());
-                positions.add(position);
+//                permissionsService.checkPermission(Device.class, getUserId(), position.getDeviceId());
+//                positions.add(position);
+                // 添加空值检查
+                if (position != null) {
+                    permissionsService.checkPermission(Device.class, getUserId(), position.getDeviceId());
+                    positions.add(position);
+                }
             }
             return positions.stream();
-        // 根据设备ID查询位置信息
+            // 根据设备ID查询位置信息
         } else if (deviceId > 0) {
             permissionsService.checkPermission(Device.class, getUserId(), deviceId);
             // 查询指定时间范围内的位置数据
@@ -107,7 +113,7 @@ public class PositionResource extends BaseResource {
                 return storage.getObjectsStream(Position.class, new Request(
                                 new Columns.All(), Condition.merge(conditions)))
                         .filter(position -> geofence == null || geofence.containsPosition(position));
-            // 查询最新的位置数据
+                // 查询最新的位置数据
             } else {
                 // 如果需要，也可以在这里添加valid条件
                 var conditions = new LinkedList<Condition>();
@@ -116,7 +122,7 @@ public class PositionResource extends BaseResource {
                 return storage.getObjectsStream(Position.class, new Request(
                         new Columns.All(), Condition.merge(conditions)));
             }
-        // 查询用户所有设备的最新位置
+            // 查询用户所有设备的最新位置
         } else {
             return PositionUtil.getLatestPositions(storage, getUserId()).stream();
         }

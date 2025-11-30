@@ -67,8 +67,11 @@ public final class PositionUtil {
         return storage.getObjectsStream(Position.class, new Request(
                 new Columns.All(),
                 new Condition.And(
-                        new Condition.Equals("deviceId", deviceId),
-                        new Condition.Between("fixTime", from, to)),
+                        new Condition.And(
+                                new Condition.Equals("deviceId", deviceId),
+                                new Condition.Between("fixTime", from, to)),
+                        new Condition.Equals("valid", 1)
+                ),
                 new Order("fixTime")));
     }
 
@@ -77,8 +80,11 @@ public final class PositionUtil {
         return storage.getObject(Position.class, new Request(
                 new Columns.All(),
                 new Condition.And(
-                        new Condition.Equals("deviceId", deviceId),
-                        new Condition.Between("fixTime", from, to)),
+                        new Condition.And(
+                                new Condition.Equals("deviceId", deviceId),
+                                new Condition.Between("fixTime", from, to)),
+                        new Condition.Equals("valid", 1)
+                ),
                 new Order("fixTime", end, 1)));
     }
 
