@@ -652,6 +652,14 @@ public final class Keys {
             List.of(KeyType.CONFIG));
 
     /**
+     * List of OpenID Connect clients for the built-in provider.
+     * Value should be a comma-separated list of 'clientId:clientSecret' pairs.
+     */
+    public static final ConfigKey<String> OPENID_CLIENTS = new StringConfigKey(
+            "openid.clients",
+            List.of(KeyType.CONFIG));
+
+    /**
      * Force OpenID Connect authentication. When enabled, the Traccar login page will be skipped
      * and users are redirected to the OpenID Connect provider.
      */
@@ -781,21 +789,6 @@ public final class Keys {
             "web.port",
             List.of(KeyType.CONFIG),
             8082);
-
-    /**
-     * Maximum API requests per second. Above this limit requests and delayed and throttled.
-     */
-    public static final ConfigKey<Integer> WEB_MAX_REQUESTS_PER_SECOND = new IntegerConfigKey(
-            "web.maxRequestsPerSec",
-            List.of(KeyType.CONFIG));
-
-    /**
-     * Maximum API request duration in seconds.
-     */
-    public static final ConfigKey<Integer> WEB_MAX_REQUEST_SECONDS = new IntegerConfigKey(
-            "web.maxRequestSec",
-            List.of(KeyType.CONFIG),
-            600);
 
     /**
      * Path to the web app folder.
@@ -1585,8 +1578,7 @@ public final class Keys {
             List.of(KeyType.CONFIG));
 
     /**
-     * Distance in meters. Distances above this value gets handled like explained in 'coordinates.filter', but only if
-     * Position is also marked as 'invalid'.
+     * Distance in meters. Distances above this value gets handled like explained in 'coordinates.filter'.
      */
     public static final ConfigKey<Integer> COORDINATES_MAX_ERROR = new IntegerConfigKey(
             "coordinates.maxError",
