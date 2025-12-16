@@ -91,18 +91,18 @@ public class TtnHttpProtocolDecoder extends BaseHttpProtocolDecoder {
                 if (location.getValueType() != JsonValue.ValueType.OBJECT) {
                     continue;
                 }
-                position.setLatitude(location.getJsonNumber("latitude").doubleValue());
-                position.setLongitude(location.getJsonNumber("longitude").doubleValue());
+                position.setLatitudeWgs84(location.getJsonNumber("latitude").doubleValue());
+                position.setLongitudeWgs84(location.getJsonNumber("longitude").doubleValue());
                 position.setAltitude(location.getJsonNumber("altitude").doubleValue());
                 hasLocation = true;
             } else {
                 switch (key) {
                     case "latitude" -> {
-                        position.setLatitude(payload.getJsonNumber(key).doubleValue());
+                        position.setLatitudeWgs84(payload.getJsonNumber(key).doubleValue());
                         hasLocation = true;
                     }
                     case "longitude" -> {
-                        position.setLongitude(payload.getJsonNumber(key).doubleValue());
+                        position.setLongitudeWgs84(payload.getJsonNumber(key).doubleValue());
                         hasLocation = true;
                     }
                     case "altitude" -> position.setAltitude(payload.getJsonNumber(key).doubleValue());

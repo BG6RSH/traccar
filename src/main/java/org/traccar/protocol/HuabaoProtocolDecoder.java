@@ -519,9 +519,9 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
         double lon = buf.readUnsignedInt() * 0.000001;
 
         if (BitUtil.check(status, 2)) {
-            position.setLatitude(-lat);
+            position.setLatitudeWgs84(-lat);
         } else {
-            position.setLatitude(lat);
+            position.setLatitudeWgs84(lat);
         }
 
         if (BitUtil.check(status, 3)) {
