@@ -1975,6 +1975,20 @@ public final class Keys {
             true);
 
     /**
+     * Boolean flag to enable Amap grasp road correction for trajectory replay.
+     */
+    public static final ConfigKey<Boolean> AMAP_GRASP_ROAD_ENABLE = new BooleanConfigKey(
+            "amap.graspRoad.enable",
+            List.of(KeyType.CONFIG));
+
+    /**
+     * Amap API key for grasp road service. Required if amap.graspRoad.enable is true.
+     */
+    public static final ConfigKey<String> AMAP_WEB_SERVICE_KEY = new StringConfigKey(
+            "amap.webservice.key",
+            List.of(KeyType.CONFIG));
+
+    /**
      * Boolean flag to enable map matcher. When enabled, position coordinates are aligned to the nearest road segment
      * before further processing.
      */

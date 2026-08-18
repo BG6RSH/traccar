@@ -89,6 +89,7 @@ import org.traccar.handler.MapMatcherHandler;
 import org.traccar.handler.SpeedLimitHandler;
 import org.traccar.mapmatcher.MapMatcher;
 import org.traccar.mapmatcher.TraccarMapMatcher;
+import org.traccar.mapmatcher.AmapGraspRoadService;
 import org.traccar.helper.LogAction;
 import org.traccar.helper.ObjectMapperContextResolver;
 import org.traccar.helper.WebHelper;
@@ -329,6 +330,16 @@ public class MainModule extends AbstractModule {
                 case "traccar" -> new TraccarMapMatcher(client, url, key);
                 default -> throw new IllegalArgumentException("Unknown map matcher provider");
             };
+        }
+        return null;
+    }
+
+    @Singleton
+    @Provides
+    public static AmapGraspRoadService provideAmapGraspRoadService(Config config, Client client) {
+        if (config.getBoolean(Keys.AMAP_GRASP_ROAD_ENABLE)) {
+            String key = config.getString(Keys.AMAP_WEB_SERVICE_KEY);
+            return new AmapGraspRoadService(client, key);
         }
         return null;
     }

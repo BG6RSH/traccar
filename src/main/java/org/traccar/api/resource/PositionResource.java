@@ -19,6 +19,8 @@ import org.traccar.api.BaseResource;
 import org.traccar.config.Config;
 import org.traccar.config.Keys;
 import org.traccar.helper.model.PositionUtil;
+import org.traccar.mapmatcher.AmapGraspRoadService;
+import org.traccar.model.AttributeMap;
 import org.traccar.model.Device;
 import org.traccar.model.Geofence;
 import org.traccar.model.Position;
@@ -31,6 +33,7 @@ import org.traccar.storage.query.Columns;
 import org.traccar.storage.query.Condition;
 import org.traccar.storage.query.Request;
 
+import jakarta.annotation.Nullable;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -49,6 +52,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.LinkedList;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -66,6 +70,10 @@ public class PositionResource extends BaseResource {
 
     @Inject
     private GpxExportProvider gpxExportProvider;
+
+    @Inject
+    @Nullable
+    private AmapGraspRoadService amapGraspRoadService;
 
     @Inject
     private Config config;
@@ -199,6 +207,45 @@ public class PositionResource extends BaseResource {
         };
         return Response.ok(stream)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=positions.gpx").build();
+    }
+
+    @Path("corrected")
+    @GET
+    public Response getCorrected(
+            @QueryParam("deviceId") long deviceId,
+            @QueryParam("from") Date from, @QueryParam("to") Date to) throws StorageException {
+        if (amapGraspRoadService == null) {
+            return Response.status(Response.Status.SERVICE_UNAVAILABLE)
+                    .entity("Amap grasp road service is not enabled").build();
+        }
+        permissionsService.checkPermission(Device.class, getUserId(), deviceId);
+        permissionsService.checkRestriction(getUserId(), UserRestrictions::getDisableReports);
+
+        List<Position> positions = PositionUtil.getPositionsStream(
+                storage, deviceId, from, to, config.getInteger(Keys.REPORT_MAX_POSITIONS))
+                .collect(Collectors.toList());
+
+        if (positions.size() < 2) {
+            return Response.ok(positions).build();
+        }
+
+        List<AmapGraspRoadService.CorrectedPoint> correctedPoints =
+                amapGraspRoadService.correctPath(positions);
+
+        List<Position> result = new ArrayList<>();
+        for (AmapGraspRoadService.CorrectedPoint cp : correctedPoints) {
+            Position p = new Position();
+            p.setDeviceId(positions.get(0).getDeviceId());
+            p.setLatitude(cp.latitude());
+            p.setLongitude(cp.longitude());
+            p.setFixTime(cp.fixTime());
+            AttributeMap attrs = new AttributeMap();
+            attrs.put("correctedCoordinateSystem", "gcj02");
+            p.setAttributes(attrs);
+            result.add(p);
+        }
+
+        return Response.ok(result).build();
     }
 
 }

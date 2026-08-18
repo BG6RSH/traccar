@@ -2,7 +2,7 @@
 <!DOCTYPE properties SYSTEM 'http://java.sun.com/dtd/properties.dtd'>
 <properties>
 
-    <entry key='web.path'>./traccar-web/simple</entry>
+    <entry key='web.path'>./traccar-web</entry>
     <entry key='web.localizationPath'>./traccar-web/src/resources/l10n</entry>
     <entry key='web.debug'>true</entry>
     <entry key='web.console'>true</entry>
@@ -29,4 +29,13 @@
     <entry key='atrack.custom'>true</entry>
     <entry key='intellitrac.port'>6037</entry>
 
+    <!-- 高德轨迹纠偏服务：你的高德【Web服务API】密钥（Key） -->
+    <entry key='amap.graspRoad.enable'>true</entry>
+    <entry key='amap.webservice.key'>4c57011f603dbfe4d3b1bad74f17fd70</entry>
+
+    <!-- 静止抖动过滤，建议5‑20米，根据GPS精度调整，普通车载GPS推荐10米 -->
+    <entry key="filter.minDistance">10</entry>
+
+    <!-- 无效位置过滤:如果设备上报携带 valid:false 无效 GPS 点，开启过滤无效点 -->
+    <entry key="filter.invalid">true</entry>
 </properties>
