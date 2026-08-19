@@ -81,11 +81,14 @@ public class AmapGraspRoadService {
             CoordinateUtil.Coordinate gcj02 = CoordinateUtil.wgs84ToGcj02(
                     p.getLatitude(), p.getLongitude());
             long tm = p.getFixTime().getTime() / 1000 - firstTime;
-            double sp = p.getSpeed() * 3.6;
+            double rawSpeed = p.getSpeed();
+            double rawCourse = p.getCourse();
+            double sp = Double.isNaN(rawSpeed) ? 0 : rawSpeed * 3.6;
+            double ag = Double.isNaN(rawCourse) ? 0 : rawCourse;
             bodyBuilder.add(Json.createObjectBuilder()
                     .add("x", round6(gcj02.longitude()))
                     .add("y", round6(gcj02.latitude()))
-                    .add("ag", round1(p.getCourse()))
+                    .add("ag", round1(ag))
                     .add("tm", tm)
                     .add("sp", round1(sp))
                     .build());
