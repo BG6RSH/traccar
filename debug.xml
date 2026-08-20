@@ -33,9 +33,22 @@
     <entry key='amap.graspRoad.enable'>true</entry>
     <entry key='amap.webservice.key'>4c57011f603dbfe4d3b1bad74f17fd70</entry>
 
+    <!-- amap逆地址解析 -->
+<!--    <entry key='geocoder.type'>autonavi</entry>-->
+<!--    <entry key='geocoder.url'>https://restapi.amap.com/v3/geocode/regeo</entry>-->
+<!--    <entry key='geocoder.key'>4c57011f603dbfe4d3b1bad74f17fd70</entry>-->
+<!--    <entry key='geocoder.format'>%f %r</entry>-->
+
+    <!-- qq逆地址解析  -->
+    <entry key='geocoder.type'>tencent</entry>
+    <entry key='geocoder.url'>https://apis.map.qq.com/ws/geocoder/v1</entry>
+    <entry key='geocoder.key'>CGABZ-7KUL2-WDEUO-CO6FL-DXBCE-SIFW2</entry>
+    <entry key='geocoder.format'>%f，%r</entry>
+
     <!-- 静止抖动过滤，建议5‑20米，根据GPS精度调整，普通车载GPS推荐10米 -->
     <entry key="filter.minDistance">10</entry>
 
     <!-- 无效位置过滤:如果设备上报携带 valid:false 无效 GPS 点，开启过滤无效点 -->
     <entry key="filter.invalid">true</entry>
+    <entry key='filter.zero"'>true</entry>
 </properties>
