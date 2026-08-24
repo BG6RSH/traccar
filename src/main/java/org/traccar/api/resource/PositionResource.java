@@ -236,6 +236,11 @@ public class PositionResource extends BaseResource {
         List<AmapGraspRoadService.CorrectedPoint> correctedPoints =
                 amapGraspRoadService.correctPath(positions);
 
+        if (correctedPoints.isEmpty()) {
+            return Response.status(Response.Status.BAD_GATEWAY)
+                    .entity("Amap grasp road correction returned no data").build();
+        }
+
         List<Position> result = new ArrayList<>();
         for (AmapGraspRoadService.CorrectedPoint cp : correctedPoints) {
             Position p = new Position();
