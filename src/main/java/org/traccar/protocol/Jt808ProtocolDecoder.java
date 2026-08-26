@@ -796,6 +796,11 @@ public class Jt808ProtocolDecoder extends BaseProtocolDecoder {
                         position.set(Position.KEY_DRIVER_UNIQUE_ID, stringValue);
                     }
                     break;
+                case 0x61:
+                    // 电压
+                    long voltage1 = buf.readUnsignedShort();
+                    position.set(Position.KEY_POWER, voltage1 * 0.01);
+                    break;
                 case 0x63:
                     for (int i = 1; i <= length / 11; i++) {
                         position.set("lock" + i + "Id", ByteBufUtil.hexDump(buf.readSlice(6)));
@@ -1200,7 +1205,10 @@ public class Jt808ProtocolDecoder extends BaseProtocolDecoder {
                     }
                     break;
                 case 0xF1:
-                    position.set(Position.KEY_POWER, buf.readUnsignedInt() / 1000.0);
+//                    position.set(Position.KEY_POWER, buf.readUnsignedInt() / 1000.0);
+                    // ICCID信息
+                    String iccid = buf.readSlice(length).toString(StandardCharsets.US_ASCII);
+                    position.set(Position.KEY_ICCID, iccid);
                     break;
                 case 0xF2:
                     position.set(Position.KEY_VERSION_FW, buf.readCharSequence(
