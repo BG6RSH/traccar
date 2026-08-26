@@ -1,6 +1,6 @@
 # Traccar 功能定制说明
 
-> 基于 Traccar 6.14.5 版本，新增 **高德轨迹纠偏** 与 **腾讯地图瓦片** 两大功能。
+> 基于 Traccar 6.14.5 版本，新增 **高德轨迹纠偏**、**腾讯地图瓦片**、**地图地点搜索（高德地理编码）** 等定制功能。
 
 ---
 
@@ -146,7 +146,9 @@ GET /api/positions/corrected?deviceId={id}&from={date}&to={date}
 
 ---
 
-## 三、逆地理编码（腾讯地图）
+## 三、地理编码服务
+
+### 3.1 逆地理编码（腾讯地图）
 
 在 `debug.xml` 中配置腾讯地图逆地理编码服务：
 
@@ -157,6 +159,33 @@ GET /api/positions/corrected?deviceId={id}&from={date}&to={date}
 <entry key='geocoder.format'>%f %h</entry>
 ```
 
+### 3.2 地图地点搜索 / 正向地理编码（高德）
+
+**背景：** 主地图右上角的地点搜索组件 `MapGeocoder` 原本直连 `nominatim.openstreetmap.org`。该服务在国内不可达，且组件挂载时**即使关键词为空也会发起请求**，请求挂起约 20 秒（TCP 超时）后以 "Failed to fetch" 弹出红色错误提示——即登录后固定出现的报错弹窗。现改为经后端代理调用高德地理编码 API。
+
+#### 后端修改
+
+| 文件 | 修改内容 |
+|------|---------|
+| `src/main/java/org/traccar/api/resource/ServerResource.java` | 新增 REST 端点 `GET /api/server/geosearch?q={关键词}`，注入 JAX-RS `Client` |
+
+**端点逻辑：**
+- 复用轨迹纠偏的配置项 `amap.webservice.key`（无需新增配置），未配置时抛出异常（返回 500 + 明确文案）
+- 后端代理调用高德地理编码 API：`https://restapi.amap.com/v3/geocode/geo`，Key 保留在服务端不暴露给浏览器
+- 将高德返回的 `geocodes` 数组包装为前端现有逻辑所需的 GeoJSON `FeatureCollection`：每个 Feature 含 `bbox`（坐标点 ±0.01）、`geometry`（Point）和 `properties`（`place_id`、`display_name` = 高德 `formatted_address`）
+- 高德返回 `status != 1`（Key 无效、配额超限等）时抛异常并携带高德的 `info` 错误文案，前端弹窗显示具体原因
+
+#### 前端修改
+
+| 文件 | 修改内容 |
+|------|---------|
+| `src/map/control/MapGeocoder.jsx` | 数据源改为 `/api/server/geosearch`；空关键词不再发请求；选中结果时坐标转换 |
+
+**关键改动点：**
+1. **空查询短路**：关键词为空时直接清空结果并 `return`，从根源消除登录后自动发起的空搜索请求（原 "Failed to fetch" 报错的修复）
+2. **请求方式**：`fetch` 改为 `fetchOrThrow`，HTTP 错误时弹出后端返回的错误文本而非 "Failed to fetch"
+3. **坐标系处理**：高德返回 GCJ-02 坐标，`onSelect` 先用 `gcoord` 将结果 `bbox` 从 GCJ-02 转为 WGS-84，再经原有 `toMapCoordinates()` 适配当前地图坐标系，保证在任意地图样式下跳转定位均准确
+
 ---
 
 ## 四、坐标系处理总结
@@ -165,6 +194,7 @@ GET /api/positions/corrected?deviceId={id}&from={date}&to={date}
 |--------|-----------|---------------|---------|
 | GPS 设备上报 | WGS-84 | 取决于所选地图 | `toMapCoordinates()` 自动转换 |
 | 高德纠偏返回 | GCJ-02 | 取决于所选地图 | `toMapCoordinatesFrom()` 按源坐标系转换 |
+| 高德地理编码搜索结果 | GCJ-02 | 取决于所选地图 | 前端先 `gcoord` 转 WGS-84，再 `toMapCoordinates()` |
 | 腾讯瓦片 | — | GCJ-02 | 瓦片本身已为 GCJ-02 偏移 |
 
 核心转换函数 `mapUtil.js`：
@@ -184,6 +214,7 @@ GET /api/positions/corrected?deviceId={id}&from={date}&to={date}
 | `src/main/java/org/traccar/config/Keys.java` | 修改 | 轨迹纠偏 |
 | `src/main/java/org/traccar/MainModule.java` | 修改 | 轨迹纠偏 |
 | `src/main/java/org/traccar/api/resource/PositionResource.java` | 修改 | 轨迹纠偏 |
+| `src/main/java/org/traccar/api/resource/ServerResource.java` | 修改 | 地图地点搜索 |
 | `debug.xml` | 修改 | 轨迹纠偏 + 逆地理编码 |
 
 ### 前端（traccar-web）
@@ -198,7 +229,86 @@ GET /api/positions/corrected?deviceId={id}&from={date}&to={date}
 | `src/map/MapMarkers.js` | 修改 | 轨迹纠偏 |
 | `src/map/MapPositionMarkers.jsx` | 修改 | 轨迹纠偏 |
 | `src/other/ReplayPage.jsx` | 修改 | 轨迹纠偏 |
+| `src/map/control/MapGeocoder.jsx` | 修改 | 地图地点搜索 |
 | `src/resources/l10n/en.json` | 修改 | 轨迹纠偏 + 腾讯瓦片 |
 | `src/resources/l10n/zh.json` | 修改 | 轨迹纠偏 + 腾讯瓦片 |
 | `src/login/LoginPage.jsx` | 修改 | 论坛链接 |
 | `index.html` | 修改 | 标题后缀 |
+
+---
+
+## 六、Git 版本管理与上游更新流程
+
+> 背景：曾发生过 git 提交覆盖事故（"添加腾讯地图"的提交基于旧快照，把"高德纠偏"代码全部冲掉），导致定制功能丢失且无法从 git 历史恢复。**所有定制必须先提交到自定义分支并推送到私有远程，才有资格谈上游更新。**
+
+### 6.1 仓库与分支结构（2026-08 建立）
+
+两个仓库（后端 `traccar` + 前端子模块 `traccar-web`）采用相同结构：
+
+| 项目 | 后端 | 前端（子模块） |
+|------|------|---------------|
+| `origin`（官方上游，只 fetch） | `https://github.com/traccar/traccar.git` | `https://github.com/traccar/traccar-web.git` |
+| `myfork`（自己的仓库，推送定制） | `https://github.com/BG6RSH/traccar.git` | `https://github.com/BG6RSH/traccar-web.git` |
+| 定制分支 | `custom/v6.15` | `custom/v6.15` |
+| 基线标签 | `v6.15.2-custom` | `v6.15.2-custom` |
+
+### 6.2 日常修改后提交推送（两个仓库分别执行）
+
+```bash
+git add <修改的文件>
+git commit -m "说明"
+git push                    # custom/v6.15 已跟踪 myfork，直接 push 即可
+```
+
+### 6.3 上游发布新版本时的合并流程（以 v6.16.0 为例）
+
+**先后端、再前端分别操作：**
+
+```bash
+git fetch origin --tags          # 拉取上游新标签，不合并
+git merge v6.16.0                # 在 custom 分支上合并上游版本标签，逐个解决冲突
+git push
+git tag v6.16.0-custom           # 测试通过后打新基线标签
+git push myfork v6.16.0-custom
+```
+
+**冲突解决原则：**
+1. 以本文档**第五节修改文件清单**为准，清单内的文件冲突时逐个保留定制逻辑 + 吸收上游新代码（不能图省事全选某一侧）
+2. 翻译文件（`l10n/*.json`）冲突建议以上游为基线，重新手工追加自定义键（如 `reportGraspRoad`、`loginForum`、腾讯地图键）
+3. 前端合并后，回到后端仓库把子模块指针更新到新提交并提交（`git add traccar-web`）
+4. 全部完成后重新编译后端、构建前端，按 1.3 节交互流程验证纠偏等功能正常，再打新标签；出问题可 `git reset --hard` 回滚到上一个 `-custom` 标签
+5. 合并提交信息建议注明上游版本，如 `Merge upstream v6.16.0 into custom`
+
+### 6.4 危险操作黑名单（定制丢失的主要根源）
+
+| 操作 | 后果 |
+|------|------|
+| `git submodule update --init` | 把 `traccar-web` 检出到外层记录的（可能是上游）提交，工作区定制从视图消失 |
+| `git reset --hard`（未提交定制时） | 未提交的定制直接销毁，无法恢复 |
+| `git checkout .` / `git restore .` | 同上 |
+| 基于旧快照做新提交再合并 | 上次覆盖事故的根源：旧快照不含新功能的提交会把这些功能全部冲掉 |
+| 用上游 release 压缩包直接覆盖目录 | 无冲突提示，定制无声丢失 |
+| 把 `debug.xml` 提交到公开仓库 | 含高德/腾讯 API Key，泄露后会被盗用配额 |
+| `git push origin`（任何写操作） | 官方上游仓库无写权限且不应写；写操作一律用 `myfork` |
+
+### 6.5 永不提交的文件清单（当前均未纳入版本控制，保持现状）
+
+| 文件/目录 | 仓库 | 原因 |
+|-----------|------|------|
+| `debug.xml` | 后端 | 含高德/腾讯 API Key |
+| `git_list.txt` | 后端 | 临时文件 |
+| `src-old/` | 前端 | 旧版代码备份目录，仅本地参考 |
+
+### 6.6 灾备恢复（最坏情况）
+
+```bash
+# 本地仓库丢失/损坏时，从自己的仓库重建
+git clone -b custom/v6.15 https://github.com/BG6RSH/traccar.git
+cd traccar
+git submodule update --init      # 检出子模块到外层记录的定制提交后，
+                                 # 进 traccar-web 确认/切换到 custom/v6.15 分支
+git remote add myfork https://github.com/BG6RSH/traccar-web.git   # 子模块内单独加远程便于推送
+git remote add origin https://github.com/traccar/traccar.git      # 如缺失，补上游远程便于 fetch 更新
+```
+
+> 注意：恢复后需手工重建 `debug.xml`（含 API Key，参考 1.4 节配置说明）。

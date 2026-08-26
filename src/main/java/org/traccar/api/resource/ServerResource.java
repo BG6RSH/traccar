@@ -15,7 +15,12 @@
  */
 package org.traccar.api.resource;
 
+import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.core.Context;
 import org.traccar.api.BaseResource;
 import org.traccar.model.ObjectOperation;
@@ -53,10 +58,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 @Path("server")
@@ -66,6 +75,9 @@ public class ServerResource extends BaseResource {
 
     @Inject
     private Config config;
+
+    @Inject
+    private Client client;
 
     @Inject
     private CacheManager cacheManager;
@@ -129,6 +141,55 @@ public class ServerResource extends BaseResource {
             return geocoder.getAddress(latitude, longitude, null);
         } else {
             throw new RuntimeException("Reverse geocoding is not enabled");
+        }
+    }
+
+    @Path("geosearch")
+    @GET
+    public Map<String, Object> geosearch(@QueryParam("q") String query) {
+        String key = config.getString(Keys.AMAP_WEB_SERVICE_KEY);
+        if (key == null || key.isEmpty()) {
+            throw new RuntimeException("Amap geocoding is not enabled");
+        }
+        Response response = client
+                .target("https://restapi.amap.com/v3/geocode/geo")
+                .queryParam("key", key)
+                .queryParam("address", query)
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+        String responseBody = response.readEntity(String.class);
+        try (JsonReader reader = Json.createReader(new StringReader(responseBody))) {
+            JsonObject json = reader.readObject();
+            if (!"1".equals(json.getString("status", ""))) {
+                throw new RuntimeException("Amap geocoding failed: " + json.getString("info", "unknown error"));
+            }
+            List<Map<String, Object>> features = new ArrayList<>();
+            JsonArray geocodes = json.getJsonArray("geocodes");
+            if (geocodes != null) {
+                for (int i = 0; i < geocodes.size(); i++) {
+                    JsonObject item = geocodes.getJsonObject(i);
+                    String location = item.getString("location", "");
+                    if (location.isEmpty() || !location.contains(",")) {
+                        continue;
+                    }
+                    String[] parts = location.split(",");
+                    double longitude = Double.parseDouble(parts[0]);
+                    double latitude = Double.parseDouble(parts[1]);
+                    double delta = 0.01;
+
+                    Map<String, Object> feature = new LinkedHashMap<>();
+                    feature.put("type", "Feature");
+                    feature.put("bbox", List.of(
+                            longitude - delta, latitude - delta, longitude + delta, latitude + delta));
+                    feature.put("geometry", Map.of(
+                            "type", "Point", "coordinates", List.of(longitude, latitude)));
+                    feature.put("properties", Map.of(
+                            "place_id", String.valueOf(i),
+                            "display_name", item.getString("formatted_address", query)));
+                    features.add(feature);
+                }
+            }
+            return Map.of("type", "FeatureCollection", "features", features);
         }
     }
 
