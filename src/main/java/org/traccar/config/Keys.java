@@ -982,6 +982,14 @@ public final class Keys {
             List.of(KeyType.CONFIG));
 
     /**
+     * Include stack traces in API error responses. Disable to return only error messages.
+     */
+    public static final ConfigKey<Boolean> WEB_SHOW_STACK_TRACES = new BooleanConfigKey(
+            "web.showStackTraces",
+            List.of(KeyType.CONFIG),
+            true);
+
+    /**
      * A token to log in as a virtual admin account. Can be used to restore access in case of issues with regular
      * admin login. For example, if a password is lost and can't be restored.
      */
@@ -1390,6 +1398,14 @@ public final class Keys {
     public static final ConfigKey<String> COMMAND_CLIENT_SERVICE_ACCOUNT = new StringConfigKey(
             "command.client.serviceAccount",
             List.of(KeyType.CONFIG));
+
+    /**
+     * Enable Google Find Hub command sender.
+     */
+    public static final ConfigKey<Boolean> COMMAND_FIND_HUB_ENABLE = new BooleanConfigKey(
+            "command.findHub.enable",
+            List.of(KeyType.CONFIG),
+            false);
 
     /**
      * Google Find Hub service URL.
