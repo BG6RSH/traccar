@@ -50,7 +50,7 @@ public class Jt808FrameDecoder extends BaseFrameDecoder {
 
             int index = buf.indexOf(buf.readerIndex() + 1, buf.writerIndex(), (byte) ')');
             if (index >= 0) {
-                return buf.readRetainedSlice(index + 1);
+                return buf.readRetainedSlice(index + 1 - buf.readerIndex());
             }
 
         } else {
