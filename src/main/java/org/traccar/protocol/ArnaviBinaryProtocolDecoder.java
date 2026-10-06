@@ -40,7 +40,6 @@ public class ArnaviBinaryProtocolDecoder extends BaseProtocolDecoder {
 
     private static final int HEADER_VERSION_1 = 0x22;
     private static final int HEADER_VERSION_2 = 0x23;
-    private static final int HEADER_VERSION_3 = 0x24;
     private static final int HEADER_VERSION_2_WIFI = 0x25;
 
     private static final int RECORD_PING = 0x00;
