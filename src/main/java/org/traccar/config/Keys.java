@@ -1386,6 +1386,14 @@ public final class Keys {
             List.of(KeyType.CONFIG));
 
     /**
+     * Enable Google Find Hub command sender.
+     */
+    public static final ConfigKey<Boolean> COMMAND_FIND_HUB_ENABLE = new BooleanConfigKey(
+        "command.findHub.enable",
+        List.of(KeyType.CONFIG),
+        false);
+
+    /**
      * Command sender type for the device. This overrides standard data or text commands with API-based commands.
      * For example, it can be Traccar Client push commands.
      */
@@ -1399,14 +1407,6 @@ public final class Keys {
     public static final ConfigKey<String> COMMAND_CLIENT_SERVICE_ACCOUNT = new StringConfigKey(
             "command.client.serviceAccount",
             List.of(KeyType.CONFIG));
-
-    /**
-     * Enable Google Find Hub command sender.
-     */
-    public static final ConfigKey<Boolean> COMMAND_FIND_HUB_ENABLE = new BooleanConfigKey(
-            "command.findHub.enable",
-            List.of(KeyType.CONFIG),
-            false);
 
     /**
      * Google Find Hub service URL.

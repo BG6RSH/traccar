@@ -28,9 +28,9 @@ import java.util.Map;
 public class CommandSenderManager {
 
     private static final Map<String, Class<? extends CommandSender>> SENDERS_ALL = Map.of(
-            "firebase", FirebaseCommandSender.class,
-            "traccar", TraccarCommandSender.class,
-            "findHub", FindHubCommandSender.class);
+        "firebase", FirebaseCommandSender.class,
+        "traccar", TraccarCommandSender.class,
+        "findHub", FindHubCommandSender.class);
 
     private final Config config;
     private final Injector injector;

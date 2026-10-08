@@ -55,7 +55,7 @@ public class ShareResource extends BaseResource {
     private TokenManager tokenManager;
 
     private String share(User user, Class<? extends BaseModel> clazz, long id, Date expiration)
-            throws StorageException, GeneralSecurityException, IOException {
+        throws StorageException, GeneralSecurityException, IOException {
 
         if (permissionsService.getServer().getBoolean(Keys.DEVICE_SHARE_DISABLE.getKey())) {
             throw new SecurityException("Sharing is disabled");
@@ -68,10 +68,10 @@ public class ShareResource extends BaseResource {
         }
 
         BaseModel object = storage.getObject(clazz, new Request(
-                new Columns.All(),
-                new Condition.And(
-                        new Condition.Equals("id", id),
-                        new Condition.Permission(User.class, user.getId(), clazz))));
+            new Columns.All(),
+            new Condition.And(
+                new Condition.Equals("id", id),
+                new Condition.Permission(User.class, user.getId(), clazz))));
 
         String shareEmail;
         if (clazz == Device.class) {
@@ -81,7 +81,7 @@ public class ShareResource extends BaseResource {
         }
 
         User share = storage.getObject(User.class, new Request(
-                new Columns.All(), new Condition.Equals("email", shareEmail)));
+            new Columns.All(), new Condition.Equals("email", shareEmail)));
 
         if (share == null) {
             share = new User();
@@ -107,8 +107,8 @@ public class ShareResource extends BaseResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @POST
     public String shareDevice(
-            @FormParam("deviceId") long deviceId,
-            @FormParam("expiration") Date expiration) throws StorageException, GeneralSecurityException, IOException {
+        @FormParam("deviceId") long deviceId,
+        @FormParam("expiration") Date expiration) throws StorageException, GeneralSecurityException, IOException {
         return share(permissionsService.getUser(getUserId()), Device.class, deviceId, expiration);
     }
 
@@ -116,8 +116,8 @@ public class ShareResource extends BaseResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @POST
     public String shareGroup(
-            @FormParam("groupId") long groupId,
-            @FormParam("expiration") Date expiration) throws StorageException, GeneralSecurityException, IOException {
+        @FormParam("groupId") long groupId,
+        @FormParam("expiration") Date expiration) throws StorageException, GeneralSecurityException, IOException {
         return share(permissionsService.getUser(getUserId()), Group.class, groupId, expiration);
     }
 
