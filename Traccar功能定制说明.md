@@ -249,7 +249,7 @@ GET /api/positions/corrected?deviceId={id}&from={date}&to={date}
 |------|------|---------------|
 | `origin`（官方上游，只 fetch） | `https://github.com/traccar/traccar.git` | `https://github.com/traccar/traccar-web.git` |
 | `myfork`（自己的仓库，推送定制） | `https://github.com/BG6RSH/traccar.git` | `https://github.com/BG6RSH/traccar-web.git` |
-| 定制分支 | `custom/v6.15` | `custom/v6.15` |
+| 定制分支 | `custom/v6.15`、`custom/v6.16.0` | `custom/v6.15`、`custom/v6.16.0` |
 | 基线标签 | `v6.15.2-custom` | `v6.15.2-custom` |
 
 ### 6.2 日常修改后提交推送（两个仓库分别执行）
@@ -260,16 +260,97 @@ git commit -m "说明"
 git push                    # custom/v6.15 已跟踪 myfork，直接 push 即可
 ```
 
+> 新建定制分支（如 `custom/v6.16.0`）首次推送时需指定上游：
+> ```bash
+> git push -u myfork custom/v6.16.0
+> ```
+> 后续 `git push` 即可。子模块（traccar-web）需先进子模块目录推送，再回父仓库提交指针更新并推送。
+
 ### 6.3 上游发布新版本时的合并流程（以 v6.16.0 为例）
 
-**先后端、再前端分别操作：**
+> 整体顺序：**先后端、再前端、最后更新子模块指针并推送**。
+> 命令中的 `custom/v6.16.0` 为新版本分支，下次升级到 v6.17.0 时按同样流程替换版本号即可。
+
+#### 步骤 1：后端合并 origin/master
 
 ```bash
-git fetch origin --tags          # 拉取上游新标签，不合并
-git merge v6.16.0                # 在 custom 分支上合并上游版本标签，逐个解决冲突
-git push
-git tag v6.16.0-custom           # 测试通过后打新基线标签
+# 在后端仓库根目录执行
+git fetch origin --tags                # 拉取上游新提交和标签，不合并
+git checkout custom/v6.15              # 切到当前定制分支
+git merge origin/master --no-edit     # 合并上游 master，逐个解决冲突
+# 冲突高发点：MainModule.java / PositionResource.java / ServerResource.java
+# （多为新增 import 行冲突，保留双方 import 即可）
+git commit --no-edit                   # 冲突解决后完成合并提交
+```
+
+#### 步骤 2：前端子模块合并 origin/master
+
+```bash
+cd traccar-web
+# 2.1 暂存可能存在的未提交修改（package-lock.json 等自动生成文件）
+git stash push -u -m "WIP before merge"
+# 2.2 切到定制分支并创建新版本分支
+git checkout custom/v6.15
+git checkout -b custom/v6.16.0
+# 2.3 合并上游
+git merge origin/master --no-edit
+```
+
+**冲突解决（按文件类型分别处理）：**
+
+| 冲突文件 | 处理方式 |
+|---------|---------|
+| `src/resources/l10n/zh.json` | 手工编辑：保留本地定制键（`loginForum`、`mapTencentSatellite`、`mapTencentHybrid`、`reportGraspRoad`）+ 吸收上游文案调整 |
+| `package-lock.json` | 取上游版本（自动生成文件，需匹配新 package.json）：`git checkout --theirs package-lock.json && git add package-lock.json` |
+
+```bash
+git add src/resources/l10n/zh.json package-lock.json
+git commit --no-edit                     # 完成合并提交
+cd ..                                    # 回到后端仓库根目录
+```
+
+#### 步骤 3：更新后端仓库的子模块指针
+
+```bash
+# 在后端仓库根目录
+git add traccar-web
+git commit -m "Point traccar-web submodule to custom/v6.16.0 branch"
+```
+
+#### 步骤 4：合并后修复上游 API 重命名
+
+> 上游 v6.16.0 将 `ErrorHandler` 重构为 `MessageHandler`，`errorsActions` 重命名为 `messagesActions`，
+> `src/store/errors.js` 改为 `src/store/messages.js`。定制文件中残留的旧名引用会导致运行时报错：
+> `SyntaxError: The requested module '/src/store/index.js' does not provide an export named 'errorsActions'`
+
+```bash
+cd traccar-web
+# 全仓搜索旧名引用：grep -rn "errorsActions\|ErrorHandler" src/
+# 把 src/other/ReplayPage.jsx 中 3 处 errorsActions 改为 messagesActions
+git add src/other/ReplayPage.jsx
+git commit -m "Fix ReplayPage to use messagesActions after upstream rename"
+cd ..
+git add traccar-web
+git commit -m "Update traccar-web submodule pointer for messagesActions fix"
+```
+
+#### 步骤 5：推送到 myfork
+
+```bash
+# 顺序重要：先推子模块，再推父仓库（父仓库的子模块指针需指向已推送的子模块提交）
+git -C traccar-web push -u myfork custom/v6.16.0
+git push -u myfork custom/v6.16.0
+```
+
+#### 步骤 6：（可选）打新基线标签
+
+```bash
+# 全部测试通过后打标签
+git tag v6.16.0-custom
 git push myfork v6.16.0-custom
+# 子模块也打标签（可选）
+git -C traccar-web tag v6.16.0-custom
+git -C traccar-web push myfork v6.16.0-custom
 ```
 
 **冲突解决原则：**
@@ -277,7 +358,8 @@ git push myfork v6.16.0-custom
 2. 翻译文件（`l10n/*.json`）冲突建议以上游为基线，重新手工追加自定义键（如 `reportGraspRoad`、`loginForum`、腾讯地图键）
 3. 前端合并后，回到后端仓库把子模块指针更新到新提交并提交（`git add traccar-web`）
 4. 全部完成后重新编译后端、构建前端，按 1.3 节交互流程验证纠偏等功能正常，再打新标签；出问题可 `git reset --hard` 回滚到上一个 `-custom` 标签
-5. 合并提交信息建议注明上游版本，如 `Merge upstream v6.16.0 into custom`
+5. 合并提交信息建议注明上游版本，如 `MergeUpstreamV6.16.0IntoCustom`
+6. **合并后必做**：grep 搜索上游已重命名/删除的 API（如 `errorsActions`、`ErrorHandler`），把定制文件中的旧名引用全部更新为新名，否则运行时报 `SyntaxError`
 
 ### 6.4 危险操作黑名单（定制丢失的主要根源）
 
@@ -302,11 +384,11 @@ git push myfork v6.16.0-custom
 ### 6.6 灾备恢复（最坏情况）
 
 ```bash
-# 本地仓库丢失/损坏时，从自己的仓库重建
-git clone -b custom/v6.15 https://github.com/BG6RSH/traccar.git
+# 本地仓库丢失/损坏时，从自己的仓库重建（替换为当前最新定制分支）
+git clone -b custom/v6.16.0 https://github.com/BG6RSH/traccar.git
 cd traccar
 git submodule update --init      # 检出子模块到外层记录的定制提交后，
-                                 # 进 traccar-web 确认/切换到 custom/v6.15 分支
+                                 # 进 traccar-web 确认/切换到 custom/v6.16.0 分支
 git remote add myfork https://github.com/BG6RSH/traccar-web.git   # 子模块内单独加远程便于推送
 git remote add origin https://github.com/traccar/traccar.git      # 如缺失，补上游远程便于 fetch 更新
 ```
