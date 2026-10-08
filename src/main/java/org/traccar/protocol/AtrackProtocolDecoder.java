@@ -20,7 +20,6 @@ import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import org.traccar.BaseProtocolDecoder;
-import org.traccar.session.DeviceSession;
 import org.traccar.NetworkMessage;
 import org.traccar.Protocol;
 import org.traccar.config.Keys;
@@ -34,6 +33,7 @@ import org.traccar.helper.UnitsConverter;
 import org.traccar.model.CellTower;
 import org.traccar.model.Network;
 import org.traccar.model.Position;
+import org.traccar.session.DeviceSession;
 
 import java.net.SocketAddress;
 import java.nio.charset.StandardCharsets;
@@ -408,9 +408,9 @@ public class AtrackProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (cellTower.getMobileCountryCode() != null
-            && cellTower.getMobileNetworkCode() != null
-            && cellTower.getCellId() != null && cellTower.getCellId() != 0
-            && cellTower.getLocationAreaCode() != null) {
+                && cellTower.getMobileNetworkCode() != null
+                && cellTower.getCellId() != null && cellTower.getCellId() != 0
+                && cellTower.getLocationAreaCode() != null) {
             position.setNetwork(new Network(cellTower));
         } else if (cellTower.getSignalStrength() != null) {
             position.set(Position.KEY_RSSI, cellTower.getSignalStrength());
@@ -530,7 +530,6 @@ public class AtrackProtocolDecoder extends BaseProtocolDecoder {
 
         return positions;
     }
-
 
     private Position decodeTextLine(DeviceSession deviceSession, String sentence) {
 

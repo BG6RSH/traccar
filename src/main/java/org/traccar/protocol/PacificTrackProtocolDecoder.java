@@ -19,12 +19,12 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.Channel;
 import org.traccar.BaseProtocolDecoder;
-import org.traccar.session.DeviceSession;
 import org.traccar.Protocol;
 import org.traccar.helper.BitUtil;
 import org.traccar.helper.DateBuilder;
 import org.traccar.helper.UnitsConverter;
 import org.traccar.model.Position;
+import org.traccar.session.DeviceSession;
 
 import java.net.SocketAddress;
 
@@ -125,7 +125,7 @@ public class PacificTrackProtocolDecoder extends BaseProtocolDecoder {
                                         Position.PREFIX_TEMP + 1, buf.readUnsignedShort() * 0.03125 - 273);
                                 default -> buf.readUnsignedShort();
                             }
-                        }  else if (fieldPrefix < 0b111) {
+                        } else if (fieldPrefix < 0b111) {
                             switch (BitUtil.to(field, 5)) {
                                 case 0b00000 -> position.set(Position.KEY_ODOMETER, buf.readUnsignedInt() * 100);
                                 case 0b00001 -> position.set(Position.KEY_HOURS, buf.readUnsignedInt() * 180);
