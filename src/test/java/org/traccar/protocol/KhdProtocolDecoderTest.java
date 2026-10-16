@@ -4,12 +4,37 @@ import org.junit.jupiter.api.Test;
 import org.traccar.ProtocolTest;
 import org.traccar.model.Position;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+
 public class KhdProtocolDecoderTest extends ProtocolTest {
 
     @Test
     public void testDecode() throws Exception {
 
         var decoder = inject(new KhdProtocolDecoder(null));
+
+        verifyDecode(decoder, binary(
+                "2929d80006c8dca318710d"));
+
+        verifyDecode(decoder, binary(
+                "292985002837B737B7080628113116022325731140527600000000F80000C07FFC7F00003C000000000034730D"),
+                position().attribute(Position.KEY_RESULT, "52"));
+
+        verifyDecode(decoder, binary(
+                "29298000a6c8dca3182610021401168061704410658602000000007f000000fff75cffffffffffffffff00001300243436303b30313b333331323b3237333035000500042952150004000801e5001600a35757413543382053433238585556312e38203b00000600a50000000c00060089ffffffff002400a901fe15060cf06aa9350cefb3e5300cf06aaa170cf06aa8110cef27a7110cef49800e000600c5ffffffff000400fa14117a0d"),
+                position()
+                        .attribute(Position.PREFIX_ADC + 1, 2.95215)
+                        .attribute(Position.KEY_BATTERY_LEVEL, 32)
+                        .attribute("model", "0000000C")
+                        .attribute("debug", "WWA5C8 SC28XUV1.8 ;")
+                        .network(network()
+                                .cell(cell().mcc(460).mnc(1).lac(3312).cid(27305))
+                                .cell(cell().mcc(510).mnc(21).lac(3312).cid(27305).signal(-53))
+                                .cell(cell().mcc(510).mnc(21).lac(3311).cid(46053).signal(-48))
+                                .cell(cell().mcc(510).mnc(21).lac(3312).cid(27306).signal(-23))
+                                .cell(cell().mcc(510).mnc(21).lac(3312).cid(27304).signal(-17))
+                                .cell(cell().mcc(510).mnc(21).lac(3311).cid(10151).signal(-17))
+                                .cell(cell().mcc(510).mnc(21).lac(3311).cid(18816).signal(-14))));
 
         verifyDecode(decoder, binary(
                 "2929A300403099934C2004030943310000000000000000000000007B0000007FFF0E0000E70014000000000018050B01303030314330334437312102007B2203140DDA610D"),
@@ -64,7 +89,7 @@ public class KhdProtocolDecoderTest extends ProtocolTest {
 
         verifyDecode(decoder, binary(
                 "29298500081DD08C22120312174026026545710312541700000000F819C839FFFF1D00001E00500000003AF90D"),
-                position());
+                position().attribute(Position.KEY_RESULT, "58"));
 
         verifyDecode(decoder, binary(
                 "292980002822836665140825142037045343770193879200000050ffff000082fc000004b0780b170000002a0d"),
@@ -74,6 +99,14 @@ public class KhdProtocolDecoderTest extends ProtocolTest {
                 "292980002802425349120811032137022373011140211100000334FFFF000082FC0000001E780913000034DF0D"),
                 position());
 
+    }
+
+    @Test
+    public void testReadIdentifiers() {
+        var decoder = new KhdProtocolDecoder(null);
+
+        assertArrayEquals(new String[] {"c8dca318", "200923524", "14472923524"},
+                decoder.readIdentifiers(binary("C8DCA318")));
     }
 
 }
