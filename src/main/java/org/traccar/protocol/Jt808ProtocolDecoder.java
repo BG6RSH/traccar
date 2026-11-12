@@ -712,6 +712,9 @@ public class Jt808ProtocolDecoder extends BaseProtocolDecoder {
         if ("G1C Pro".equals(model)) {
             position.set(Position.KEY_MOTION, BitUtil.check(status, 4));
         }
+        if ("MV710G".equals(model)) {
+            position.set(Position.KEY_ARMED, BitUtil.check(status, 6));
+        }
         position.set(Position.KEY_BLOCKED, BitUtil.check(status, 10));
         if ("MV810G".equals(model) || "MV710G".equals(model)) {
             position.set(Position.KEY_DOOR, BitUtil.check(status, 16));
@@ -1020,11 +1023,13 @@ public class Jt808ProtocolDecoder extends BaseProtocolDecoder {
                     }
                     break;
                 case 0xDA:
-                    buf.readUnsignedShort(); // string cut count
-                    int deviceStatus = buf.readUnsignedByte();
-                    position.set("string", BitUtil.check(deviceStatus, 0));
-                    position.set(Position.KEY_MOTION, BitUtil.check(deviceStatus, 2));
-                    position.set("cover", BitUtil.check(deviceStatus, 3));
+                    if (length >= 3) {
+                        buf.readUnsignedShort(); // string cut count
+                        int deviceStatus = buf.readUnsignedByte();
+                        position.set("string", BitUtil.check(deviceStatus, 0));
+                        position.set(Position.KEY_MOTION, BitUtil.check(deviceStatus, 2));
+                        position.set("cover", BitUtil.check(deviceStatus, 3));
+                    }
                     break;
                 case 0xE2:
                     if (!"DT800".equals(model)) {
@@ -1281,7 +1286,7 @@ public class Jt808ProtocolDecoder extends BaseProtocolDecoder {
                     }
                     break;
                 case 0xF0:
-                    while (buf.readerIndex() < endIndex) {
+                    while (endIndex - buf.readerIndex() >= 13) {
                         int mcc = buf.readUnsignedShort();
                         int mnc = buf.readUnsignedShort();
                         long cid = buf.readUnsignedInt();
@@ -1700,6 +1705,14 @@ public class Jt808ProtocolDecoder extends BaseProtocolDecoder {
 
             Position position = new Position(getProtocolName());
             position.setDeviceId(deviceSession.getDeviceId());
+
+            String model = getDeviceModel(deviceSession);
+            if (model != null && model.startsWith("JC")) {
+                getLastLocation(position, null);
+                position.set(Position.KEY_RESULT,
+                        buf.readCharSequence(buf.readableBytes() - 2, StandardCharsets.US_ASCII).toString());
+                return position;
+            }
 
             Date time = readDate(buf, deviceSession.get(DeviceSession.KEY_TIMEZONE));
 

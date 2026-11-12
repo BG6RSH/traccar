@@ -20,19 +20,23 @@ import io.netty.buffer.CompositeByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
-import org.traccar.BaseProtocolDecoder;
+import io.netty.handler.codec.TooLongFrameException;
+import org.traccar.BaseMediaProtocolDecoder;
 import org.traccar.Protocol;
-import org.traccar.database.DeviceLookupService;
 import org.traccar.helper.BitUtil;
 import org.traccar.media.VideoStreamManager;
-import org.traccar.model.Device;
+import org.traccar.model.Pair;
+import org.traccar.session.DeviceSession;
 
 import jakarta.inject.Inject;
 import java.net.SocketAddress;
+import java.util.HashSet;
+import java.util.Set;
 
-public class Jt1078ProtocolDecoder extends BaseProtocolDecoder {
+public class Jt1078ProtocolDecoder extends BaseMediaProtocolDecoder {
 
-    private DeviceLookupService deviceLookupService;
+    private static final int MAX_FRAME_SIZE = 10 * 1024 * 1024;
+
     private VideoStreamManager streamManager;
 
     private CompositeByteBuf frameBuffer;
@@ -40,16 +44,10 @@ public class Jt1078ProtocolDecoder extends BaseProtocolDecoder {
     private long frameTimestamp;
     private int framePayloadType;
 
-    private long streamDeviceId;
-    private int streamChannel;
+    private final Set<Pair<Long, Integer>> streams = new HashSet<>();
 
     public Jt1078ProtocolDecoder(Protocol protocol) {
         super(protocol);
-    }
-
-    @Inject
-    public void setDeviceLookupService(DeviceLookupService deviceLookupService) {
-        this.deviceLookupService = deviceLookupService;
     }
 
     @Inject
@@ -86,47 +84,52 @@ public class Jt1078ProtocolDecoder extends BaseProtocolDecoder {
             return null;
         }
 
-        Device device = deviceLookupService.lookup(new String[]{uniqueId});
-        if (device == null) {
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, uniqueId);
+        if (deviceSession == null) {
             return null;
         }
 
-        streamDeviceId = device.getId();
-        streamChannel = videoChannel;
+        long streamDeviceId = deviceSession.getDeviceId();
+        streams.add(new Pair<>(streamDeviceId, videoChannel));
 
         ByteBuf body = buf.readRetainedSlice(bodyLength);
 
-        if (subpackageType == 0) {
-            boolean isKeyFrame = dataType == 0;
-            streamManager.handleFrame(streamDeviceId, videoChannel, body, timestamp, isKeyFrame, payloadType);
-            body.release();
-        } else if (subpackageType == 1) {
-            if (frameBuffer != null) {
-                frameBuffer.release();
+        try {
+            if (subpackageType == 0) {
+                boolean isKeyFrame = dataType == 0;
+                streamManager.handleFrame(streamDeviceId, videoChannel, body, timestamp, isKeyFrame, payloadType);
+            } else if (subpackageType == 1) {
+                if (frameBuffer != null) {
+                    frameBuffer.release();
+                }
+                frameBuffer = Unpooled.compositeBuffer();
+                frameBuffer.addComponent(true, body.retain());
+                frameDataType = dataType;
+                frameTimestamp = timestamp;
+                framePayloadType = payloadType;
+            } else if (subpackageType == 3 || subpackageType == 2) {
+                if (frameBuffer != null) {
+                    if (bodyLength > MAX_FRAME_SIZE - frameBuffer.readableBytes()) {
+                        throw new TooLongFrameException();
+                    }
+                    frameBuffer.addComponent(true, body.retain());
+                    if (subpackageType == 2) {
+                        boolean isKeyFrame = frameDataType == 0;
+                        try {
+                            streamManager.handleFrame(
+                                    streamDeviceId, videoChannel, frameBuffer,
+                                    frameTimestamp, isKeyFrame, framePayloadType);
+                        } finally {
+                            frameBuffer.release();
+                            frameBuffer = null;
+                        }
+                    }
+                }
             }
-            frameBuffer = Unpooled.compositeBuffer();
-            frameBuffer.addComponent(true, body);
-            frameDataType = dataType;
-            frameTimestamp = timestamp;
-            framePayloadType = payloadType;
-        } else if (subpackageType == 3) {
-            if (frameBuffer != null) {
-                frameBuffer.addComponent(true, body);
-            } else {
-                body.release();
-            }
-        } else if (subpackageType == 2) {
-            if (frameBuffer != null) {
-                frameBuffer.addComponent(true, body);
-                boolean isKeyFrame = frameDataType == 0;
-                streamManager.handleFrame(
-                        streamDeviceId, videoChannel, frameBuffer, frameTimestamp, isKeyFrame, framePayloadType);
-                frameBuffer.release();
-                frameBuffer = null;
-            } else {
-                body.release();
-            }
-        } else {
+        } catch (TooLongFrameException e) {
+            channel.close();
+            throw e;
+        } finally {
             body.release();
         }
 
@@ -136,9 +139,10 @@ public class Jt1078ProtocolDecoder extends BaseProtocolDecoder {
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         super.channelInactive(ctx);
-        if (streamDeviceId > 0) {
-            streamManager.removeStream(streamDeviceId, streamChannel);
+        for (Pair<Long, Integer> stream : streams) {
+            streamManager.removeStream(stream.first(), stream.second());
         }
+        streams.clear();
         if (frameBuffer != null) {
             frameBuffer.release();
             frameBuffer = null;
