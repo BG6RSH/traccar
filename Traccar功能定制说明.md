@@ -394,3 +394,51 @@ git remote add origin https://github.com/traccar/traccar.git      # 如缺失，
 ```
 
 > 注意：恢复后需手工重建 `debug.xml`（含 API Key，参考 1.4 节配置说明）。
+
+## 七、前、后端编译
+### 7.1 npm 使用国内镜像
+#### 7.1.1. 单次临时使用（只对当前这一条 install 生效，不改全局）
+
+适合偶尔加速，不影响全局 npm 配置
+
+```
+# 安装全部依赖（项目根目录）
+npm install --registry=https://registry.npmmirror.com
+
+# 安装单个包示例
+npm install axios --registry=https://registry.npmmirror.com
+```
+
+#### 7.1.2. 全局永久设置（推荐，所有 npm install 自动走国内源）
+
+```
+# 设置为 npmmirror（阿里npmmirror，国内最稳）
+npm config set registry https://registry.npmmirror.com
+
+# 验证是否生效
+npm config get registry
+# 输出 https://registry.npmmirror.com 代表成功
+
+# 切回官方源（需要发包publish的时候用）
+npm config set registry https://registry.npmjs.org
+```
+#### 7.1.3. 项目单独配置 .npmrc（只当前项目生效，团队协作推荐）
+
+在项目根目录新建 `.npmrc` 文件，写入一行：
+
+```
+registry=https://registry.npmmirror.com
+```
+
+>
+> 优先级：项目 `.npmrc` > 用户全局配置 > npm 内置默认源，不会污染电脑全局环境。
+
+### 7.2 编译前端，traccar-web目录中执行
+```bash
+npm install
+npm run build
+```
+### 7.3 编译后端，项目根目录（traccar)中执行
+```bash
+./gradlew assemble
+```
